@@ -7,9 +7,9 @@
  *
  * Code generated for Simulink model 'controller'.
  *
- * Model version                  : 1.9
+ * Model version                  : 1.16
  * Simulink Coder version         : 9.8 (R2022b) 13-May-2022
- * C/C++ source code generated on : Fri Jan 27 13:18:25 2023
+ * C/C++ source code generated on : Wed May 17 12:48:32 2023
  *
  * Target selection: ert.tlc
  * Embedded hardware selection: Intel->x86-64 (Windows64)
@@ -21,6 +21,15 @@
 
 /* Invariant block signals (default storage) */
 const ConstB_controller_T controller_ConstB = {
+  4095.0F,                             /* '<S11>/Data Type Conversion' */
+  0.0F,                                /* '<S11>/Data Type Conversion2' */
+  4095.0F,                             /* '<S16>/Subtract' */
+  4095.0F,                             /* '<S12>/Data Type Conversion' */
+  0.0F,                                /* '<S12>/Data Type Conversion2' */
+  4095.0F,                             /* '<S18>/Subtract' */
+  4095.0F,                             /* '<S13>/Data Type Conversion' */
+  0.0F,                                /* '<S13>/Data Type Conversion2' */
+  4095.0F,                             /* '<S20>/Subtract' */
   50.0F                                /* '<S5>/Gain1' */
 };
 

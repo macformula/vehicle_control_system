@@ -7,9 +7,9 @@
  *
  * Code generated for Simulink model 'controller'.
  *
- * Model version                  : 1.9
+ * Model version                  : 1.16
  * Simulink Coder version         : 9.8 (R2022b) 13-May-2022
- * C/C++ source code generated on : Fri Jan 27 13:18:25 2023
+ * C/C++ source code generated on : Wed May 17 12:48:32 2023
  *
  * Target selection: ert.tlc
  * Embedded hardware selection: Intel->x86-64 (Windows64)
@@ -70,8 +70,21 @@ Verification pane for ERT based targets, which will disable the \
 preprocessor word size checks.
 #endif
 
-extern real32_T look1_iflf_binlxpw(real32_T u0, const real32_T bp0[], const
+extern real32_T look1_iflf_binlcpw(real32_T u0, const real32_T bp0[], const
   real32_T table[], uint32_T maxIndex);
+extern void controller_LEFT_MOTOR_Init(MI_STATUSES *rty_MI_motorStatus, uint8_T *
+  rty_AMK_bInverterOn_tx, uint8_T *rty_AMK_bDcOn_tx, uint8_T *rty_AMK_bEnable,
+  uint8_T *rty_AMK_bErrorReset, real32_T *rty_AMK_TargetVelocity, real32_T
+  *rty_AMK_TorqueLimitPositiv, real32_T *rty_AMK_TorqueLimitNegativ);
+extern void controller_LEFT_MOTOR(MI_CMD rtu_GOV_e_miCmd, boolean_T
+  rtu_AMK_bSystemReady, boolean_T rtu_AMK_bError, boolean_T rtu_AMK_bQuitDcOn,
+  boolean_T rtu_AMK_bDcOn_rx, boolean_T rtu_AMK_bQuitInverterOn, boolean_T
+  rtu_AMK_bInverterOn_rx, real32_T rtu_VD_T_motorSpeedRequest, real32_T
+  rtu_VD_T_motorTorqueLimitPositi, real32_T rtu_VD_T_motorTorqueLimitNegati,
+  MI_STATUSES *rty_MI_motorStatus, uint8_T *rty_AMK_bInverterOn_tx, uint8_T
+  *rty_AMK_bDcOn_tx, uint8_T *rty_AMK_bEnable, uint8_T *rty_AMK_bErrorReset,
+  real32_T *rty_AMK_TargetVelocity, real32_T *rty_AMK_TorqueLimitPositiv,
+  real32_T *rty_AMK_TorqueLimitNegativ, DW_LEFT_MOTOR_controller_T *localDW);
 
 #endif                                 /* RTW_HEADER_controller_private_h_ */
 
