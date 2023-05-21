@@ -7,9 +7,9 @@
  *
  * Code generated for Simulink model 'controller'.
  *
- * Model version                  : 1.16
+ * Model version                  : 1.17
  * Simulink Coder version         : 9.8 (R2022b) 13-May-2022
- * C/C++ source code generated on : Wed May 17 12:48:32 2023
+ * C/C++ source code generated on : Sun May 21 17:54:25 2023
  *
  * Target selection: ert.tlc
  * Embedded hardware selection: Intel->x86-64 (Windows64)
@@ -70,7 +70,7 @@ Verification pane for ERT based targets, which will disable the \
 preprocessor word size checks.
 #endif
 
-extern real32_T look1_iflf_binlcpw(real32_T u0, const real32_T bp0[], const
+extern real32_T look1_iflf_binlxpw(real32_T u0, const real32_T bp0[], const
   real32_T table[], uint32_T maxIndex);
 extern void controller_LEFT_MOTOR_Init(MI_STATUSES *rty_MI_motorStatus, uint8_T *
   rty_AMK_bInverterOn_tx, uint8_T *rty_AMK_bDcOn_tx, uint8_T *rty_AMK_bEnable,

@@ -7,9 +7,9 @@
  *
  * Code generated for Simulink model 'controller'.
  *
- * Model version                  : 1.16
+ * Model version                  : 1.17
  * Simulink Coder version         : 9.8 (R2022b) 13-May-2022
- * C/C++ source code generated on : Wed May 17 12:48:32 2023
+ * C/C++ source code generated on : Sun May 21 17:54:25 2023
  *
  * Target selection: ert.tlc
  * Embedded hardware selection: Intel->x86-64 (Windows64)
@@ -24,7 +24,7 @@
 #include <math.h>
 
 /* Named constants for Chart: '<S4>/LEFT_MOTOR' */
-#define contr_IN_enforceSetpointsZero_d ((uint8_T)1U)
+#define contr_IN_enforceSetpointsZero_p ((uint8_T)1U)
 #define contr_IN_motorOff_waitingForGov ((uint8_T)6U)
 #define control_IN_enforceSetpointsZero ((uint8_T)2U)
 #define controller_IN_AMK_errorDetected ((uint8_T)1U)
@@ -99,7 +99,7 @@ ExtY_controller_T controller_Y;
 /* Real-time model */
 static RT_MODEL_controller_T controller_M_;
 RT_MODEL_controller_T *const controller_M = &controller_M_;
-real32_T look1_iflf_binlcpw(real32_T u0, const real32_T bp0[], const real32_T
+real32_T look1_iflf_binlxpw(real32_T u0, const real32_T bp0[], const real32_T
   table[], uint32_T maxIndex)
 {
   real32_T frac;
@@ -110,20 +110,20 @@ real32_T look1_iflf_binlcpw(real32_T u0, const real32_T bp0[], const real32_T
      Search method: 'binary'
      Use previous index: 'off'
      Interpolation method: 'Linear point-slope'
-     Extrapolation method: 'Clip'
+     Extrapolation method: 'Linear'
      Use last breakpoint for index at or above upper limit: 'off'
      Remove protection against out-of-range input in generated code: 'off'
    */
   /* Prelookup - Index and Fraction
      Index Search method: 'binary'
-     Extrapolation method: 'Clip'
+     Extrapolation method: 'Linear'
      Use previous index: 'off'
      Use last breakpoint for index at or above upper limit: 'off'
      Remove protection against out-of-range input in generated code: 'off'
    */
   if (u0 <= bp0[0U]) {
     iLeft = 0U;
-    frac = 0.0F;
+    frac = (u0 - bp0[0U]) / (bp0[1U] - bp0[0U]);
   } else if (u0 < bp0[maxIndex]) {
     uint32_T bpIdx;
     uint32_T iRght;
@@ -145,7 +145,7 @@ real32_T look1_iflf_binlcpw(real32_T u0, const real32_T bp0[], const real32_T
     frac = (u0 - bp0[iLeft]) / (bp0[iLeft + 1U] - bp0[iLeft]);
   } else {
     iLeft = maxIndex - 1U;
-    frac = 1.0F;
+    frac = (u0 - bp0[maxIndex - 1U]) / (bp0[maxIndex] - bp0[maxIndex - 1U]);
   }
 
   /* Column-major Interpolation 1-D
@@ -192,14 +192,14 @@ void controller_LEFT_MOTOR(MI_CMD rtu_GOV_e_miCmd, boolean_T
   real32_T *rty_AMK_TargetVelocity, real32_T *rty_AMK_TorqueLimitPositiv,
   real32_T *rty_AMK_TorqueLimitNegativ, DW_LEFT_MOTOR_controller_T *localDW)
 {
-  if (localDW->temporalCounter_i1 < 7U) {
+  if (localDW->temporalCounter_i1 < 3U) {
     localDW->temporalCounter_i1++;
   }
 
   /* Chart: '<S4>/LEFT_MOTOR' */
-  if (localDW->is_active_c1_motor_interface_li == 0U) {
-    localDW->is_active_c1_motor_interface_li = 1U;
-    localDW->is_c1_motor_interface_lib = contr_IN_motorOff_waitingForGov;
+  if (localDW->is_active_c1_controller == 0U) {
+    localDW->is_active_c1_controller = 1U;
+    localDW->is_c1_controller = contr_IN_motorOff_waitingForGov;
     *rty_MI_motorStatus = OFF;
     *rty_AMK_bInverterOn_tx = 0U;
     *rty_AMK_bDcOn_tx = 0U;
@@ -209,11 +209,11 @@ void controller_LEFT_MOTOR(MI_CMD rtu_GOV_e_miCmd, boolean_T
     *rty_AMK_TorqueLimitPositiv = 0.0F;
     *rty_AMK_TorqueLimitNegativ = 0.0F;
   } else {
-    switch (localDW->is_c1_motor_interface_lib) {
+    switch (localDW->is_c1_controller) {
      case controller_IN_AMK_errorDetected:
       if (rtu_GOV_e_miCmd == ERR_RESET) {
-        localDW->is_c1_motor_interface_lib = controller_IN_AMK_errorReset;
-        localDW->is_AMK_errorReset = contr_IN_enforceSetpointsZero_d;
+        localDW->is_c1_controller = controller_IN_AMK_errorReset;
+        localDW->is_AMK_errorReset = contr_IN_enforceSetpointsZero_p;
         *rty_AMK_TargetVelocity = 0.0F;
         *rty_AMK_TorqueLimitPositiv = 0.0F;
         *rty_AMK_TorqueLimitNegativ = 0.0F;
@@ -223,7 +223,7 @@ void controller_LEFT_MOTOR(MI_CMD rtu_GOV_e_miCmd, boolean_T
 
      case controller_IN_AMK_errorReset:
       switch (localDW->is_AMK_errorReset) {
-       case contr_IN_enforceSetpointsZero_d:
+       case contr_IN_enforceSetpointsZero_p:
         *rty_AMK_bInverterOn_tx = 0U;
         if (!rtu_AMK_bInverterOn_rx) {
           localDW->is_AMK_errorReset = controller_IN_toggleEnable;
@@ -254,7 +254,7 @@ void controller_LEFT_MOTOR(MI_CMD rtu_GOV_e_miCmd, boolean_T
         *rty_AMK_bErrorReset = 0U;
         if (rtu_AMK_bSystemReady) {
           localDW->is_AMK_errorReset = controller_IN_NO_ACTIVE_CHILD;
-          localDW->is_c1_motor_interface_lib = contr_IN_motorOff_waitingForGov;
+          localDW->is_c1_controller = contr_IN_motorOff_waitingForGov;
           *rty_MI_motorStatus = OFF;
           *rty_AMK_bInverterOn_tx = 0U;
           *rty_AMK_bDcOn_tx = 0U;
@@ -270,10 +270,10 @@ void controller_LEFT_MOTOR(MI_CMD rtu_GOV_e_miCmd, boolean_T
 
      case controller_IN_AMK_running:
       if (rtu_AMK_bError) {
-        localDW->is_c1_motor_interface_lib = controller_IN_AMK_errorDetected;
+        localDW->is_c1_controller = controller_IN_AMK_errorDetected;
         *rty_MI_motorStatus = MI_STS_ERROR;
       } else if (rtu_GOV_e_miCmd == CMD_SHUTDOWN) {
-        localDW->is_c1_motor_interface_lib = controller_IN_AMK_shutdown;
+        localDW->is_c1_controller = controller_IN_AMK_shutdown;
         localDW->is_AMK_shutdown = control_IN_enforceSetpointsZero;
         *rty_MI_motorStatus = SHUTDOWN;
         *rty_AMK_TargetVelocity = 0.0F;
@@ -297,7 +297,7 @@ void controller_LEFT_MOTOR(MI_CMD rtu_GOV_e_miCmd, boolean_T
           *rty_AMK_bDcOn_tx = 0U;
         } else if (rtu_AMK_bError) {
           localDW->is_AMK_shutdown = controller_IN_NO_ACTIVE_CHILD;
-          localDW->is_c1_motor_interface_lib = controller_IN_AMK_errorDetected;
+          localDW->is_c1_controller = controller_IN_AMK_errorDetected;
           *rty_MI_motorStatus = MI_STS_ERROR;
         }
         break;
@@ -309,7 +309,7 @@ void controller_LEFT_MOTOR(MI_CMD rtu_GOV_e_miCmd, boolean_T
           *rty_AMK_bEnable = 0U;
         } else if (rtu_AMK_bError) {
           localDW->is_AMK_shutdown = controller_IN_NO_ACTIVE_CHILD;
-          localDW->is_c1_motor_interface_lib = controller_IN_AMK_errorDetected;
+          localDW->is_c1_controller = controller_IN_AMK_errorDetected;
           *rty_MI_motorStatus = MI_STS_ERROR;
         }
         break;
@@ -319,7 +319,7 @@ void controller_LEFT_MOTOR(MI_CMD rtu_GOV_e_miCmd, boolean_T
         *rty_AMK_bDcOn_tx = 0U;
         if ((!rtu_AMK_bDcOn_rx) && (!rtu_AMK_bQuitDcOn)) {
           localDW->is_AMK_shutdown = controller_IN_NO_ACTIVE_CHILD;
-          localDW->is_c1_motor_interface_lib = contr_IN_motorOff_waitingForGov;
+          localDW->is_c1_controller = contr_IN_motorOff_waitingForGov;
           *rty_MI_motorStatus = OFF;
           *rty_AMK_bInverterOn_tx = 0U;
           *rty_AMK_bDcOn_tx = 0U;
@@ -330,7 +330,7 @@ void controller_LEFT_MOTOR(MI_CMD rtu_GOV_e_miCmd, boolean_T
           *rty_AMK_TorqueLimitNegativ = 0.0F;
         } else if (rtu_AMK_bError) {
           localDW->is_AMK_shutdown = controller_IN_NO_ACTIVE_CHILD;
-          localDW->is_c1_motor_interface_lib = controller_IN_AMK_errorDetected;
+          localDW->is_c1_controller = controller_IN_AMK_errorDetected;
           *rty_MI_motorStatus = MI_STS_ERROR;
         }
         break;
@@ -344,24 +344,18 @@ void controller_LEFT_MOTOR(MI_CMD rtu_GOV_e_miCmd, boolean_T
         *rty_AMK_bInverterOn_tx = 1U;
         if (rtu_AMK_bInverterOn_rx && rtu_AMK_bQuitInverterOn) {
           localDW->is_AMK_startup = controller_IN_NO_ACTIVE_CHILD;
-          localDW->is_c1_motor_interface_lib = controller_IN_AMK_running;
+          localDW->is_c1_controller = controller_IN_AMK_running;
         } else if (rtu_AMK_bError) {
           localDW->is_AMK_startup = controller_IN_NO_ACTIVE_CHILD;
-          localDW->is_c1_motor_interface_lib = controller_IN_AMK_errorDetected;
+          localDW->is_c1_controller = controller_IN_AMK_errorDetected;
           *rty_MI_motorStatus = MI_STS_ERROR;
         }
         break;
 
        case control_IN_enforceSetpointsZero:
-        if (localDW->temporalCounter_i1 >= 5U) {
-          localDW->is_AMK_startup = controller_IN_commandOn;
-          *rty_AMK_bEnable = 1U;
-          *rty_AMK_bInverterOn_tx = 1U;
-        } else if (rtu_AMK_bError) {
-          localDW->is_AMK_startup = controller_IN_NO_ACTIVE_CHILD;
-          localDW->is_c1_motor_interface_lib = controller_IN_AMK_errorDetected;
-          *rty_MI_motorStatus = MI_STS_ERROR;
-        }
+        localDW->is_AMK_startup = controller_IN_commandOn;
+        *rty_AMK_bEnable = 1U;
+        *rty_AMK_bInverterOn_tx = 1U;
         break;
 
        case controller_IN_toggleDCon:
@@ -374,7 +368,7 @@ void controller_LEFT_MOTOR(MI_CMD rtu_GOV_e_miCmd, boolean_T
           *rty_AMK_TorqueLimitNegativ = 0.0F;
         } else if (rtu_AMK_bError) {
           localDW->is_AMK_startup = controller_IN_NO_ACTIVE_CHILD;
-          localDW->is_c1_motor_interface_lib = controller_IN_AMK_errorDetected;
+          localDW->is_c1_controller = controller_IN_AMK_errorDetected;
           *rty_MI_motorStatus = MI_STS_ERROR;
         }
         break;
@@ -386,7 +380,7 @@ void controller_LEFT_MOTOR(MI_CMD rtu_GOV_e_miCmd, boolean_T
           *rty_AMK_bDcOn_tx = 1U;
         } else if (rtu_AMK_bError) {
           localDW->is_AMK_startup = controller_IN_NO_ACTIVE_CHILD;
-          localDW->is_c1_motor_interface_lib = controller_IN_AMK_errorDetected;
+          localDW->is_c1_controller = controller_IN_AMK_errorDetected;
           *rty_MI_motorStatus = MI_STS_ERROR;
         }
         break;
@@ -400,7 +394,7 @@ void controller_LEFT_MOTOR(MI_CMD rtu_GOV_e_miCmd, boolean_T
       *rty_AMK_bEnable = 0U;
       *rty_AMK_bErrorReset = 0U;
       if (rtu_GOV_e_miCmd == CMD_STARTUP) {
-        localDW->is_c1_motor_interface_lib = controller_IN_AMK_startup;
+        localDW->is_c1_controller = controller_IN_AMK_startup;
         localDW->is_AMK_startup = controller_IN_waiting_sysReady;
         *rty_MI_motorStatus = STARTUP;
       }
@@ -415,11 +409,8 @@ void controller_LEFT_MOTOR(MI_CMD rtu_GOV_e_miCmd, boolean_T
 void controller_step(void)
 {
   real32_T a;
-  real32_T rtb_Gain;
+  real32_T rtb_Switch2;
   real32_T rtb_TorqueLimit;
-  boolean_T rtb_NOT_e;
-  boolean_T rtb_NOT_k;
-  boolean_T rtb_b_DriverInterfaceError;
 
   /* Chart: '<S3>/Chart' incorporates:
    *  Delay: '<S3>/Delay'
@@ -441,7 +432,7 @@ void controller_step(void)
       break;
 
      case controller_IN_RUNNING:
-      if (controller_DW.Delay_DSTATE_f == ERR_RUNNING) {
+      if (controller_DW.Delay_DSTATE_f == ERR_STARTUP) {
         controller_DW.is_c3_governor_lib = controller_IN_RUNNING_ERROR;
         controller_DW.is_RUNNING_ERROR = controller_IN_HV_run_error;
         controller_B.GOV_e_diCmd = SYSTEM_ERROR;
@@ -548,60 +539,6 @@ void controller_step(void)
 
   /* End of Chart: '<S3>/Chart' */
 
-  /* Logic: '<S11>/NOT' incorporates:
-   *  Constant: '<S11>/LowerPotentiometerLimit1'
-   *  Constant: '<S11>/UpperPotentiometerLimit1'
-   *  Inport: '<Root>/DI_V_AccelPedalPos1'
-   *  Logic: '<S15>/FixPt Logical Operator'
-   *  RelationalOperator: '<S15>/Lower Test'
-   *  RelationalOperator: '<S15>/Upper Test'
-   */
-  rtb_NOT_e = ((controller_U.DI_V_AccelPedalPos1 < 0) ||
-               (controller_U.DI_V_AccelPedalPos1 > 4095));
-
-  /* Logic: '<S13>/NOT' incorporates:
-   *  Constant: '<S13>/LowerPotentiometerLimit1'
-   *  Constant: '<S13>/UpperPotentiometerLimit1'
-   *  Inport: '<Root>/DI_V_BrakePedalPos'
-   *  Logic: '<S19>/FixPt Logical Operator'
-   *  RelationalOperator: '<S19>/Lower Test'
-   *  RelationalOperator: '<S19>/Upper Test'
-   */
-  rtb_NOT_k = ((controller_U.DI_V_BrakePedalPos < 0) ||
-               (controller_U.DI_V_BrakePedalPos > 4095));
-
-  /* Logic: '<S2>/b_DriverInterfaceError' incorporates:
-   *  Constant: '<S12>/LowerPotentiometerLimit1'
-   *  Constant: '<S12>/UpperPotentiometerLimit1'
-   *  Constant: '<S14>/LowerPotentiometerLimit1'
-   *  Constant: '<S14>/UpperPotentiometerLimit1'
-   *  Inport: '<Root>/DI_V_AccelPedalPos2'
-   *  Inport: '<Root>/DI_V_SteeringAngle'
-   *  Logic: '<S12>/NOT'
-   *  Logic: '<S14>/NOT'
-   *  Logic: '<S17>/FixPt Logical Operator'
-   *  Logic: '<S21>/FixPt Logical Operator'
-   *  Logic: '<S2>/AND'
-   *  RelationalOperator: '<S17>/Lower Test'
-   *  RelationalOperator: '<S17>/Upper Test'
-   *  RelationalOperator: '<S21>/Lower Test'
-   *  RelationalOperator: '<S21>/Upper Test'
-   */
-  rtb_b_DriverInterfaceError = ((rtb_NOT_e && ((controller_U.DI_V_AccelPedalPos2
-    < 0) || (controller_U.DI_V_AccelPedalPos2 > 4095))) || rtb_NOT_k ||
-    ((controller_U.DI_V_SteeringAngle < 0) || (controller_U.DI_V_SteeringAngle >
-    4095)));
-
-  /* Gain: '<S20>/Gain' incorporates:
-   *  DataTypeConversion: '<S13>/Data Type Conversion1'
-   *  Inport: '<Root>/DI_V_BrakePedalPos'
-   *  Product: '<S20>/Divide'
-   *  Sum: '<S20>/Subtract1'
-   */
-  rtb_Gain = ((real32_T)controller_U.DI_V_BrakePedalPos -
-              controller_ConstB.DataTypeConversion2_l) /
-    controller_ConstB.range_o * 100.0F;
-
   /* Chart: '<S2>/Chart' incorporates:
    *  Delay: '<S3>/Delay2'
    *  Inport: '<Root>/DI_b_DriverButton'
@@ -627,63 +564,56 @@ void controller_step(void)
       break;
 
      case controller_IN_DI_running:
-      if (rtb_b_DriverInterfaceError) {
-        controller_DW.is_Ready_to_drive = controller_IN_NO_ACTIVE_CHILD_c;
-        controller_DW.is_DI_running = controller_IN_NO_ACTIVE_CHILD_c;
-        controller_DW.is_c3_driver_interface_lib = controller_IN_DI_error;
-        controller_DW.Delay2_DSTATE = DI_ERROR;
-      } else {
-        switch (controller_DW.is_DI_running) {
-         case contr_IN_Driver_requested_start:
-          controller_DW.Delay2_DSTATE = DRV_START_REQ;
-          if (controller_B.GOV_e_diCmd == READY_TO_DRIVE) {
-            controller_DW.is_DI_running = controller_IN_Ready_to_drive;
-            controller_B.b_ReadyToDrive = true;
-            controller_DW.Delay2_DSTATE = DI_RUNNING;
-            controller_DW.is_Ready_to_drive = controller_IN_SpeakerOn_;
-            controller_DW.temporalCounter_i1 = 0U;
-
-            /* Outport: '<Root>/DI_b_driverSpeaker' */
-            controller_Y.DI_b_driverSpeaker = true;
-          }
-          break;
-
-         case controller_IN_Ready_to_drive:
+      switch (controller_DW.is_DI_running) {
+       case contr_IN_Driver_requested_start:
+        controller_DW.Delay2_DSTATE = DRV_START_REQ;
+        if (controller_B.GOV_e_diCmd == READY_TO_DRIVE) {
+          controller_DW.is_DI_running = controller_IN_Ready_to_drive;
           controller_B.b_ReadyToDrive = true;
           controller_DW.Delay2_DSTATE = DI_RUNNING;
-          if (controller_B.GOV_e_diCmd == SYSTEM_ERROR) {
-            controller_DW.is_Ready_to_drive = controller_IN_NO_ACTIVE_CHILD_c;
-            controller_DW.is_DI_running = controller_IN_NO_ACTIVE_CHILD_c;
-            controller_DW.is_c3_driver_interface_lib =
-              controller_IN_Vehicle_coasting;
-            controller_B.b_ReadyToDrive = false;
-            controller_DW.Delay2_DSTATE = DI_IDLE;
-          } else if (controller_DW.is_Ready_to_drive == controller_IN_SpeakerOff)
-          {
+          controller_DW.is_Ready_to_drive = controller_IN_SpeakerOn_;
+          controller_DW.temporalCounter_i1 = 0U;
+
+          /* Outport: '<Root>/DI_b_driverSpeaker' */
+          controller_Y.DI_b_driverSpeaker = true;
+        }
+        break;
+
+       case controller_IN_Ready_to_drive:
+        controller_B.b_ReadyToDrive = true;
+        controller_DW.Delay2_DSTATE = DI_RUNNING;
+        if (controller_B.GOV_e_diCmd == SYSTEM_ERROR) {
+          controller_DW.is_Ready_to_drive = controller_IN_NO_ACTIVE_CHILD_c;
+          controller_DW.is_DI_running = controller_IN_NO_ACTIVE_CHILD_c;
+          controller_DW.is_c3_driver_interface_lib =
+            controller_IN_Vehicle_coasting;
+          controller_B.b_ReadyToDrive = false;
+          controller_DW.Delay2_DSTATE = DI_IDLE;
+        } else if (controller_DW.is_Ready_to_drive == controller_IN_SpeakerOff)
+        {
+          /* Outport: '<Root>/DI_b_driverSpeaker' */
+          controller_Y.DI_b_driverSpeaker = false;
+        } else {
+          /* Outport: '<Root>/DI_b_driverSpeaker' */
+          /* case IN_SpeakerOn_: */
+          controller_Y.DI_b_driverSpeaker = true;
+          if (controller_DW.temporalCounter_i1 >= 10U) {
+            controller_DW.is_Ready_to_drive = controller_IN_SpeakerOff;
+
             /* Outport: '<Root>/DI_b_driverSpeaker' */
             controller_Y.DI_b_driverSpeaker = false;
-          } else {
-            /* Outport: '<Root>/DI_b_driverSpeaker' */
-            /* case IN_SpeakerOn_: */
-            controller_Y.DI_b_driverSpeaker = true;
-            if (controller_DW.temporalCounter_i1 >= 10U) {
-              controller_DW.is_Ready_to_drive = controller_IN_SpeakerOff;
-
-              /* Outport: '<Root>/DI_b_driverSpeaker' */
-              controller_Y.DI_b_driverSpeaker = false;
-            }
           }
-          break;
-
-         default:
-          /* case IN_Waiting_for_driver: */
-          controller_DW.Delay2_DSTATE = WAITING_FOR_DRVR;
-          if ((controller_U.DI_b_DriverButton == 1.0) && (rtb_Gain > 50.0F)) {
-            controller_DW.is_DI_running = contr_IN_Driver_requested_start;
-            controller_DW.Delay2_DSTATE = DRV_START_REQ;
-          }
-          break;
         }
+        break;
+
+       default:
+        /* case IN_Waiting_for_driver: */
+        controller_DW.Delay2_DSTATE = WAITING_FOR_DRVR;
+        if (controller_U.DI_b_DriverButton == 1.0) {
+          controller_DW.is_DI_running = contr_IN_Driver_requested_start;
+          controller_DW.Delay2_DSTATE = DRV_START_REQ;
+        }
+        break;
       }
       break;
 
@@ -707,6 +637,27 @@ void controller_step(void)
 
   /* End of Chart: '<S2>/Chart' */
 
+  /* Switch: '<S2>/Switch2' incorporates:
+   *  Constant: '<S13>/LowerPotentiometerLimit1'
+   *  Constant: '<S13>/UpperPotentiometerLimit1'
+   *  Constant: '<S2>/Constant1'
+   *  Gain: '<S13>/Gain'
+   *  Inport: '<Root>/DI_V_BrakePedalPos'
+   *  Logic: '<S19>/FixPt Logical Operator'
+   *  Product: '<S20>/Divide'
+   *  RelationalOperator: '<S19>/Lower Test'
+   *  RelationalOperator: '<S19>/Upper Test'
+   *  Sum: '<S20>/Subtract'
+   */
+  if ((controller_U.DI_V_BrakePedalPos >= 0.0F) &&
+      (controller_U.DI_V_BrakePedalPos <= 1024.0F)) {
+    rtb_Switch2 = 0.0F;
+  } else {
+    rtb_Switch2 = (controller_U.DI_V_BrakePedalPos - 1024.0F) / 1024.0F * 100.0F;
+  }
+
+  /* End of Switch: '<S2>/Switch2' */
+
   /* MATLAB Function: '<S5>/RIGHT_LIMIT' incorporates:
    *  Constant: '<S5>/MaxMotorCurrent'
    *  Constant: '<S5>/MaxMotorTorque'
@@ -717,33 +668,30 @@ void controller_step(void)
    *  Inport: '<Root>/AMK_MagnetizingCurrent_R'
    */
   rtb_TorqueLimit = fmaxf(0.0999984741F * (real32_T)
-    controller_U.AMK_MagnetizingCurrent, 0.0F);
+    controller_U.AMK_MagnetizingCurrent_R, 0.0F);
   a = fminf(controller_ConstB.Gain1, 52.0F);
   rtb_TorqueLimit = fminf(fmaxf(fmaxf(sqrtf(a * a - rtb_TorqueLimit *
     rtb_TorqueLimit), 0.0F) * 600.0F / ((real32_T)
-    controller_U.AMK_ActualVelocity * 3.14159274F / 30.0F), 0.0F), 27.0F);
-
-  /* Switch: '<S2>/Switch2' incorporates:
-   *  Constant: '<S2>/Constant1'
-   */
-  if (rtb_NOT_k) {
-    rtb_Gain = 0.0F;
-  }
+    controller_U.AMK_ActualVelocity_R * 3.14159274F / 30.0F), 0.0F), 27.0F);
 
   /* Switch: '<S5>/Switch' incorporates:
+   *  Constant: '<S12>/LowerPotentiometerLimit1'
+   *  Constant: '<S12>/UpperPotentiometerLimit1'
    *  Constant: '<S5>/Constant6'
    *  If: '<S2>/If'
+   *  Inport: '<Root>/DI_V_AccelPedalPos2'
+   *  Logic: '<S17>/FixPt Logical Operator'
    *  Logic: '<S2>/NOT'
-   *  Logic: '<S2>/OR1'
    *  Lookup_n-D: '<S2>/AccelPedalPos1 LUT'
    *  MinMax: '<S5>/Min'
    *  Product: '<S5>/Divide'
-   *  Switch: '<S2>/Switch2'
+   *  RelationalOperator: '<S17>/Lower Test'
+   *  RelationalOperator: '<S17>/Upper Test'
    */
-  if (rtb_Gain > 0.0F) {
-    rtb_Gain = 0.0F;
+  if (rtb_Switch2 > 0.0F) {
+    rtb_Switch2 = 0.0F;
   } else {
-    if ((!controller_B.b_ReadyToDrive) || rtb_b_DriverInterfaceError) {
+    if (!controller_B.b_ReadyToDrive) {
       /* Outputs for IfAction SubSystem: '<S2>/If Action Subsystem' incorporates:
        *  ActionPort: '<S8>/Action Port'
        */
@@ -751,35 +699,34 @@ void controller_step(void)
        *  Constant: '<S2>/Constant'
        *  SignalConversion generated from: '<S8>/In1'
        */
-      rtb_Gain = 0.0F;
+      rtb_Switch2 = 0.0F;
 
       /* End of Outputs for SubSystem: '<S2>/If Action Subsystem' */
-    } else if (rtb_NOT_e) {
+    } else if ((controller_U.DI_V_AccelPedalPos2 >= 0.0F) &&
+               (controller_U.DI_V_AccelPedalPos2 <= 1024.0F)) {
       /* If: '<S2>/If' incorporates:
-       *  DataTypeConversion: '<S12>/Data Type Conversion1'
-       *  Gain: '<S18>/Gain'
+       *  Constant: '<S12>/UpperPotentiometerLimit1'
+       *  Gain: '<S12>/Gain'
        *  Inport: '<Root>/DI_V_AccelPedalPos2'
        *  Product: '<S18>/Divide'
-       *  Sum: '<S18>/Subtract1'
+       *  Sum: '<S18>/Subtract'
        */
-      rtb_Gain = ((real32_T)controller_U.DI_V_AccelPedalPos2 -
-                  controller_ConstB.DataTypeConversion2_d) /
-        controller_ConstB.range_c * 100.0F;
+      rtb_Switch2 = (controller_U.DI_V_AccelPedalPos2 - 1024.0F) / 1024.0F *
+        100.0F;
     } else {
       /* If: '<S2>/If' incorporates:
-       *  DataTypeConversion: '<S11>/Data Type Conversion1'
-       *  Gain: '<S16>/Gain'
+       *  Constant: '<S11>/UpperPotentiometerLimit1'
+       *  Gain: '<S11>/Gain'
        *  Inport: '<Root>/DI_V_AccelPedalPos1'
        *  Product: '<S16>/Divide'
-       *  Sum: '<S16>/Subtract1'
+       *  Sum: '<S16>/Subtract'
        */
-      rtb_Gain = ((real32_T)controller_U.DI_V_AccelPedalPos1 -
-                  controller_ConstB.DataTypeConversion2) /
-        controller_ConstB.range * 100.0F;
+      rtb_Switch2 = (controller_U.DI_V_AccelPedalPos1 - 1024.0F) / 1024.0F *
+        100.0F;
     }
 
-    rtb_Gain = look1_iflf_binlcpw(rtb_Gain, controller_ConstP.pooled2,
-      controller_ConstP.pooled2, 20U) * fminf(rtb_TorqueLimit, rtb_TorqueLimit);
+    rtb_Switch2 = look1_iflf_binlxpw(rtb_Switch2, controller_ConstP.pooled3,
+      controller_ConstP.pooled3, 20U) * fminf(rtb_TorqueLimit, rtb_TorqueLimit);
   }
 
   /* End of Switch: '<S5>/Switch' */
@@ -793,25 +740,28 @@ void controller_step(void)
    *  Inport: '<Root>/AMK_bQuitDcOn_R'
    *  Inport: '<Root>/AMK_bQuitInverterOn_R'
    *  Inport: '<Root>/AMK_bSystemReady_R'
-   *  Outport: '<Root>/AMK_TargetVelocity'
-   *  Outport: '<Root>/AMK_TorqueLimitNegativ'
-   *  Outport: '<Root>/AMK_TorqueLimitPositiv'
-   *  Outport: '<Root>/AMK_bDcOn_tx'
-   *  Outport: '<Root>/AMK_bEnable'
-   *  Outport: '<Root>/AMK_bErrorReset'
-   *  Outport: '<Root>/AMK_bInverterOn_tx'
+   *  Outport: '<Root>/AMK_TargetVelocity_R'
+   *  Outport: '<Root>/AMK_TorqueLimitNegativ_R'
+   *  Outport: '<Root>/AMK_TorqueLimitPositiv_R'
+   *  Outport: '<Root>/AMK_bDcOn_tx_R'
+   *  Outport: '<Root>/AMK_bEnable_R'
+   *  Outport: '<Root>/AMK_bErrorReset_R'
+   *  Outport: '<Root>/AMK_bInverterOn_tx_R'
    */
-  controller_LEFT_MOTOR(controller_B.GOV_e_miCmd, controller_U.AMK_bSystemReady,
-                        controller_U.AMK_bError, controller_U.AMK_bQuitDcOn,
-                        controller_U.AMK_bDcOn, controller_U.AMK_bQuitInverterOn,
-                        controller_U.AMK_bInverterOn, 20000.0F, rtb_Gain, 0.0F,
-                        &controller_B.MI_motorStatus,
-                        &controller_Y.AMK_bInverterOn_tx,
-                        &controller_Y.AMK_bDcOn_tx, &controller_Y.AMK_bEnable,
-                        &controller_Y.AMK_bErrorReset,
-                        &controller_Y.AMK_TargetVelocity,
-                        &controller_Y.AMK_TorqueLimitPositiv,
-                        &controller_Y.AMK_TorqueLimitNegativ,
+  controller_LEFT_MOTOR(controller_B.GOV_e_miCmd,
+                        controller_U.AMK_bSystemReady_R,
+                        controller_U.AMK_bError_R, controller_U.AMK_bQuitDcOn_R,
+                        controller_U.AMK_bDcOn_R,
+                        controller_U.AMK_bQuitInverterOn_R,
+                        controller_U.AMK_bInverterOn_R, 20000.0F, rtb_Switch2,
+                        0.0F, &controller_B.MI_motorStatus,
+                        &controller_Y.AMK_bInverterOn_tx_R,
+                        &controller_Y.AMK_bDcOn_tx_R,
+                        &controller_Y.AMK_bEnable_R,
+                        &controller_Y.AMK_bErrorReset_R,
+                        &controller_Y.AMK_TargetVelocity_R,
+                        &controller_Y.AMK_TorqueLimitPositiv_R,
+                        &controller_Y.AMK_TorqueLimitNegativ_R,
                         &controller_DW.sf_RIGHT_MOTOR);
 
   /* Chart: '<S4>/LEFT_MOTOR' incorporates:
@@ -836,8 +786,8 @@ void controller_step(void)
                         controller_U.AMK_bError_L, controller_U.AMK_bQuitDcOn_L,
                         controller_U.AMK_bDcOn_L,
                         controller_U.AMK_bQuitInverterOn_L,
-                        controller_U.AMK_bInverterOn_L, 20000.0F, rtb_Gain, 0.0F,
-                        &controller_B.MI_motorStatus_n,
+                        controller_U.AMK_bInverterOn_L, 20000.0F, rtb_Switch2,
+                        0.0F, &controller_B.MI_motorStatus_b,
                         &controller_Y.AMK_bInverterOn_tx_L,
                         &controller_Y.AMK_bDcOn_tx_L,
                         &controller_Y.AMK_bEnable_L,
@@ -1011,8 +961,8 @@ void controller_step(void)
    *  Delay: '<S4>/Delay'
    *  RelationalOperator: '<S4>/GreaterThan'
    */
-  if (controller_B.MI_motorStatus_n == controller_B.MI_motorStatus) {
-    controller_DW.Delay_DSTATE = controller_B.MI_motorStatus_n;
+  if (controller_B.MI_motorStatus_b == controller_B.MI_motorStatus) {
+    controller_DW.Delay_DSTATE = controller_B.MI_motorStatus_b;
   }
 
   /* End of Switch: '<S4>/overallMotorState' */
@@ -1027,7 +977,7 @@ void controller_step(void)
    *  RelationalOperator: '<S4>/motorErrorActive1'
    */
   if ((controller_B.MI_motorStatus == MI_STS_ERROR) ||
-      (controller_B.MI_motorStatus_n == MI_STS_ERROR)) {
+      (controller_B.MI_motorStatus_b == MI_STS_ERROR)) {
     controller_DW.Delay1_DSTATE = MI_STS_ERROR;
   } else {
     controller_DW.Delay1_DSTATE = controller_DW.Delay_DSTATE;
@@ -1043,19 +993,19 @@ void controller_initialize(void)
   controller_DW.Delay_DSTATE = OFF;
 
   /* SystemInitialize for Chart: '<S4>/RIGHT_MOTOR' incorporates:
-   *  Outport: '<Root>/AMK_TargetVelocity'
-   *  Outport: '<Root>/AMK_TorqueLimitNegativ'
-   *  Outport: '<Root>/AMK_TorqueLimitPositiv'
-   *  Outport: '<Root>/AMK_bDcOn_tx'
-   *  Outport: '<Root>/AMK_bEnable'
-   *  Outport: '<Root>/AMK_bErrorReset'
-   *  Outport: '<Root>/AMK_bInverterOn_tx'
+   *  Outport: '<Root>/AMK_TargetVelocity_R'
+   *  Outport: '<Root>/AMK_TorqueLimitNegativ_R'
+   *  Outport: '<Root>/AMK_TorqueLimitPositiv_R'
+   *  Outport: '<Root>/AMK_bDcOn_tx_R'
+   *  Outport: '<Root>/AMK_bEnable_R'
+   *  Outport: '<Root>/AMK_bErrorReset_R'
+   *  Outport: '<Root>/AMK_bInverterOn_tx_R'
    */
   controller_LEFT_MOTOR_Init(&controller_B.MI_motorStatus,
-    &controller_Y.AMK_bInverterOn_tx, &controller_Y.AMK_bDcOn_tx,
-    &controller_Y.AMK_bEnable, &controller_Y.AMK_bErrorReset,
-    &controller_Y.AMK_TargetVelocity, &controller_Y.AMK_TorqueLimitPositiv,
-    &controller_Y.AMK_TorqueLimitNegativ);
+    &controller_Y.AMK_bInverterOn_tx_R, &controller_Y.AMK_bDcOn_tx_R,
+    &controller_Y.AMK_bEnable_R, &controller_Y.AMK_bErrorReset_R,
+    &controller_Y.AMK_TargetVelocity_R, &controller_Y.AMK_TorqueLimitPositiv_R,
+    &controller_Y.AMK_TorqueLimitNegativ_R);
 
   /* SystemInitialize for Chart: '<S4>/LEFT_MOTOR' incorporates:
    *  Outport: '<Root>/AMK_TargetVelocity_L'
@@ -1066,7 +1016,7 @@ void controller_initialize(void)
    *  Outport: '<Root>/AMK_bErrorReset_L'
    *  Outport: '<Root>/AMK_bInverterOn_tx_L'
    */
-  controller_LEFT_MOTOR_Init(&controller_B.MI_motorStatus_n,
+  controller_LEFT_MOTOR_Init(&controller_B.MI_motorStatus_b,
     &controller_Y.AMK_bInverterOn_tx_L, &controller_Y.AMK_bDcOn_tx_L,
     &controller_Y.AMK_bEnable_L, &controller_Y.AMK_bErrorReset_L,
     &controller_Y.AMK_TargetVelocity_L, &controller_Y.AMK_TorqueLimitPositiv_L,
