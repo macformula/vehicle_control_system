@@ -7,9 +7,9 @@
  *
  * Code generated for Simulink model 'controller_autogen'.
  *
- * Model version                  : 1.22
+ * Model version                  : 1.26
  * Simulink Coder version         : 9.8 (R2022b) 13-May-2022
- * C/C++ source code generated on : Sun May 28 18:52:47 2023
+ * C/C++ source code generated on : Sun May 28 19:57:13 2023
  *
  * Target selection: ert.tlc
  * Embedded hardware selection: Intel->x86-64 (Windows64)
@@ -413,7 +413,8 @@ void controller_autogen_LEFT_MOTOR(MI_CMD rtu_GOV_e_miCmd, boolean_T
  */
 void controller_autogen_LEFT_LIMIT(real32_T rtu_motSpeed, real32_T
   rtu_magCurrent, real32_T rtu_DCbusVoltage, real32_T rtu_maxBatCurrent,
-  real32_T rtu_maxMotCurrent, real_T rtu_maxMotTorque, real32_T *rty_TorqueLimit)
+  real32_T rtu_maxMotCurrent, real32_T rtu_maxMotTorque, real32_T
+  *rty_TorqueLimit)
 {
   real32_T a;
   real32_T b_a;
@@ -421,8 +422,7 @@ void controller_autogen_LEFT_LIMIT(real32_T rtu_motSpeed, real32_T
   a = fminf(rtu_maxBatCurrent, rtu_maxMotCurrent);
   *rty_TorqueLimit = fmaxf(sqrtf(a * a - b_a * b_a), 0.0F) * rtu_DCbusVoltage /
     (fmaxf(rtu_motSpeed, 1.0F) * 3.14159274F / 30.0F);
-  *rty_TorqueLimit = fminf(fmaxf(*rty_TorqueLimit, 0.0F), (real32_T)
-    rtu_maxMotTorque);
+  *rty_TorqueLimit = fminf(fmaxf(*rty_TorqueLimit, 0.0F), rtu_maxMotTorque);
 }
 
 /* Model step function */
@@ -430,7 +430,7 @@ void controller_autogen_step(void)
 {
   real32_T rtb_Gain;
   real32_T rtb_TorqueLimit;
-  real32_T rtb_TorqueLimit_j;
+  real32_T rtb_TorqueLimit_l;
   boolean_T rtb_NOT_g;
   boolean_T rtb_NOT_j;
   boolean_T rtb_b_DriverInterfaceError;
@@ -455,7 +455,7 @@ void controller_autogen_step(void)
       break;
 
      case controller_autogen_IN_RUNNING:
-      if (controller_autogen_DW.Delay_DSTATE_f == ERR_STARTUP) {
+      if (controller_autogen_DW.Delay_DSTATE_f == ERR_RUNNING) {
         controller_autogen_DW.is_c3_governor_lib =
           controller_aut_IN_RUNNING_ERROR;
         controller_autogen_DW.is_RUNNING_ERROR = controller_auto_IN_HV_run_error;
@@ -758,7 +758,8 @@ void controller_autogen_step(void)
   controller_autogen_LEFT_LIMIT((real32_T)
     controller_autogen_U.AMK_ActualVelocity_L, (real32_T)
     controller_autogen_U.AMK_MagnetizingCurrent_L, 600.0F,
-    controller_autogen_ConstB.Gain4, 0.0F, 0.0, &rtb_TorqueLimit_j);
+    controller_autogen_ConstB.Gain4, controller_autogen_ConstB.CastToSingle6,
+    controller_autogen_ConstB.CastToSingle7, &rtb_TorqueLimit_l);
 
   /* MATLAB Function: '<S5>/RIGHT_LIMIT' incorporates:
    *  Constant: '<S5>/Vbat'
@@ -770,7 +771,8 @@ void controller_autogen_step(void)
   controller_autogen_LEFT_LIMIT((real32_T)
     controller_autogen_U.AMK_ActualVelocity_R, (real32_T)
     controller_autogen_U.AMK_MagnetizingCurrent_R, 600.0F,
-    controller_autogen_ConstB.Gain1, 0.0F, 0.0, &rtb_TorqueLimit);
+    controller_autogen_ConstB.Gain1, controller_autogen_ConstB.CastToSingle4,
+    controller_autogen_ConstB.CastToSingle5, &rtb_TorqueLimit);
 
   /* Switch: '<S2>/Switch2' incorporates:
    *  Constant: '<S2>/Constant1'
@@ -827,7 +829,7 @@ void controller_autogen_step(void)
     }
 
     rtb_Gain = 0.01F * look1_iflf_binlcpw(rtb_Gain,
-      controller_autogen_ConstP.pooled2, controller_autogen_ConstP.pooled2, 20U);
+      controller_autogen_ConstP.pooled3, controller_autogen_ConstP.pooled3, 20U);
   }
 
   /* End of Switch: '<S5>/Switch2' */
@@ -835,7 +837,7 @@ void controller_autogen_step(void)
   /* Product: '<S5>/Divide' incorporates:
    *  MinMax: '<S5>/T_globalTorqLimit'
    */
-  rtb_Gain *= fminf(rtb_TorqueLimit_j, rtb_TorqueLimit);
+  rtb_Gain *= fminf(rtb_TorqueLimit_l, rtb_TorqueLimit);
 
   /* Chart: '<S4>/RIGHT_MOTOR' incorporates:
    *  Constant: '<S5>/NegTorqueLimit'
@@ -858,7 +860,8 @@ void controller_autogen_step(void)
     controller_autogen_U.AMK_bSystemReady_R, controller_autogen_U.AMK_bError_R,
     controller_autogen_U.AMK_bQuitDcOn_R, controller_autogen_U.AMK_bDcOn_R,
     controller_autogen_U.AMK_bQuitInverterOn_R,
-    controller_autogen_U.AMK_bInverterOn_R, 0.0F, rtb_Gain, 0.0F,
+    controller_autogen_U.AMK_bInverterOn_R,
+    controller_autogen_ConstB.CastToSingle, rtb_Gain, 0.0F,
     &controller_autogen_B.MI_motorStatus,
     &controller_autogen_Y.AMK_bInverterOn_tx_R,
     &controller_autogen_Y.AMK_bDcOn_tx_R, &controller_autogen_Y.AMK_bEnable_R,
@@ -889,7 +892,8 @@ void controller_autogen_step(void)
     controller_autogen_U.AMK_bSystemReady_L, controller_autogen_U.AMK_bError_L,
     controller_autogen_U.AMK_bQuitDcOn_L, controller_autogen_U.AMK_bDcOn_L,
     controller_autogen_U.AMK_bQuitInverterOn_L,
-    controller_autogen_U.AMK_bInverterOn_L, 0.0F, rtb_Gain, 0.0F,
+    controller_autogen_U.AMK_bInverterOn_L,
+    controller_autogen_ConstB.CastToSingle3, rtb_Gain, 0.0F,
     &controller_autogen_B.MI_motorStatus_h,
     &controller_autogen_Y.AMK_bInverterOn_tx_L,
     &controller_autogen_Y.AMK_bDcOn_tx_L, &controller_autogen_Y.AMK_bEnable_L,

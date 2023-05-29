@@ -7,9 +7,9 @@
  *
  * Code generated for Simulink model 'controller_autogen'.
  *
- * Model version                  : 1.23
+ * Model version                  : 1.26
  * Simulink Coder version         : 9.8 (R2022b) 13-May-2022
- * C/C++ source code generated on : Sun May 28 18:59:42 2023
+ * C/C++ source code generated on : Sun May 28 19:57:56 2023
  *
  * Target selection: ert.tlc
  * Embedded hardware selection: Intel->x86-64 (Windows64)
@@ -30,6 +30,12 @@ const ConstB_controller_autogen_T controller_autogen_ConstB = {
   4095.0F,                             /* '<S13>/Data Type Conversion' */
   0.0F,                                /* '<S13>/Data Type Conversion2' */
   4095.0F,                             /* '<S20>/Subtract' */
+  18000.0F,                            /* '<S4>/Cast To Single' */
+  18000.0F,                            /* '<S4>/Cast To Single3' */
+  1000.0F,                             /* '<S5>/Cast To Single4' */
+  1000.0F,                             /* '<S5>/Cast To Single5' */
+  1000.0F,                             /* '<S5>/Cast To Single6' */
+  1000.0F,                             /* '<S5>/Cast To Single7' */
   50.0F,                               /* '<S5>/Gain1' */
   50.0F                                /* '<S5>/Gain4' */
 };

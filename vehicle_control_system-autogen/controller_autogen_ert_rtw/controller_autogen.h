@@ -7,9 +7,9 @@
  *
  * Code generated for Simulink model 'controller_autogen'.
  *
- * Model version                  : 1.23
+ * Model version                  : 1.26
  * Simulink Coder version         : 9.8 (R2022b) 13-May-2022
- * C/C++ source code generated on : Sun May 28 18:59:42 2023
+ * C/C++ source code generated on : Sun May 28 19:57:56 2023
  *
  * Target selection: ert.tlc
  * Embedded hardware selection: Intel->x86-64 (Windows64)
@@ -89,6 +89,12 @@ typedef struct {
   const real32_T DataTypeConversion_d; /* '<S13>/Data Type Conversion' */
   const real32_T DataTypeConversion2_b;/* '<S13>/Data Type Conversion2' */
   const real32_T range_i;              /* '<S20>/Subtract' */
+  const real32_T CastToSingle;         /* '<S4>/Cast To Single' */
+  const real32_T CastToSingle3;        /* '<S4>/Cast To Single3' */
+  const real32_T CastToSingle4;        /* '<S5>/Cast To Single4' */
+  const real32_T CastToSingle5;        /* '<S5>/Cast To Single5' */
+  const real32_T CastToSingle6;        /* '<S5>/Cast To Single6' */
+  const real32_T CastToSingle7;        /* '<S5>/Cast To Single7' */
   const real32_T Gain1;                /* '<S5>/Gain1' */
   const real32_T Gain4;                /* '<S5>/Gain4' */
 } ConstB_controller_autogen_T;
@@ -98,7 +104,7 @@ typedef struct {
   /* Pooled Parameter (Expression: [0 5 10 15 20 25 30 35 40 45 50 55 60 65 70 75 80 85 90 95 100])
    * Referenced by: '<S2>/AccelPedalPos1 LUT'
    */
-  real32_T pooled2[21];
+  real32_T pooled3[21];
 } ConstP_controller_autogen_T;
 
 /* External inputs (root inport signals with default storage) */
@@ -212,10 +218,8 @@ extern RT_MODEL_controller_autogen_T *const controller_autogen_M;
  * Block '<S31>/Constant' : Unused code path elimination
  * Block '<S5>/latAccel' : Unused code path elimination
  * Block '<S5>/longAccel' : Unused code path elimination
- * Block '<S4>/Cast To Single' : Eliminate redundant data type conversion
  * Block '<S4>/Cast To Single1' : Eliminate redundant data type conversion
  * Block '<S4>/Cast To Single2' : Eliminate redundant data type conversion
- * Block '<S4>/Cast To Single3' : Eliminate redundant data type conversion
  * Block '<S4>/Cast To Single4' : Eliminate redundant data type conversion
  * Block '<S4>/Cast To Single5' : Eliminate redundant data type conversion
  */

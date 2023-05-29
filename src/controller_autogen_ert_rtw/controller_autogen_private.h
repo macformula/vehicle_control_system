@@ -7,9 +7,9 @@
  *
  * Code generated for Simulink model 'controller_autogen'.
  *
- * Model version                  : 1.22
+ * Model version                  : 1.26
  * Simulink Coder version         : 9.8 (R2022b) 13-May-2022
- * C/C++ source code generated on : Sun May 28 18:52:47 2023
+ * C/C++ source code generated on : Sun May 28 19:57:13 2023
  *
  * Target selection: ert.tlc
  * Embedded hardware selection: Intel->x86-64 (Windows64)
@@ -41,7 +41,8 @@ extern void controller_autogen_LEFT_MOTOR(MI_CMD rtu_GOV_e_miCmd, boolean_T
   real32_T *rty_AMK_TorqueLimitNegativ, DW_LEFT_MOTOR_controller_auto_T *localDW);
 extern void controller_autogen_LEFT_LIMIT(real32_T rtu_motSpeed, real32_T
   rtu_magCurrent, real32_T rtu_DCbusVoltage, real32_T rtu_maxBatCurrent,
-  real32_T rtu_maxMotCurrent, real_T rtu_maxMotTorque, real32_T *rty_TorqueLimit);
+  real32_T rtu_maxMotCurrent, real32_T rtu_maxMotTorque, real32_T
+  *rty_TorqueLimit);
 
 #endif                            /* RTW_HEADER_controller_autogen_private_h_ */
 
