@@ -7,9 +7,9 @@
  *
  * Code generated for Simulink model 'controller_autogen'.
  *
- * Model version                  : 1.26
+ * Model version                  : 1.31
  * Simulink Coder version         : 9.8 (R2022b) 13-May-2022
- * C/C++ source code generated on : Sun May 28 19:57:56 2023
+ * C/C++ source code generated on : Sat Jun  3 19:31:01 2023
  *
  * Target selection: ert.tlc
  * Embedded hardware selection: Intel->x86-64 (Windows64)
@@ -27,6 +27,7 @@ typedef enum {
   UNKNOWN = 0,                         /* Default value */
   STS_INIT,
   STARTUP,
+  READY,
   RUNNING,
   SHUTDOWN,
   MI_STS_ERROR,

@@ -7,9 +7,9 @@
  *
  * Code generated for Simulink model 'controller_autogen'.
  *
- * Model version                  : 1.26
+ * Model version                  : 1.31
  * Simulink Coder version         : 9.8 (R2022b) 13-May-2022
- * C/C++ source code generated on : Sun May 28 19:57:56 2023
+ * C/C++ source code generated on : Sat Jun  3 19:31:01 2023
  *
  * Target selection: ert.tlc
  * Embedded hardware selection: Intel->x86-64 (Windows64)
@@ -80,7 +80,7 @@ int_T main(int_T argc, const char *argv[])
   controller_autogen_initialize();
 
   /* Attach rt_OneStep to a timer or interrupt service routine with
-   * period 0.2 seconds (base rate of the model) here.
+   * period 0.005 seconds (base rate of the model) here.
    * The call syntax for rt_OneStep is
    *
    *  rt_OneStep();

@@ -7,9 +7,9 @@
  *
  * Code generated for Simulink model 'controller_autogen'.
  *
- * Model version                  : 1.26
+ * Model version                  : 1.31
  * Simulink Coder version         : 9.8 (R2022b) 13-May-2022
- * C/C++ source code generated on : Sun May 28 19:57:56 2023
+ * C/C++ source code generated on : Sat Jun  3 19:31:01 2023
  *
  * Target selection: ert.tlc
  * Embedded hardware selection: Intel->x86-64 (Windows64)
@@ -33,16 +33,13 @@ extern void controller_auto_LEFT_MOTOR_Init(MI_STATUSES *rty_MI_motorStatus,
 extern void controller_autogen_LEFT_MOTOR(MI_CMD rtu_GOV_e_miCmd, boolean_T
   rtu_AMK_bSystemReady, boolean_T rtu_AMK_bError, boolean_T rtu_AMK_bQuitDcOn,
   boolean_T rtu_AMK_bDcOn_rx, boolean_T rtu_AMK_bQuitInverterOn, boolean_T
-  rtu_AMK_bInverterOn_rx, real32_T rtu_VD_T_motorSpeedRequest, real32_T
-  rtu_VD_T_motorTorqueLimitPositi, real32_T rtu_VD_T_motorTorqueLimitNegati,
-  MI_STATUSES *rty_MI_motorStatus, uint8_T *rty_AMK_bInverterOn_tx, uint8_T
-  *rty_AMK_bDcOn_tx, uint8_T *rty_AMK_bEnable, uint8_T *rty_AMK_bErrorReset,
-  real32_T *rty_AMK_TargetVelocity, real32_T *rty_AMK_TorqueLimitPositiv,
-  real32_T *rty_AMK_TorqueLimitNegativ, DW_LEFT_MOTOR_controller_auto_T *localDW);
-extern void controller_autogen_LEFT_LIMIT(real32_T rtu_motSpeed, real32_T
-  rtu_magCurrent, real32_T rtu_DCbusVoltage, real32_T rtu_maxBatCurrent,
-  real32_T rtu_maxMotCurrent, real32_T rtu_maxMotTorque, real32_T
-  *rty_TorqueLimit);
+  rtu_AMK_bInverterOn_rx, boolean_T rtu_AMK_bDerating, real32_T
+  rtu_VD_T_motorSpeedRequest, real32_T rtu_VD_T_motorTorqueLimitPositi, real32_T
+  rtu_VD_T_motorTorqueLimitNegati, MI_STATUSES *rty_MI_motorStatus, uint8_T
+  *rty_AMK_bInverterOn_tx, uint8_T *rty_AMK_bDcOn_tx, uint8_T *rty_AMK_bEnable,
+  uint8_T *rty_AMK_bErrorReset, real32_T *rty_AMK_TargetVelocity, real32_T
+  *rty_AMK_TorqueLimitPositiv, real32_T *rty_AMK_TorqueLimitNegativ,
+  DW_LEFT_MOTOR_controller_auto_T *localDW);
 
 #endif                            /* RTW_HEADER_controller_autogen_private_h_ */
 
