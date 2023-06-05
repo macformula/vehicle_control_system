@@ -7,9 +7,9 @@
  *
  * Code generated for Simulink model 'controller_autogen'.
  *
- * Model version                  : 1.31
+ * Model version                  : 1.32
  * Simulink Coder version         : 9.8 (R2022b) 13-May-2022
- * C/C++ source code generated on : Sat Jun  3 19:31:01 2023
+ * C/C++ source code generated on : Mon Jun  5 15:50:00 2023
  *
  * Target selection: ert.tlc
  * Embedded hardware selection: Intel->x86-64 (Windows64)
@@ -86,15 +86,15 @@ typedef struct {
 
 /* Invariant block signals (default storage) */
 typedef struct {
-  const real32_T DataTypeConversion;   /* '<S12>/Data Type Conversion' */
-  const real32_T DataTypeConversion2;  /* '<S12>/Data Type Conversion2' */
-  const real32_T range;                /* '<S17>/Subtract' */
-  const real32_T DataTypeConversion_i; /* '<S13>/Data Type Conversion' */
-  const real32_T DataTypeConversion2_e;/* '<S13>/Data Type Conversion2' */
-  const real32_T range_l;              /* '<S19>/Subtract' */
-  const real32_T DataTypeConversion_d; /* '<S14>/Data Type Conversion' */
-  const real32_T DataTypeConversion2_b;/* '<S14>/Data Type Conversion2' */
-  const real32_T range_i;              /* '<S21>/Subtract' */
+  const real32_T DataTypeConversion;   /* '<S13>/Data Type Conversion' */
+  const real32_T DataTypeConversion2;  /* '<S13>/Data Type Conversion2' */
+  const real32_T range;                /* '<S18>/Subtract' */
+  const real32_T DataTypeConversion_i; /* '<S14>/Data Type Conversion' */
+  const real32_T DataTypeConversion2_e;/* '<S14>/Data Type Conversion2' */
+  const real32_T range_l;              /* '<S20>/Subtract' */
+  const real32_T DataTypeConversion_d; /* '<S15>/Data Type Conversion' */
+  const real32_T DataTypeConversion2_b;/* '<S15>/Data Type Conversion2' */
+  const real32_T range_i;              /* '<S22>/Subtract' */
   const real32_T CastToSingle;         /* '<S4>/Cast To Single' */
   const real32_T CastToSingle2;        /* '<S4>/Cast To Single2' */
   const real32_T CastToSingle3;        /* '<S4>/Cast To Single3' */
@@ -108,7 +108,7 @@ typedef struct {
    *   '<S2>/AccelPedalPos1 LUT'
    *   '<S2>/BrakePedalPos1 LUT1'
    */
-  real32_T pooled8[21];
+  real32_T pooled9[21];
 } ConstP_controller_autogen_T;
 
 /* External inputs (root inport signals with default storage) */
@@ -214,17 +214,17 @@ extern RT_MODEL_controller_autogen_T *const controller_autogen_M;
  *
  * Block '<S2>/Constant2' : Unused code path elimination
  * Block '<S2>/Switch1' : Unused code path elimination
- * Block '<S16>/FixPt Data Type Duplicate' : Unused code path elimination
- * Block '<S18>/FixPt Data Type Duplicate' : Unused code path elimination
- * Block '<S20>/FixPt Data Type Duplicate' : Unused code path elimination
- * Block '<S15>/Data Type Conversion' : Unused code path elimination
- * Block '<S15>/Data Type Conversion1' : Unused code path elimination
- * Block '<S15>/Data Type Conversion2' : Unused code path elimination
- * Block '<S22>/FixPt Data Type Duplicate' : Unused code path elimination
- * Block '<S23>/Divide' : Unused code path elimination
- * Block '<S23>/Gain' : Unused code path elimination
- * Block '<S23>/Subtract' : Unused code path elimination
- * Block '<S23>/Subtract1' : Unused code path elimination
+ * Block '<S17>/FixPt Data Type Duplicate' : Unused code path elimination
+ * Block '<S19>/FixPt Data Type Duplicate' : Unused code path elimination
+ * Block '<S21>/FixPt Data Type Duplicate' : Unused code path elimination
+ * Block '<S16>/Data Type Conversion' : Unused code path elimination
+ * Block '<S16>/Data Type Conversion1' : Unused code path elimination
+ * Block '<S16>/Data Type Conversion2' : Unused code path elimination
+ * Block '<S23>/FixPt Data Type Duplicate' : Unused code path elimination
+ * Block '<S24>/Divide' : Unused code path elimination
+ * Block '<S24>/Gain' : Unused code path elimination
+ * Block '<S24>/Subtract' : Unused code path elimination
+ * Block '<S24>/Subtract1' : Unused code path elimination
  */
 
 /*-
@@ -249,26 +249,27 @@ extern RT_MODEL_controller_autogen_T *const controller_autogen_M;
  * '<S5>'   : 'controller_autogen/simp_vd_interface'
  * '<S6>'   : 'controller_autogen/battery_monitor/Chart'
  * '<S7>'   : 'controller_autogen/battery_monitor/Chart1'
- * '<S8>'   : 'controller_autogen/driver_interface/Chart'
- * '<S9>'   : 'controller_autogen/driver_interface/If Action Subsystem'
- * '<S10>'  : 'controller_autogen/driver_interface/If Action Subsystem1'
- * '<S11>'  : 'controller_autogen/driver_interface/If Action Subsystem2'
- * '<S12>'  : 'controller_autogen/driver_interface/potentiometerProcessing'
- * '<S13>'  : 'controller_autogen/driver_interface/potentiometerProcessing1'
- * '<S14>'  : 'controller_autogen/driver_interface/potentiometerProcessing2'
- * '<S15>'  : 'controller_autogen/driver_interface/potentiometerProcessing3'
- * '<S16>'  : 'controller_autogen/driver_interface/potentiometerProcessing/Interval Test Dynamic'
- * '<S17>'  : 'controller_autogen/driver_interface/potentiometerProcessing/convertToPercent'
- * '<S18>'  : 'controller_autogen/driver_interface/potentiometerProcessing1/Interval Test Dynamic'
- * '<S19>'  : 'controller_autogen/driver_interface/potentiometerProcessing1/convertToPercent'
- * '<S20>'  : 'controller_autogen/driver_interface/potentiometerProcessing2/Interval Test Dynamic'
- * '<S21>'  : 'controller_autogen/driver_interface/potentiometerProcessing2/convertToPercent'
- * '<S22>'  : 'controller_autogen/driver_interface/potentiometerProcessing3/Interval Test Dynamic'
- * '<S23>'  : 'controller_autogen/driver_interface/potentiometerProcessing3/convertToPercent'
- * '<S24>'  : 'controller_autogen/governor/Chart'
- * '<S25>'  : 'controller_autogen/motor_interface/LEFT_MOTOR'
- * '<S26>'  : 'controller_autogen/motor_interface/RIGHT_MOTOR'
- * '<S27>'  : 'controller_autogen/simp_vd_interface/Chart'
+ * '<S8>'   : 'controller_autogen/driver_interface/Accelerator plausibility check'
+ * '<S9>'   : 'controller_autogen/driver_interface/Chart'
+ * '<S10>'  : 'controller_autogen/driver_interface/If Action Subsystem'
+ * '<S11>'  : 'controller_autogen/driver_interface/If Action Subsystem1'
+ * '<S12>'  : 'controller_autogen/driver_interface/If Action Subsystem2'
+ * '<S13>'  : 'controller_autogen/driver_interface/potentiometerProcessing'
+ * '<S14>'  : 'controller_autogen/driver_interface/potentiometerProcessing1'
+ * '<S15>'  : 'controller_autogen/driver_interface/potentiometerProcessing2'
+ * '<S16>'  : 'controller_autogen/driver_interface/potentiometerProcessing3'
+ * '<S17>'  : 'controller_autogen/driver_interface/potentiometerProcessing/Interval Test Dynamic'
+ * '<S18>'  : 'controller_autogen/driver_interface/potentiometerProcessing/convertToPercent'
+ * '<S19>'  : 'controller_autogen/driver_interface/potentiometerProcessing1/Interval Test Dynamic'
+ * '<S20>'  : 'controller_autogen/driver_interface/potentiometerProcessing1/convertToPercent'
+ * '<S21>'  : 'controller_autogen/driver_interface/potentiometerProcessing2/Interval Test Dynamic'
+ * '<S22>'  : 'controller_autogen/driver_interface/potentiometerProcessing2/convertToPercent'
+ * '<S23>'  : 'controller_autogen/driver_interface/potentiometerProcessing3/Interval Test Dynamic'
+ * '<S24>'  : 'controller_autogen/driver_interface/potentiometerProcessing3/convertToPercent'
+ * '<S25>'  : 'controller_autogen/governor/Chart'
+ * '<S26>'  : 'controller_autogen/motor_interface/LEFT_MOTOR'
+ * '<S27>'  : 'controller_autogen/motor_interface/RIGHT_MOTOR'
+ * '<S28>'  : 'controller_autogen/simp_vd_interface/Chart'
  */
 #endif                                 /* RTW_HEADER_controller_autogen_h_ */
 

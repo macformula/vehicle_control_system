@@ -7,9 +7,9 @@
  *
  * Code generated for Simulink model 'controller_autogen'.
  *
- * Model version                  : 1.31
+ * Model version                  : 1.32
  * Simulink Coder version         : 9.8 (R2022b) 13-May-2022
- * C/C++ source code generated on : Sat Jun  3 19:31:01 2023
+ * C/C++ source code generated on : Mon Jun  5 15:50:00 2023
  *
  * Target selection: ert.tlc
  * Embedded hardware selection: Intel->x86-64 (Windows64)
@@ -21,6 +21,7 @@
 #include "controller_autogen_types.h"
 #include "rtwtypes.h"
 #include "controller_autogen_private.h"
+#include <math.h>
 
 /* Named constants for Chart: '<S4>/LEFT_MOTOR' */
 #define contr_IN_enforceSetpointsZero_p ((uint8_T)1U)
@@ -389,8 +390,9 @@ void controller_autogen_step(void)
 {
   real_T rtb_Gain;
   int32_T rtb_Switch;
-  real32_T rtb_AccelPedalPos1LUT;
+  real32_T rtb_Gain_c;
   real32_T rtb_Gain_o;
+  real32_T rtb_Gain_ps;
   boolean_T rtb_NOT_g;
   boolean_T rtb_NOT_j;
   boolean_T rtb_b_DriverInterfaceError;
@@ -550,56 +552,81 @@ void controller_autogen_step(void)
 
   /* End of Chart: '<S3>/Chart' */
 
-  /* Logic: '<S12>/NOT' incorporates:
-   *  Constant: '<S12>/LowerPotentiometerLimit1'
-   *  Constant: '<S12>/UpperPotentiometerLimit1'
+  /* Logic: '<S13>/NOT' incorporates:
+   *  Constant: '<S13>/LowerPotentiometerLimit1'
+   *  Constant: '<S13>/UpperPotentiometerLimit1'
    *  Inport: '<Root>/DI_V_AccelPedalPos1'
-   *  Logic: '<S16>/FixPt Logical Operator'
-   *  RelationalOperator: '<S16>/Lower Test'
-   *  RelationalOperator: '<S16>/Upper Test'
+   *  Logic: '<S17>/FixPt Logical Operator'
+   *  RelationalOperator: '<S17>/Lower Test'
+   *  RelationalOperator: '<S17>/Upper Test'
    */
   rtb_NOT_g = ((!(controller_autogen_U.DI_V_AccelPedalPos1 >= 0.0)) ||
                (!(controller_autogen_U.DI_V_AccelPedalPos1 <= 4095.0)));
 
-  /* Logic: '<S14>/NOT' incorporates:
-   *  Constant: '<S14>/LowerPotentiometerLimit1'
-   *  Constant: '<S14>/UpperPotentiometerLimit1'
+  /* Logic: '<S15>/NOT' incorporates:
+   *  Constant: '<S15>/LowerPotentiometerLimit1'
+   *  Constant: '<S15>/UpperPotentiometerLimit1'
    *  Inport: '<Root>/DI_V_BrakePedalPos'
-   *  Logic: '<S20>/FixPt Logical Operator'
-   *  RelationalOperator: '<S20>/Lower Test'
-   *  RelationalOperator: '<S20>/Upper Test'
+   *  Logic: '<S21>/FixPt Logical Operator'
+   *  RelationalOperator: '<S21>/Lower Test'
+   *  RelationalOperator: '<S21>/Upper Test'
    */
   rtb_NOT_j = ((!(controller_autogen_U.DI_V_BrakePedalPos >= 0.0)) ||
                (!(controller_autogen_U.DI_V_BrakePedalPos <= 4095.0)));
 
+  /* Gain: '<S18>/Gain' incorporates:
+   *  DataTypeConversion: '<S13>/Data Type Conversion1'
+   *  Inport: '<Root>/DI_V_AccelPedalPos1'
+   *  Product: '<S18>/Divide'
+   *  Sum: '<S18>/Subtract1'
+   */
+  rtb_Gain_c = ((real32_T)controller_autogen_U.DI_V_AccelPedalPos1 -
+                controller_autogen_ConstB.DataTypeConversion2) /
+    controller_autogen_ConstB.range * 100.0F;
+
+  /* Gain: '<S20>/Gain' incorporates:
+   *  DataTypeConversion: '<S14>/Data Type Conversion1'
+   *  Inport: '<Root>/DI_V_AccelPedalPos2'
+   *  Product: '<S20>/Divide'
+   *  Sum: '<S20>/Subtract1'
+   */
+  rtb_Gain_ps = ((real32_T)controller_autogen_U.DI_V_AccelPedalPos2 -
+                 controller_autogen_ConstB.DataTypeConversion2_e) /
+    controller_autogen_ConstB.range_l * 100.0F;
+
   /* Logic: '<S2>/b_DriverInterfaceError' incorporates:
-   *  Constant: '<S13>/LowerPotentiometerLimit1'
-   *  Constant: '<S13>/UpperPotentiometerLimit1'
-   *  Constant: '<S15>/LowerPotentiometerLimit1'
-   *  Constant: '<S15>/UpperPotentiometerLimit1'
+   *  Abs: '<S8>/Abs'
+   *  Constant: '<S14>/LowerPotentiometerLimit1'
+   *  Constant: '<S14>/UpperPotentiometerLimit1'
+   *  Constant: '<S16>/LowerPotentiometerLimit1'
+   *  Constant: '<S16>/UpperPotentiometerLimit1'
+   *  Constant: '<S8>/Constant'
    *  Inport: '<Root>/DI_V_AccelPedalPos2'
    *  Inport: '<Root>/DI_V_SteeringAngle'
-   *  Logic: '<S13>/NOT'
-   *  Logic: '<S15>/NOT'
-   *  Logic: '<S18>/FixPt Logical Operator'
-   *  Logic: '<S22>/FixPt Logical Operator'
+   *  Logic: '<S14>/NOT'
+   *  Logic: '<S16>/NOT'
+   *  Logic: '<S19>/FixPt Logical Operator'
+   *  Logic: '<S23>/FixPt Logical Operator'
    *  Logic: '<S2>/AND'
-   *  RelationalOperator: '<S18>/Lower Test'
-   *  RelationalOperator: '<S18>/Upper Test'
-   *  RelationalOperator: '<S22>/Lower Test'
-   *  RelationalOperator: '<S22>/Upper Test'
+   *  RelationalOperator: '<S19>/Lower Test'
+   *  RelationalOperator: '<S19>/Upper Test'
+   *  RelationalOperator: '<S23>/Lower Test'
+   *  RelationalOperator: '<S23>/Upper Test'
+   *  RelationalOperator: '<S8>/GreaterThan'
+   *  Sum: '<S8>/Subtract'
    */
-  rtb_b_DriverInterfaceError = ((rtb_NOT_g &&
+  rtb_b_DriverInterfaceError = (rtb_NOT_g ||
     ((!(controller_autogen_U.DI_V_AccelPedalPos2 >= 0.0)) ||
-     (!(controller_autogen_U.DI_V_AccelPedalPos2 <= 4095.0)))) || rtb_NOT_j ||
-    ((!(controller_autogen_U.DI_V_SteeringAngle >= 0.0)) ||
-     (!(controller_autogen_U.DI_V_SteeringAngle <= 4095.0))));
+     (!(controller_autogen_U.DI_V_AccelPedalPos2 <= 4095.0))) || rtb_NOT_j || ((
+    !(controller_autogen_U.DI_V_SteeringAngle >= 0.0)) ||
+    (!(controller_autogen_U.DI_V_SteeringAngle <= 4095.0))) || (fabsf(rtb_Gain_c
+    - rtb_Gain_ps) > 10.0F));
 
-  /* Gain: '<S21>/Gain' incorporates:
-   *  DataTypeConversion: '<S14>/Data Type Conversion1'
+  /* Gain: '<S22>/Gain' incorporates:
+   *  DataTypeConversion: '<S15>/Data Type Conversion1'
    *  Inport: '<Root>/DI_V_BrakePedalPos'
-   *  Product: '<S21>/Divide'
-   *  Sum: '<S21>/Subtract1'
+   *  Product: '<S22>/Divide'
+   *  Sum: '<S22>/Subtract1'
    */
   rtb_Gain_o = ((real32_T)controller_autogen_U.DI_V_BrakePedalPos -
                 controller_autogen_ConstB.DataTypeConversion2_b) /
@@ -787,40 +814,29 @@ void controller_autogen_step(void)
 
   /* If: '<S2>/If' incorporates:
    *  Constant: '<S2>/Constant'
-   *  DataTypeConversion: '<S12>/Data Type Conversion1'
-   *  DataTypeConversion: '<S13>/Data Type Conversion1'
-   *  Gain: '<S17>/Gain'
-   *  Gain: '<S19>/Gain'
-   *  Inport: '<Root>/DI_V_AccelPedalPos1'
-   *  Inport: '<Root>/DI_V_AccelPedalPos2'
    *  Logic: '<S2>/NOT'
    *  Logic: '<S2>/OR1'
    *  Lookup_n-D: '<S2>/AccelPedalPos1 LUT'
-   *  Product: '<S17>/Divide'
-   *  Product: '<S19>/Divide'
-   *  SignalConversion generated from: '<S9>/In1'
-   *  Sum: '<S17>/Subtract1'
-   *  Sum: '<S19>/Subtract1'
+   *  SignalConversion generated from: '<S10>/In1'
    */
   if ((!controller_autogen_B.b_ReadyToDrive) || rtb_b_DriverInterfaceError) {
     /* Outputs for IfAction SubSystem: '<S2>/If Action Subsystem' incorporates:
-     *  ActionPort: '<S9>/Action Port'
+     *  ActionPort: '<S10>/Action Port'
      */
-    rtb_AccelPedalPos1LUT = 0.0F;
+    rtb_Gain_c = 0.0F;
 
     /* End of Outputs for SubSystem: '<S2>/If Action Subsystem' */
   } else if (rtb_NOT_g) {
-    rtb_AccelPedalPos1LUT = ((real32_T)controller_autogen_U.DI_V_AccelPedalPos2
-      - controller_autogen_ConstB.DataTypeConversion2_e) /
-      controller_autogen_ConstB.range_l * 100.0F;
-  } else {
-    rtb_AccelPedalPos1LUT = ((real32_T)controller_autogen_U.DI_V_AccelPedalPos1
-      - controller_autogen_ConstB.DataTypeConversion2) /
-      controller_autogen_ConstB.range * 100.0F;
+    /* Outputs for IfAction SubSystem: '<S2>/If Action Subsystem2' incorporates:
+     *  ActionPort: '<S12>/Action Port'
+     */
+    rtb_Gain_c = rtb_Gain_ps;
+
+    /* End of Outputs for SubSystem: '<S2>/If Action Subsystem2' */
   }
 
-  rtb_AccelPedalPos1LUT = look1_iflf_binlcpw(rtb_AccelPedalPos1LUT,
-    controller_autogen_ConstP.pooled8, controller_autogen_ConstP.pooled8, 20U);
+  rtb_Gain_c = look1_iflf_binlcpw(rtb_Gain_c, controller_autogen_ConstP.pooled9,
+    controller_autogen_ConstP.pooled9, 20U);
 
   /* End of If: '<S2>/If' */
 
@@ -834,8 +850,8 @@ void controller_autogen_step(void)
   /* Lookup_n-D: '<S2>/BrakePedalPos1 LUT1' incorporates:
    *  Switch: '<S2>/Switch2'
    */
-  rtb_Gain_o = look1_iflf_binlcpw(rtb_Gain_o, controller_autogen_ConstP.pooled8,
-    controller_autogen_ConstP.pooled8, 20U);
+  rtb_Gain_o = look1_iflf_binlcpw(rtb_Gain_o, controller_autogen_ConstP.pooled9,
+    controller_autogen_ConstP.pooled9, 20U);
 
   /* Switch: '<S5>/Switch' */
   rtb_Switch = (rtb_Gain_o > 10.0F);
@@ -846,17 +862,17 @@ void controller_autogen_step(void)
     controller_autogen_DW.is_c3_controller_autogen = controller_autogen_IN_Run;
   } else if (controller_autogen_DW.is_c3_controller_autogen ==
              controller_autogen_IN_Run) {
-    if ((rtb_AccelPedalPos1LUT >= 20.0F) && (rtb_Switch != 0)) {
+    if ((rtb_Gain_c >= 20.0F) && (rtb_Switch != 0)) {
       controller_autogen_DW.is_c3_controller_autogen =
         controller_autogen_IN_Stop;
-      rtb_AccelPedalPos1LUT = 0.0F;
+      rtb_Gain_c = 0.0F;
     }
 
     /* case IN_Stop: */
-  } else if ((rtb_AccelPedalPos1LUT < 5.0F) && (rtb_Switch == 0)) {
+  } else if ((rtb_Gain_c < 5.0F) && (rtb_Switch == 0)) {
     controller_autogen_DW.is_c3_controller_autogen = controller_autogen_IN_Run;
   } else {
-    rtb_AccelPedalPos1LUT = 0.0F;
+    rtb_Gain_c = 0.0F;
   }
 
   /* End of Chart: '<S5>/Chart' */
@@ -865,7 +881,7 @@ void controller_autogen_step(void)
    *  Constant: '<S5>/Constant6'
    *  Product: '<S5>/Divide'
    */
-  rtb_Gain = rtb_AccelPedalPos1LUT / 100.0 * 500.0;
+  rtb_Gain = rtb_Gain_c / 100.0 * 500.0;
 
   /* Chart: '<S4>/RIGHT_MOTOR' incorporates:
    *  DataTypeConversion: '<S4>/Cast To Single1'
