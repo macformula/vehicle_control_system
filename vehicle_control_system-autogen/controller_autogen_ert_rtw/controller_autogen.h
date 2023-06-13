@@ -9,7 +9,7 @@
  *
  * Model version                  : 1.32
  * Simulink Coder version         : 9.8 (R2022b) 13-May-2022
- * C/C++ source code generated on : Mon Jun  5 15:50:00 2023
+ * C/C++ source code generated on : Mon Jun 12 20:39:00 2023
  *
  * Target selection: ert.tlc
  * Embedded hardware selection: Intel->x86-64 (Windows64)
@@ -51,6 +51,7 @@ typedef struct {
   MI_CMD GOV_e_miCmd;                  /* '<S3>/Chart' */
   DI_STATUSES GOV_e_diSts;             /* '<S2>/Chart' */
   DI_CMD GOV_e_diCmd;                  /* '<S3>/Chart' */
+  uint8_T GOV_e_bmCmd;                 /* '<S3>/Chart' */
   boolean_T b_ReadyToDrive;            /* '<S2>/Chart' */
 } B_controller_autogen_T;
 
@@ -116,12 +117,12 @@ typedef struct {
   boolean_T AMK_bReserve_R;            /* '<Root>/AMK_bReserve_R' */
   real_T DI_V_SteeringAngle;           /* '<Root>/DI_V_SteeringAngle' */
   real_T DI_V_BrakePedalPos;           /* '<Root>/DI_V_BrakePedalPos' */
-  real_T DI_b_DriverButton;            /* '<Root>/DI_b_DriverButton' */
+  boolean_T DI_b_DriverButton;         /* '<Root>/DI_b_DriverButton' */
   real_T DI_V_AccelPedalPos1;          /* '<Root>/DI_V_AccelPedalPos1' */
   real_T DI_V_AccelPedalPos2;          /* '<Root>/DI_V_AccelPedalPos2' */
-  real_T BM_b_prechrgContactorSts;     /* '<Root>/BM_b_prechrgContactorSts' */
-  real_T BM_b_HVposContactorSts;       /* '<Root>/BM_b_HVposContactorSts' */
-  real_T BM_b_HVnegContactorSts;       /* '<Root>/BM_b_HVnegContactorSts' */
+  boolean_T BM_b_prechrgContactorSts;  /* '<Root>/BM_b_prechrgContactorSts' */
+  boolean_T BM_b_HVposContactorSts;    /* '<Root>/BM_b_HVposContactorSts' */
+  boolean_T BM_b_HVnegContactorSts;    /* '<Root>/BM_b_HVnegContactorSts' */
   boolean_T AMK_bSystemReady_R;        /* '<Root>/AMK_bSystemReady_R' */
   boolean_T AMK_bError_R;              /* '<Root>/AMK_bError_R' */
   boolean_T AMK_bWarn_R;               /* '<Root>/AMK_bWarn_R' */

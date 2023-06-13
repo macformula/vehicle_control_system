@@ -9,7 +9,7 @@
  *
  * Model version                  : 1.32
  * Simulink Coder version         : 9.8 (R2022b) 13-May-2022
- * C/C++ source code generated on : Mon Jun  5 15:50:00 2023
+ * C/C++ source code generated on : Mon Jun 12 20:39:00 2023
  *
  * Target selection: ert.tlc
  * Embedded hardware selection: Intel->x86-64 (Windows64)
@@ -58,7 +58,7 @@
 /* Named constants for Chart: '<S1>/Chart1' */
 #define controller_a_IN_Close_precharge ((uint8_T)3U)
 #define controller_au_IN_Open_precharge ((uint8_T)4U)
-#define controller_autog_IN_Close_HVneg ((uint8_T)1U)
+#define controller_auto_IN_Close_HVneg1 ((uint8_T)1U)
 #define controller_autog_IN_Close_HVpos ((uint8_T)2U)
 #define controller_autoge_IN_StartupCMD ((uint8_T)5U)
 
@@ -405,12 +405,14 @@ void controller_autogen_step(void)
   if (controller_autogen_DW.is_active_c1_governor_lib == 0U) {
     controller_autogen_DW.is_active_c1_governor_lib = 1U;
     controller_autogen_DW.is_c1_governor_lib = controlle_IN_Initialize_outputs;
+    controller_autogen_B.GOV_e_bmCmd = 0U;
     controller_autogen_B.GOV_e_miCmd = CMD_INIT;
     controller_autogen_B.GOV_e_diCmd = DI_CMD_INIT;
     controller_autogen_DW.motorStartCount = 0U;
   } else {
     switch (controller_autogen_DW.is_c1_governor_lib) {
      case controlle_IN_Initialize_outputs:
+      controller_autogen_B.GOV_e_bmCmd = 0U;
       controller_autogen_B.GOV_e_diCmd = DI_CMD_INIT;
       controller_autogen_DW.is_c1_governor_lib = controller_autogen_IN_STARTUP;
       controller_autogen_DW.is_STARTUP = controller_autoge_IN_HV_startup;
@@ -435,6 +437,7 @@ void controller_autogen_step(void)
          case OFF:
           controller_autogen_DW.is_c1_governor_lib =
             controlle_IN_Initialize_outputs;
+          controller_autogen_B.GOV_e_bmCmd = 0U;
           controller_autogen_B.GOV_e_miCmd = CMD_INIT;
           controller_autogen_B.GOV_e_diCmd = DI_CMD_INIT;
           controller_autogen_DW.motorStartCount = 0U;
@@ -635,8 +638,9 @@ void controller_autogen_step(void)
   /* Chart: '<S2>/Chart' incorporates:
    *  Delay: '<S2>/Delay1'
    *  Inport: '<Root>/DI_b_DriverButton'
+   *  Logic: '<S2>/NOT1'
    */
-  if (controller_autogen_DW.temporalCounter_i1 < 511U) {
+  if (controller_autogen_DW.temporalCounter_i1 < 2047U) {
     controller_autogen_DW.temporalCounter_i1++;
   }
 
@@ -644,6 +648,7 @@ void controller_autogen_step(void)
     controller_autogen_DW.is_active_c1_driver_interface_l = 1U;
     controller_autogen_DW.is_c1_driver_interface_lib =
       controller_autogen_IN_INIT;
+    controller_autogen_DW.temporalCounter_i1 = 0U;
     controller_autogen_B.GOV_e_diSts = DI_STS_INIT;
     controller_autogen_B.b_ReadyToDrive = false;
 
@@ -734,6 +739,7 @@ void controller_autogen_step(void)
               controller_IN_NO_ACTIVE_CHILD_o;
             controller_autogen_DW.is_c1_driver_interface_lib =
               controller_autogen_IN_INIT;
+            controller_autogen_DW.temporalCounter_i1 = 0U;
             controller_autogen_B.GOV_e_diSts = DI_STS_INIT;
             controller_autogen_B.b_ReadyToDrive = false;
 
@@ -772,7 +778,7 @@ void controller_autogen_step(void)
 
           /* Outport: '<Root>/DI_p_PWMstatusLightFreq' */
           controller_autogen_Y.DI_p_PWMstatusLightFreq = 1.0;
-          if (controller_autogen_U.DI_b_DriverButton == 1.0) {
+          if (!controller_autogen_U.DI_b_DriverButton) {
             controller_autogen_DW.is_DI_running =
               contr_IN_Driver_requested_start;
             controller_autogen_B.GOV_e_diSts = DRV_START_REQ;
@@ -786,20 +792,26 @@ void controller_autogen_step(void)
       break;
 
      case controller_autogen_IN_INIT:
+      controller_autogen_B.GOV_e_diSts = DI_STS_INIT;
       controller_autogen_B.b_ReadyToDrive = false;
 
       /* Outport: '<Root>/DI_b_driverSpeaker' */
       controller_autogen_Y.DI_b_driverSpeaker = false;
-      controller_autogen_DW.is_c1_driver_interface_lib =
-        controller_autoge_IN_DI_running;
-      controller_autogen_DW.is_DI_running = controlle_IN_Waiting_for_driver;
-      controller_autogen_B.GOV_e_diSts = WAITING_FOR_DRVR;
 
       /* Outport: '<Root>/DI_p_PWMstatusLightCycle' */
-      controller_autogen_Y.DI_p_PWMstatusLightCycle = 50.0;
+      controller_autogen_Y.DI_p_PWMstatusLightCycle = 0.0;
 
       /* Outport: '<Root>/DI_p_PWMstatusLightFreq' */
       controller_autogen_Y.DI_p_PWMstatusLightFreq = 1.0;
+      if (controller_autogen_DW.temporalCounter_i1 >= 2000U) {
+        controller_autogen_DW.is_c1_driver_interface_lib =
+          controller_autoge_IN_DI_running;
+        controller_autogen_DW.is_DI_running = controlle_IN_Waiting_for_driver;
+        controller_autogen_B.GOV_e_diSts = WAITING_FOR_DRVR;
+
+        /* Outport: '<Root>/DI_p_PWMstatusLightCycle' */
+        controller_autogen_Y.DI_p_PWMstatusLightCycle = 50.0;
+      }
       break;
 
      default:
@@ -949,11 +961,23 @@ void controller_autogen_step(void)
     &controller_autogen_Y.AMK_TorqueLimitNegativ_L,
     &controller_autogen_DW.sf_LEFT_MOTOR);
 
+  /* Logic: '<S1>/NOT' incorporates:
+   *  Inport: '<Root>/BM_b_prechrgContactorSts'
+   */
+  rtb_NOT_g = !controller_autogen_U.BM_b_prechrgContactorSts;
+
+  /* Logic: '<S1>/NOT1' incorporates:
+   *  Inport: '<Root>/BM_b_HVposContactorSts'
+   */
+  rtb_NOT_j = !controller_autogen_U.BM_b_HVposContactorSts;
+
+  /* Logic: '<S1>/NOT2' incorporates:
+   *  Inport: '<Root>/BM_b_HVnegContactorSts'
+   */
+  rtb_b_DriverInterfaceError = !controller_autogen_U.BM_b_HVnegContactorSts;
+
   /* Chart: '<S1>/Chart' incorporates:
    *  Delay: '<S3>/Delay'
-   *  Inport: '<Root>/BM_b_HVnegContactorSts'
-   *  Inport: '<Root>/BM_b_HVposContactorSts'
-   *  Inport: '<Root>/BM_b_prechrgContactorSts'
    */
   if (controller_autogen_DW.temporalCounter_i1_g < 32767U) {
     controller_autogen_DW.temporalCounter_i1_g++;
@@ -991,34 +1015,33 @@ void controller_autogen_step(void)
       break;
 
      case controller_auto_IN_InitialState:
-      controller_autogen_DW.Delay_DSTATE_f = BM_INIT;
-      if ((controller_autogen_U.BM_b_prechrgContactorSts == 0.0) &&
-          (controller_autogen_U.BM_b_HVnegContactorSts == 0.0) &&
-          (controller_autogen_U.BM_b_HVposContactorSts == 0.0) &&
-          (controller_autogen_B.GOV_e_diSts == DRV_START_REQ)) {
-        controller_autogen_DW.is_c2_battery_monitor_lib =
-          controller_aut_IN_StartupState1;
-        controller_autogen_DW.Delay_DSTATE_f = BM_IDLE;
-      } else if ((controller_autogen_U.BM_b_prechrgContactorSts == 1.0) &&
-                 (controller_autogen_U.BM_b_HVnegContactorSts == 0.0) &&
-                 (controller_autogen_U.BM_b_HVposContactorSts == 0.0)) {
-        controller_autogen_DW.is_c2_battery_monitor_lib =
-          co_IN_ErrorPrechargeClosedState;
-        controller_autogen_DW.Delay_DSTATE_f = ERR_PRECHARGE_CLOSED;
-      } else if ((controller_autogen_U.BM_b_prechrgContactorSts == 0.0) &&
-                 (controller_autogen_U.BM_b_HVnegContactorSts == 0.0) &&
-                 (controller_autogen_U.BM_b_HVposContactorSts == 1.0)) {
-        controller_autogen_DW.is_c2_battery_monitor_lib =
-          controller_a_IN_ErrorHVPositive;
-        controller_autogen_DW.Delay_DSTATE_f = ERR_HV_POSITIVE;
+      {
+        boolean_T tmp_0;
+        boolean_T tmp_1;
+        controller_autogen_DW.Delay_DSTATE_f = BM_INIT;
+        rtb_b_DriverInterfaceError = !rtb_b_DriverInterfaceError;
+        tmp_0 = !rtb_NOT_j;
+        tmp_1 = ((!rtb_NOT_g) && rtb_b_DriverInterfaceError);
+        if (tmp_1 && tmp_0 && (controller_autogen_B.GOV_e_diSts == DRV_START_REQ))
+        {
+          controller_autogen_DW.is_c2_battery_monitor_lib =
+            controller_aut_IN_StartupState1;
+          controller_autogen_DW.Delay_DSTATE_f = BM_IDLE;
+        } else if (rtb_NOT_g && rtb_b_DriverInterfaceError && tmp_0) {
+          controller_autogen_DW.is_c2_battery_monitor_lib =
+            co_IN_ErrorPrechargeClosedState;
+          controller_autogen_DW.Delay_DSTATE_f = ERR_PRECHARGE_CLOSED;
+        } else if (tmp_1 && rtb_NOT_j) {
+          controller_autogen_DW.is_c2_battery_monitor_lib =
+            controller_a_IN_ErrorHVPositive;
+          controller_autogen_DW.Delay_DSTATE_f = ERR_HV_POSITIVE;
+        }
       }
       break;
 
      case con_IN_InitializePrechargeState:
       controller_autogen_DW.Delay_DSTATE_f = INIT_PRECHARGE;
-      if ((controller_autogen_U.BM_b_prechrgContactorSts == 1.0) &&
-          (controller_autogen_U.BM_b_HVnegContactorSts == 1.0) &&
-          (controller_autogen_U.BM_b_HVposContactorSts == 1.0)) {
+      if (rtb_NOT_g && rtb_b_DriverInterfaceError && rtb_NOT_j) {
         controller_autogen_DW.is_c2_battery_monitor_lib =
           controller_au_IN_PrechargeState;
         controller_autogen_DW.temporalCounter_i1_g = 0U;
@@ -1032,12 +1055,9 @@ void controller_autogen_step(void)
 
      case controller_au_IN_PrechargeState:
       controller_autogen_DW.Delay_DSTATE_f = PRECHARGE;
-      if ((controller_autogen_U.BM_b_prechrgContactorSts == 0.0) &&
-          (controller_autogen_U.BM_b_HVnegContactorSts == 1.0) &&
-          (controller_autogen_U.BM_b_HVposContactorSts == 1.0)) {
+      if ((!rtb_NOT_g) && rtb_b_DriverInterfaceError && rtb_NOT_j) {
         controller_autogen_DW.is_c2_battery_monitor_lib =
           controller_auto_IN_RunningState;
-        controller_autogen_DW.temporalCounter_i1_g = 0U;
         controller_autogen_DW.Delay_DSTATE_f = BM_RUNNING;
       } else if (controller_autogen_DW.temporalCounter_i1_g >= 20000U) {
         controller_autogen_DW.is_c2_battery_monitor_lib =
@@ -1048,25 +1068,20 @@ void controller_autogen_step(void)
 
      case controller_auto_IN_RunningState:
       controller_autogen_DW.Delay_DSTATE_f = BM_RUNNING;
-      if ((controller_autogen_U.BM_b_prechrgContactorSts == 0.0) &&
-          (controller_autogen_U.BM_b_HVnegContactorSts == 1.0) &&
-          (controller_autogen_U.BM_b_HVposContactorSts == 1.0)) {
-        controller_autogen_DW.is_c2_battery_monitor_lib =
-          controller_auto_IN_RunningState;
-        controller_autogen_DW.temporalCounter_i1_g = 0U;
-        controller_autogen_DW.Delay_DSTATE_f = BM_RUNNING;
-      } else if (controller_autogen_DW.temporalCounter_i1_g >= 100U) {
+      if (controller_autogen_B.GOV_e_bmCmd == 0) {
         controller_autogen_DW.is_c2_battery_monitor_lib =
           controller_auto_IN_InitialState;
         controller_autogen_DW.Delay_DSTATE_f = BM_INIT;
+      } else if ((!rtb_NOT_g) && rtb_b_DriverInterfaceError && rtb_NOT_j) {
+        controller_autogen_DW.is_c2_battery_monitor_lib =
+          controller_auto_IN_RunningState;
+        controller_autogen_DW.Delay_DSTATE_f = BM_RUNNING;
       }
       break;
 
      case controller_auto_IN_StartupState:
       controller_autogen_DW.Delay_DSTATE_f = BM_STARTUP;
-      if ((controller_autogen_U.BM_b_prechrgContactorSts == 1.0) &&
-          (controller_autogen_U.BM_b_HVnegContactorSts == 1.0) &&
-          (controller_autogen_U.BM_b_HVposContactorSts == 0.0)) {
+      if (rtb_NOT_g && rtb_b_DriverInterfaceError && (!rtb_NOT_j)) {
         controller_autogen_DW.is_c2_battery_monitor_lib =
           con_IN_InitializePrechargeState;
         controller_autogen_DW.temporalCounter_i1_g = 0U;
@@ -1081,9 +1096,7 @@ void controller_autogen_step(void)
      default:
       /* case IN_StartupState1: */
       controller_autogen_DW.Delay_DSTATE_f = BM_IDLE;
-      if ((controller_autogen_U.BM_b_prechrgContactorSts == 0.0) &&
-          (controller_autogen_U.BM_b_HVnegContactorSts == 1.0) &&
-          (controller_autogen_U.BM_b_HVposContactorSts == 0.0)) {
+      if ((!rtb_NOT_g) && rtb_b_DriverInterfaceError && (!rtb_NOT_j)) {
         controller_autogen_DW.is_c2_battery_monitor_lib =
           controller_auto_IN_StartupState;
         controller_autogen_DW.temporalCounter_i1_g = 0U;
@@ -1117,35 +1130,25 @@ void controller_autogen_step(void)
     controller_autogen_Y.BM_b_HVposContactorCMD = 0.0;
   } else {
     switch (controller_autogen_DW.is_c4_battery_monitor_lib) {
-     case controller_autog_IN_Close_HVneg:
-      /* Outport: '<Root>/BM_b_prechargeContactorCMD' */
-      controller_autogen_Y.BM_b_prechargeContactorCMD = 1.0;
-
-      /* Outport: '<Root>/BM_b_HVnegContactorCMD' */
-      controller_autogen_Y.BM_b_HVnegContactorCMD = 1.0;
-
-      /* Outport: '<Root>/BM_b_HVposContactorCMD' */
-      controller_autogen_Y.BM_b_HVposContactorCMD = 0.0;
-      if ((controller_autogen_DW.temporalCounter_i1_b >= 1300U) &&
-          (controller_autogen_DW.Delay_DSTATE_f == INIT_PRECHARGE)) {
+     case controller_auto_IN_Close_HVneg1:
+      if ((controller_autogen_DW.temporalCounter_i1_b >= 20U) &&
+          (controller_autogen_DW.Delay_DSTATE_f == BM_STARTUP)) {
         controller_autogen_DW.is_c4_battery_monitor_lib =
-          controller_autog_IN_Close_HVpos;
+          controller_a_IN_Close_precharge;
         controller_autogen_DW.temporalCounter_i1_b = 0U;
 
+        /* Outport: '<Root>/BM_b_prechargeContactorCMD' */
+        controller_autogen_Y.BM_b_prechargeContactorCMD = 1.0;
+
+        /* Outport: '<Root>/BM_b_HVnegContactorCMD' */
+        controller_autogen_Y.BM_b_HVnegContactorCMD = 1.0;
+
         /* Outport: '<Root>/BM_b_HVposContactorCMD' */
-        controller_autogen_Y.BM_b_HVposContactorCMD = 1.0;
+        controller_autogen_Y.BM_b_HVposContactorCMD = 0.0;
       }
       break;
 
      case controller_autog_IN_Close_HVpos:
-      /* Outport: '<Root>/BM_b_prechargeContactorCMD' */
-      controller_autogen_Y.BM_b_prechargeContactorCMD = 1.0;
-
-      /* Outport: '<Root>/BM_b_HVnegContactorCMD' */
-      controller_autogen_Y.BM_b_HVnegContactorCMD = 1.0;
-
-      /* Outport: '<Root>/BM_b_HVposContactorCMD' */
-      controller_autogen_Y.BM_b_HVposContactorCMD = 1.0;
       if ((controller_autogen_DW.temporalCounter_i1_b >= 20U) &&
           (controller_autogen_DW.Delay_DSTATE_f == PRECHARGE)) {
         controller_autogen_DW.is_c4_battery_monitor_lib =
@@ -1154,71 +1157,86 @@ void controller_autogen_step(void)
 
         /* Outport: '<Root>/BM_b_prechargeContactorCMD' */
         controller_autogen_Y.BM_b_prechargeContactorCMD = 0.0;
+
+        /* Outport: '<Root>/BM_b_HVnegContactorCMD' */
+        controller_autogen_Y.BM_b_HVnegContactorCMD = 1.0;
+
+        /* Outport: '<Root>/BM_b_HVposContactorCMD' */
+        controller_autogen_Y.BM_b_HVposContactorCMD = 1.0;
       }
       break;
 
      case controller_a_IN_Close_precharge:
-      /* Outport: '<Root>/BM_b_prechargeContactorCMD' */
-      controller_autogen_Y.BM_b_prechargeContactorCMD = 0.0;
-
-      /* Outport: '<Root>/BM_b_HVnegContactorCMD' */
-      controller_autogen_Y.BM_b_HVnegContactorCMD = 1.0;
-
-      /* Outport: '<Root>/BM_b_HVposContactorCMD' */
-      controller_autogen_Y.BM_b_HVposContactorCMD = 0.0;
-      if ((controller_autogen_DW.temporalCounter_i1_b >= 20U) &&
-          (controller_autogen_DW.Delay_DSTATE_f == BM_STARTUP)) {
+      if ((controller_autogen_DW.temporalCounter_i1_b >= 1300U) &&
+          (controller_autogen_DW.Delay_DSTATE_f == INIT_PRECHARGE)) {
         controller_autogen_DW.is_c4_battery_monitor_lib =
-          controller_autog_IN_Close_HVneg;
+          controller_autog_IN_Close_HVpos;
         controller_autogen_DW.temporalCounter_i1_b = 0U;
 
         /* Outport: '<Root>/BM_b_prechargeContactorCMD' */
         controller_autogen_Y.BM_b_prechargeContactorCMD = 1.0;
+
+        /* Outport: '<Root>/BM_b_HVnegContactorCMD' */
+        controller_autogen_Y.BM_b_HVnegContactorCMD = 1.0;
+
+        /* Outport: '<Root>/BM_b_HVposContactorCMD' */
+        controller_autogen_Y.BM_b_HVposContactorCMD = 1.0;
       }
       break;
 
      case controller_au_IN_Open_precharge:
-      /* Outport: '<Root>/BM_b_prechargeContactorCMD' */
-      controller_autogen_Y.BM_b_prechargeContactorCMD = 0.0;
-
-      /* Outport: '<Root>/BM_b_HVnegContactorCMD' */
-      controller_autogen_Y.BM_b_HVnegContactorCMD = 1.0;
-
-      /* Outport: '<Root>/BM_b_HVposContactorCMD' */
-      controller_autogen_Y.BM_b_HVposContactorCMD = 1.0;
       if (controller_autogen_DW.Delay_DSTATE_f == BM_RUNNING) {
         controller_autogen_DW.is_c4_battery_monitor_lib =
           controller_au_IN_Open_precharge;
         controller_autogen_DW.temporalCounter_i1_b = 0U;
+
+        /* Outport: '<Root>/BM_b_prechargeContactorCMD' */
+        controller_autogen_Y.BM_b_prechargeContactorCMD = 0.0;
+
+        /* Outport: '<Root>/BM_b_HVnegContactorCMD' */
+        controller_autogen_Y.BM_b_HVnegContactorCMD = 1.0;
+
+        /* Outport: '<Root>/BM_b_HVposContactorCMD' */
+        controller_autogen_Y.BM_b_HVposContactorCMD = 1.0;
       } else if (controller_autogen_DW.temporalCounter_i1_b >= 100U) {
         controller_autogen_DW.is_c4_battery_monitor_lib =
           controller_autoge_IN_StartupCMD;
+
+        /* Outport: '<Root>/BM_b_prechargeContactorCMD' */
+        controller_autogen_Y.BM_b_prechargeContactorCMD = 0.0;
 
         /* Outport: '<Root>/BM_b_HVnegContactorCMD' */
         controller_autogen_Y.BM_b_HVnegContactorCMD = 0.0;
 
         /* Outport: '<Root>/BM_b_HVposContactorCMD' */
         controller_autogen_Y.BM_b_HVposContactorCMD = 0.0;
+      } else {
+        /* Outport: '<Root>/BM_b_prechargeContactorCMD' */
+        controller_autogen_Y.BM_b_prechargeContactorCMD = 0.0;
+
+        /* Outport: '<Root>/BM_b_HVnegContactorCMD' */
+        controller_autogen_Y.BM_b_HVnegContactorCMD = 1.0;
+
+        /* Outport: '<Root>/BM_b_HVposContactorCMD' */
+        controller_autogen_Y.BM_b_HVposContactorCMD = 1.0;
       }
       break;
 
      default:
-      /* Outport: '<Root>/BM_b_prechargeContactorCMD' */
       /* case IN_StartupCMD: */
-      controller_autogen_Y.BM_b_prechargeContactorCMD = 0.0;
-
-      /* Outport: '<Root>/BM_b_HVnegContactorCMD' */
-      controller_autogen_Y.BM_b_HVnegContactorCMD = 0.0;
-
-      /* Outport: '<Root>/BM_b_HVposContactorCMD' */
-      controller_autogen_Y.BM_b_HVposContactorCMD = 0.0;
       if (controller_autogen_DW.Delay_DSTATE_f == BM_IDLE) {
         controller_autogen_DW.is_c4_battery_monitor_lib =
-          controller_a_IN_Close_precharge;
+          controller_auto_IN_Close_HVneg1;
         controller_autogen_DW.temporalCounter_i1_b = 0U;
+
+        /* Outport: '<Root>/BM_b_prechargeContactorCMD' */
+        controller_autogen_Y.BM_b_prechargeContactorCMD = 0.0;
 
         /* Outport: '<Root>/BM_b_HVnegContactorCMD' */
         controller_autogen_Y.BM_b_HVnegContactorCMD = 1.0;
+
+        /* Outport: '<Root>/BM_b_HVposContactorCMD' */
+        controller_autogen_Y.BM_b_HVposContactorCMD = 0.0;
       }
       break;
     }
