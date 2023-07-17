@@ -2,7 +2,7 @@
 ## Makefile generated for component 'controller_autogen'. 
 ## 
 ## Makefile     : controller_autogen.mk
-## Generated on : Sun May 28 18:59:48 2023
+## Generated on : Sun Jul 16 23:27:56 2023
 ## Final product: $(RELATIVE_PATH_TO_ANCHOR)/controller_autogen.exe
 ## Product type : executable
 ## 
@@ -22,7 +22,7 @@ MAKEFILE                  = controller_autogen.mk
 MATLAB_ROOT               = C:/PROGRA~1/MATLAB/R2022b
 MATLAB_BIN                = C:/PROGRA~1/MATLAB/R2022b/bin
 MATLAB_ARCH_BIN           = $(MATLAB_BIN)/win64
-START_DIR                 = C:/Users/LinF/DOCUME~1/MACFE/Controls/ECUCOM~1/VEHICL~1/VEHICL~1/VEHICL~1
+START_DIR                 = C:/Users/LinF/Documents/MACFE/Controls/vehicle_control_system/vehicle_control_system-autogen
 SOLVER                    = 
 SOLVER_OBJ                = 
 CLASSIC_INTERFACE         = 0
@@ -157,7 +157,7 @@ DEFINES = $(DEFINES_BUILD_ARGS) $(DEFINES_CUSTOM) $(DEFINES_OPTS) $(DEFINES_STAN
 
 SRCS = $(START_DIR)/controller_autogen_ert_rtw/controller_autogen.c $(START_DIR)/controller_autogen_ert_rtw/controller_autogen_data.c
 
-MAIN_SRC = $(START_DIR)/controller_autogen_ert_rtw/ert_main.c
+MAIN_SRC = $(MATLAB_ROOT)/rtw/c/src/common/rt_main.c
 
 ALL_SRCS = $(SRCS) $(MAIN_SRC)
 
@@ -167,7 +167,7 @@ ALL_SRCS = $(SRCS) $(MAIN_SRC)
 
 OBJS = controller_autogen.obj controller_autogen_data.obj
 
-MAIN_OBJ = ert_main.obj
+MAIN_OBJ = rt_main.obj
 
 ALL_OBJS = $(OBJS) $(MAIN_OBJ)
 
@@ -289,7 +289,7 @@ controller_autogen_data.obj : $(START_DIR)/controller_autogen_ert_rtw/controller
 	$(CC) $(CFLAGS) -Fo"$@" $(subst /,\,"$<")
 
 
-ert_main.obj : $(START_DIR)/controller_autogen_ert_rtw/ert_main.c
+rt_main.obj : $(MATLAB_ROOT)/rtw/c/src/common/rt_main.c
 	$(CC) $(CFLAGS) -Fo"$@" $(subst /,\,"$<")
 
 

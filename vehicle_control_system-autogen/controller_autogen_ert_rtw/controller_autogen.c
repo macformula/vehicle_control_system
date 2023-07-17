@@ -7,9 +7,9 @@
  *
  * Code generated for Simulink model 'controller_autogen'.
  *
- * Model version                  : 1.32
+ * Model version                  : 1.33
  * Simulink Coder version         : 9.8 (R2022b) 13-May-2022
- * C/C++ source code generated on : Mon Jun 12 20:39:00 2023
+ * C/C++ source code generated on : Sun Jul 16 23:27:53 2023
  *
  * Target selection: ert.tlc
  * Embedded hardware selection: Intel->x86-64 (Windows64)
@@ -623,7 +623,7 @@ void controller_autogen_step(void)
      (!(controller_autogen_U.DI_V_AccelPedalPos2 <= 4095.0))) || rtb_NOT_j || ((
     !(controller_autogen_U.DI_V_SteeringAngle >= 0.0)) ||
     (!(controller_autogen_U.DI_V_SteeringAngle <= 4095.0))) || (fabsf(rtb_Gain_c
-    - rtb_Gain_ps) > 10.0F));
+    - rtb_Gain_ps) > 614.25F));
 
   /* Gain: '<S22>/Gain' incorporates:
    *  DataTypeConversion: '<S15>/Data Type Conversion1'
