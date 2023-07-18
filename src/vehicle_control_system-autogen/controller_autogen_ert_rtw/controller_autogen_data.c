@@ -9,27 +9,20 @@
  *
  * Model version                  : 1.33
  * Simulink Coder version         : 9.8 (R2022b) 13-May-2022
- * C/C++ source code generated on : Sun Jul 16 23:27:53 2023
+ * C/C++ source code generated on : Tue Jul 18 16:58:04 2023
  *
  * Target selection: ert.tlc
- * Embedded hardware selection: Intel->x86-64 (Windows64)
- * Code generation objectives: Unspecified
+ * Embedded hardware selection: ARM Compatible->ARM Cortex-M
+ * Code generation objectives:
+ *    1. Execution efficiency
+ *    2. RAM efficiency
  * Validation result: Not run
  */
 
 #include "controller_autogen.h"
 
 /* Invariant block signals (default storage) */
-const ConstB_controller_autogen_T controller_autogen_ConstB = {
-  4095.0F,                             /* '<S13>/Data Type Conversion' */
-  0.0F,                                /* '<S13>/Data Type Conversion2' */
-  4095.0F,                             /* '<S18>/Subtract' */
-  4095.0F,                             /* '<S14>/Data Type Conversion' */
-  0.0F,                                /* '<S14>/Data Type Conversion2' */
-  4095.0F,                             /* '<S20>/Subtract' */
-  4095.0F,                             /* '<S15>/Data Type Conversion' */
-  0.0F,                                /* '<S15>/Data Type Conversion2' */
-  4095.0F,                             /* '<S22>/Subtract' */
+const ConstB rtConstB = {
   1000.0F,                             /* '<S4>/Cast To Single' */
   0.0F,                                /* '<S4>/Cast To Single2' */
   1000.0F,                             /* '<S4>/Cast To Single3' */
@@ -37,7 +30,7 @@ const ConstB_controller_autogen_T controller_autogen_ConstB = {
 };
 
 /* Constant parameters (default storage) */
-const ConstP_controller_autogen_T controller_autogen_ConstP = {
+const ConstP rtConstP = {
   /* Pooled Parameter (Expression: [0 5 10 15 20 25 30 35 40 45 50 55 60 65 70 75 80 85 90 95 100])
    * Referenced by:
    *   '<S2>/AccelPedalPos1 LUT'
