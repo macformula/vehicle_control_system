@@ -7,9 +7,9 @@
  *
  * Code generated for Simulink model 'controller_autogen'.
  *
- * Model version                  : 1.35
+ * Model version                  : 1.36
  * Simulink Coder version         : 9.8 (R2022b) 13-May-2022
- * C/C++ source code generated on : Sun Jul 30 14:02:34 2023
+ * C/C++ source code generated on : Sun Jul 30 17:40:07 2023
  *
  * Target selection: ert.tlc
  * Embedded hardware selection: ARM Compatible->ARM Cortex-M
@@ -148,7 +148,7 @@ typedef struct {
 typedef struct {
   DW_LEFT_MOTOR sf_RIGHT_MOTOR;        /* '<S4>/RIGHT_MOTOR' */
   DW_LEFT_MOTOR sf_LEFT_MOTOR;         /* '<S4>/LEFT_MOTOR' */
-  real32_T TappedDelay_X[5];           /* '<S29>/Tapped Delay' */
+  real32_T TappedDelay_X[10];          /* '<S29>/Tapped Delay' */
   real32_T pedaltotorque;              /* '<S5>/%pedal to %torque' */
   MI_STATUSES MI_motorStatus;          /* '<S4>/RIGHT_MOTOR' */
   MI_STATUSES MI_motorStatus_b;        /* '<S4>/LEFT_MOTOR' */
@@ -160,6 +160,7 @@ typedef struct {
   DI_STATUSES GOV_e_diSts;             /* '<S2>/Chart' */
   DI_STATUSES Delay2_DSTATE;           /* '<S3>/Delay2' */
   MI_CMD GOV_e_miCmd;                  /* '<S3>/Chart' */
+  GOV_STATUSES GOV_e_govSts;           /* '<S3>/Chart' */
   uint16_T motorStartCount;            /* '<S3>/Chart' */
   uint16_T temporalCounter_i1;         /* '<S2>/Chart' */
   uint16_T temporalCounter_i1_a;       /* '<S1>/Chart1' */
@@ -286,6 +287,7 @@ typedef struct {
   real32_T DI_b_brakeLightEn;          /* '<Root>/DI_b_brakeLightEn' */
   real_T DI_p_PWMstatusLightCycle;     /* '<Root>/DI_p_PWMstatusLightCycle' */
   real_T DI_p_PWMstatusLightFreq;      /* '<Root>/DI_p_PWMstatusLightFreq' */
+  real32_T GOV_e_govSts;               /* '<Root>/GOV_e_govSts' */
 } ExtY;
 
 /* Real-time Model Data Structure */

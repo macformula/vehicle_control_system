@@ -7,9 +7,9 @@
  *
  * Code generated for Simulink model 'controller_autogen'.
  *
- * Model version                  : 1.35
+ * Model version                  : 1.36
  * Simulink Coder version         : 9.8 (R2022b) 13-May-2022
- * C/C++ source code generated on : Sun Jul 30 14:02:34 2023
+ * C/C++ source code generated on : Sun Jul 30 17:40:07 2023
  *
  * Target selection: ert.tlc
  * Embedded hardware selection: ARM Compatible->ARM Cortex-M
@@ -457,7 +457,7 @@ void controller_autogen_step(void)
 {
   real_T rtb_Switch;
   int32_T i;
-  real32_T rtb_VectorConcatenate[6];
+  real32_T rtb_VectorConcatenate[11];
   real32_T rtb_Gain;
   real32_T rtb_Gain_c;
   real32_T rtb_Gain_i;
@@ -480,27 +480,33 @@ void controller_autogen_step(void)
     rtDW.GOV_e_miCmd = CMD_INIT;
     rtDW.GOV_e_diCmd = DI_CMD_INIT;
     rtDW.motorStartCount = 0U;
+    rtDW.GOV_e_govSts = GOV_INIT;
   } else {
     switch (rtDW.is_c1_governor_lib) {
      case IN_Initialize_outputs:
       rtDW.GOV_e_diCmd = DI_CMD_INIT;
+      rtDW.GOV_e_govSts = GOV_INIT;
       if (rtDW.Delay2_DSTATE == DRV_START_REQ) {
         rtDW.is_c1_governor_lib = IN_STARTUP;
+        rtDW.GOV_e_govSts = GOV_STARTUP;
         rtDW.is_STARTUP = IN_HV_startup;
       }
       break;
 
      case IN_RUNNING:
+      rtDW.GOV_e_govSts = GOV_RUNNING;
       if (rtDW.Delay_DSTATE_f == ERR_RUNNING) {
         rtDW.is_c1_governor_lib = IN_RUNNING_ERROR;
         rtDW.is_RUNNING_ERROR = IN_HV_run_error;
         rtDW.GOV_e_diCmd = SYSTEM_ERROR;
+        rtDW.GOV_e_govSts = HV_RUN_ERROR;
       } else {
         switch (rtDW.Delay1_DSTATE) {
          case MI_STS_ERROR:
           rtDW.is_c1_governor_lib = IN_RUNNING_ERROR;
           rtDW.is_RUNNING_ERROR = IN_Motor_run_error;
           rtDW.GOV_e_diCmd = SYSTEM_ERROR;
+          rtDW.GOV_e_govSts = MOTOR_RUN_ERROR;
           break;
 
          case OFF:
@@ -509,6 +515,7 @@ void controller_autogen_step(void)
           rtDW.GOV_e_miCmd = CMD_INIT;
           rtDW.GOV_e_diCmd = DI_CMD_INIT;
           rtDW.motorStartCount = 0U;
+          rtDW.GOV_e_govSts = GOV_INIT;
           break;
         }
       }
@@ -517,28 +524,34 @@ void controller_autogen_step(void)
      case IN_RUNNING_ERROR:
       if (rtDW.is_RUNNING_ERROR == IN_HV_run_error) {
         rtDW.GOV_e_diCmd = SYSTEM_ERROR;
+        rtDW.GOV_e_govSts = HV_RUN_ERROR;
       } else {
         /* case IN_Motor_run_error: */
         rtDW.GOV_e_diCmd = SYSTEM_ERROR;
+        rtDW.GOV_e_govSts = MOTOR_RUN_ERROR;
       }
       break;
 
      case IN_STARTUP:
       {
+        rtDW.GOV_e_govSts = GOV_STARTUP;
         if (rtDW.Delay_DSTATE_f == ERR_STARTUP) {
           rtDW.is_STARTUP = IN_NO_ACTIVE_CHILD_p;
           rtDW.is_c1_governor_lib = IN_STARTUP_ERROR;
           rtDW.is_STARTUP_ERROR = IN_HV_startup_error;
+          rtDW.GOV_e_govSts = HV_STARTUP_ERROR;
         } else if (rtDW.Delay2_DSTATE == DI_ERROR) {
           rtDW.is_STARTUP = IN_NO_ACTIVE_CHILD_p;
           rtDW.is_c1_governor_lib = IN_STARTUP_ERROR;
           rtDW.is_STARTUP_ERROR = IN_DriverInterface_Error;
+          rtDW.GOV_e_govSts = GOV_DI_ERROR;
         } else if (rtDW.Delay1_DSTATE == MI_STS_ERROR) {
           if (rtDW.motorStartCount >= 5) {
             rtDW.is_STARTUP = IN_NO_ACTIVE_CHILD_p;
             rtDW.is_c1_governor_lib = IN_STARTUP_ERROR;
             rtDW.is_STARTUP_ERROR = IN_Motor_faulted;
             rtDW.GOV_e_miCmd = CMD_SHUTDOWN;
+            rtDW.GOV_e_govSts = MOTOR_STARTUP_ERROR;
           } else {
             rtDW.is_STARTUP = IN_NO_ACTIVE_CHILD_p;
             rtDW.is_c1_governor_lib = IN_STARTUP_ERROR;
@@ -575,6 +588,7 @@ void controller_autogen_step(void)
             if (rtDW.Delay2_DSTATE == DI_RUNNING) {
               rtDW.is_STARTUP = IN_NO_ACTIVE_CHILD_p;
               rtDW.is_c1_governor_lib = IN_RUNNING;
+              rtDW.GOV_e_govSts = GOV_RUNNING;
             }
             break;
           }
@@ -586,21 +600,27 @@ void controller_autogen_step(void)
       /* case IN_STARTUP_ERROR: */
       switch (rtDW.is_STARTUP_ERROR) {
        case IN_DriverInterface_Error:
-       case IN_HV_startup_error:
+        rtDW.GOV_e_govSts = GOV_DI_ERROR;
         break;
 
        case IN_Err_reset:
         if (rtDW.Delay1_DSTATE == OFF) {
           rtDW.is_STARTUP_ERROR = IN_NO_ACTIVE_CHILD_p;
           rtDW.is_c1_governor_lib = IN_STARTUP;
+          rtDW.GOV_e_govSts = GOV_STARTUP;
           rtDW.is_STARTUP = IN_HV_startup;
         } else {
           rtDW.GOV_e_miCmd = ERR_RESET;
         }
         break;
 
+       case IN_HV_startup_error:
+        rtDW.GOV_e_govSts = HV_STARTUP_ERROR;
+        break;
+
        default:
         /* case IN_Motor_faulted: */
+        rtDW.GOV_e_govSts = MOTOR_STARTUP_ERROR;
         break;
       }
       break;
@@ -669,7 +689,7 @@ void controller_autogen_step(void)
   rtb_b_DriverInterfaceError = (rtb_NOT_g || ((!(rtU.DI_V_AccelPedalPos2 >= 0.0))
     || (!(rtU.DI_V_AccelPedalPos2 <= 4095.0))) || rtb_NOT_j ||
     ((!(rtU.DI_V_SteeringAngle >= 0.0)) || (!(rtU.DI_V_SteeringAngle <= 4095.0)))
-    || (fabsf(rtb_Gain - rtb_Gain_i) > 614.25F));
+    || (fabsf(rtb_Gain - rtb_Gain_i) > 10.0F));
 
   /* Gain: '<S22>/Gain' incorporates:
    *  DataTypeConversion: '<S15>/Data Type Conversion1'
@@ -921,7 +941,7 @@ void controller_autogen_step(void)
   rtb_VectorConcatenate[0] = rtDW.pedaltotorque;
 
   /* S-Function (sfix_udelay): '<S29>/Tapped Delay' */
-  for (i = 0; i < 5; i++) {
+  for (i = 0; i < 10; i++) {
     rtb_VectorConcatenate[i + 1] = rtDW.TappedDelay_X[i];
   }
 
@@ -929,14 +949,14 @@ void controller_autogen_step(void)
 
   /* Sum: '<S29>/Sum of Elements' */
   rtb_Gain = -0.0F;
-  for (i = 0; i < 6; i++) {
+  for (i = 0; i < 11; i++) {
     rtb_Gain += rtb_VectorConcatenate[i];
   }
 
   /* End of Sum: '<S29>/Sum of Elements' */
 
   /* Product: '<S29>/Divide' */
-  rtb_Switch = rtb_Gain / 6.0;
+  rtb_Switch = rtb_Gain / 11.0;
 
   /* Chart: '<S4>/RIGHT_MOTOR' incorporates:
    *  DataTypeConversion: '<S4>/Cast To Single1'
@@ -1239,6 +1259,11 @@ void controller_autogen_step(void)
    */
   rtY.DI_b_brakeLightEn = (real32_T)(rtb_Gain_c > 10.0F);
 
+  /* Outport: '<Root>/GOV_e_govSts' incorporates:
+   *  DataTypeConversion: '<Root>/Cast To Single'
+   */
+  rtY.GOV_e_govSts = (real32_T)rtDW.GOV_e_govSts;
+
   /* Switch: '<S4>/overallMotorState' incorporates:
    *  Delay: '<S4>/Delay'
    *  RelationalOperator: '<S4>/GreaterThan'
@@ -1280,11 +1305,13 @@ void controller_autogen_step(void)
   rtDW.Delay1_DSTATE_l = rtb_Switch_m;
 
   /* Update for S-Function (sfix_udelay): '<S29>/Tapped Delay' */
-  rtDW.TappedDelay_X[0] = rtDW.TappedDelay_X[1];
-  rtDW.TappedDelay_X[1] = rtDW.TappedDelay_X[2];
-  rtDW.TappedDelay_X[2] = rtDW.TappedDelay_X[3];
-  rtDW.TappedDelay_X[3] = rtDW.TappedDelay_X[4];
-  rtDW.TappedDelay_X[4] = rtDW.pedaltotorque;
+  for (i = 0; i < 9; i++) {
+    rtDW.TappedDelay_X[i] = rtDW.TappedDelay_X[i + 1];
+  }
+
+  rtDW.TappedDelay_X[9] = rtDW.pedaltotorque;
+
+  /* End of Update for S-Function (sfix_udelay): '<S29>/Tapped Delay' */
 
   /* Update for Delay: '<S4>/Delay' */
   rtDW.Delay_DSTATE = rtb_overallMotorState;
