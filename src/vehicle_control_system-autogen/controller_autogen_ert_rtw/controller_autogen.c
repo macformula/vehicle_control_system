@@ -7,9 +7,9 @@
  *
  * Code generated for Simulink model 'controller_autogen'.
  *
- * Model version                  : 1.33
+ * Model version                  : 1.35
  * Simulink Coder version         : 9.8 (R2022b) 13-May-2022
- * C/C++ source code generated on : Tue Jul 18 16:58:04 2023
+ * C/C++ source code generated on : Sun Jul 30 14:02:34 2023
  *
  * Target selection: ert.tlc
  * Embedded hardware selection: ARM Compatible->ARM Cortex-M
@@ -41,19 +41,14 @@
 #define IN_waiting_sysReady            ((uint8_T)4U)
 
 /* Named constants for Chart: '<S1>/Chart' */
-#define IN_ErrorAllClosedState         ((uint8_T)1U)
-#define IN_ErrorHVPositive             ((uint8_T)2U)
-#define IN_ErrorInitializePrechargeStat ((uint8_T)3U)
-#define IN_ErrorPrechargeClosedState   ((uint8_T)4U)
-#define IN_ErrorPrechargeState         ((uint8_T)5U)
-#define IN_ErrorStartupState           ((uint8_T)6U)
-#define IN_InitialState                ((uint8_T)7U)
-#define IN_InitializePrechargeState    ((uint8_T)8U)
-#define IN_NO_ACTIVE_CHILD_o           ((uint8_T)0U)
-#define IN_PrechargeState              ((uint8_T)9U)
-#define IN_RunningState                ((uint8_T)10U)
-#define IN_StartupState                ((uint8_T)11U)
-#define IN_StartupState1               ((uint8_T)12U)
+#define IN_ErrorStartupState           ((uint8_T)1U)
+#define IN_InitialState                ((uint8_T)2U)
+#define IN_InitializePrechargeState    ((uint8_T)3U)
+#define IN_NO_ACTIVE_CHILD_p           ((uint8_T)0U)
+#define IN_PrechargeState              ((uint8_T)4U)
+#define IN_RunningState                ((uint8_T)5U)
+#define IN_StartupState                ((uint8_T)6U)
+#define IN_StartupState1               ((uint8_T)7U)
 
 /* Named constants for Chart: '<S1>/Chart1' */
 #define IN_Close_HVneg1                ((uint8_T)1U)
@@ -107,6 +102,8 @@ ExtY rtY;
 static RT_MODEL rtM_;
 RT_MODEL *const rtM = &rtM_;
 static real32_T look1_iflf_binlc(real32_T u0, const real32_T bp0[], const
+  real32_T table[], uint32_T maxIndex);
+static real32_T look1_iflf_binlx(real32_T u0, const real32_T bp0[], const
   real32_T table[], uint32_T maxIndex);
 static void LEFT_MOTOR_Init(MI_STATUSES *rty_MI_motorStatus, uint8_T
   *rty_AMK_bInverterOn_tx, uint8_T *rty_AMK_bDcOn_tx, uint8_T *rty_AMK_bEnable,
@@ -169,6 +166,64 @@ static real32_T look1_iflf_binlc(real32_T u0, const real32_T bp0[], const
   } else {
     iLeft = maxIndex - 1U;
     frac = 1.0F;
+  }
+
+  /* Column-major Interpolation 1-D
+     Interpolation method: 'Linear point-slope'
+     Use last breakpoint for index at or above upper limit: 'off'
+     Overflow mode: 'wrapping'
+   */
+  yL_0d0 = table[iLeft];
+  return (table[iLeft + 1U] - yL_0d0) * frac + yL_0d0;
+}
+
+static real32_T look1_iflf_binlx(real32_T u0, const real32_T bp0[], const
+  real32_T table[], uint32_T maxIndex)
+{
+  real32_T frac;
+  real32_T yL_0d0;
+  uint32_T iLeft;
+
+  /* Column-major Lookup 1-D
+     Search method: 'binary'
+     Use previous index: 'off'
+     Interpolation method: 'Linear point-slope'
+     Extrapolation method: 'Linear'
+     Use last breakpoint for index at or above upper limit: 'off'
+     Remove protection against out-of-range input in generated code: 'off'
+   */
+  /* Prelookup - Index and Fraction
+     Index Search method: 'binary'
+     Extrapolation method: 'Linear'
+     Use previous index: 'off'
+     Use last breakpoint for index at or above upper limit: 'off'
+     Remove protection against out-of-range input in generated code: 'off'
+   */
+  if (u0 <= bp0[0U]) {
+    iLeft = 0U;
+    frac = (u0 - bp0[0U]) / (bp0[1U] - bp0[0U]);
+  } else if (u0 < bp0[maxIndex]) {
+    uint32_T bpIdx;
+    uint32_T iRght;
+
+    /* Binary Search */
+    bpIdx = maxIndex >> 1U;
+    iLeft = 0U;
+    iRght = maxIndex;
+    while (iRght - iLeft > 1U) {
+      if (u0 < bp0[bpIdx]) {
+        iRght = bpIdx;
+      } else {
+        iLeft = bpIdx;
+      }
+
+      bpIdx = (iRght + iLeft) >> 1U;
+    }
+
+    frac = (u0 - bp0[iLeft]) / (bp0[iLeft + 1U] - bp0[iLeft]);
+  } else {
+    iLeft = maxIndex - 1U;
+    frac = (u0 - bp0[maxIndex - 1U]) / (bp0[maxIndex] - bp0[maxIndex - 1U]);
   }
 
   /* Column-major Interpolation 1-D
@@ -401,9 +456,11 @@ static void LEFT_MOTOR(MI_CMD rtu_GOV_e_miCmd, boolean_T rtu_AMK_bSystemReady,
 void controller_autogen_step(void)
 {
   real_T rtb_Switch;
+  int32_T i;
+  real32_T rtb_VectorConcatenate[6];
+  real32_T rtb_Gain;
   real32_T rtb_Gain_c;
-  real32_T rtb_Gain_h;
-  real32_T rtb_Gain_ps;
+  real32_T rtb_Gain_i;
   boolean_T rtb_NOT_g;
   boolean_T rtb_NOT_j;
   boolean_T rtb_b_DriverInterfaceError;
@@ -426,10 +483,11 @@ void controller_autogen_step(void)
   } else {
     switch (rtDW.is_c1_governor_lib) {
      case IN_Initialize_outputs:
-      rtDW.GOV_e_bmCmd = 0U;
       rtDW.GOV_e_diCmd = DI_CMD_INIT;
-      rtDW.is_c1_governor_lib = IN_STARTUP;
-      rtDW.is_STARTUP = IN_HV_startup;
+      if (rtDW.Delay2_DSTATE == DRV_START_REQ) {
+        rtDW.is_c1_governor_lib = IN_STARTUP;
+        rtDW.is_STARTUP = IN_HV_startup;
+      }
       break;
 
      case IN_RUNNING:
@@ -468,29 +526,28 @@ void controller_autogen_step(void)
      case IN_STARTUP:
       {
         if (rtDW.Delay_DSTATE_f == ERR_STARTUP) {
-          rtDW.is_STARTUP = IN_NO_ACTIVE_CHILD_o;
+          rtDW.is_STARTUP = IN_NO_ACTIVE_CHILD_p;
           rtDW.is_c1_governor_lib = IN_STARTUP_ERROR;
           rtDW.is_STARTUP_ERROR = IN_HV_startup_error;
         } else if (rtDW.Delay2_DSTATE == DI_ERROR) {
-          rtDW.is_STARTUP = IN_NO_ACTIVE_CHILD_o;
+          rtDW.is_STARTUP = IN_NO_ACTIVE_CHILD_p;
           rtDW.is_c1_governor_lib = IN_STARTUP_ERROR;
           rtDW.is_STARTUP_ERROR = IN_DriverInterface_Error;
         } else if (rtDW.Delay1_DSTATE == MI_STS_ERROR) {
           if (rtDW.motorStartCount >= 5) {
-            rtDW.is_STARTUP = IN_NO_ACTIVE_CHILD_o;
+            rtDW.is_STARTUP = IN_NO_ACTIVE_CHILD_p;
             rtDW.is_c1_governor_lib = IN_STARTUP_ERROR;
             rtDW.is_STARTUP_ERROR = IN_Motor_faulted;
             rtDW.GOV_e_miCmd = CMD_SHUTDOWN;
           } else {
-            rtDW.is_STARTUP = IN_NO_ACTIVE_CHILD_o;
+            rtDW.is_STARTUP = IN_NO_ACTIVE_CHILD_p;
             rtDW.is_c1_governor_lib = IN_STARTUP_ERROR;
             rtDW.is_STARTUP_ERROR = IN_Err_reset;
           }
         } else {
           switch (rtDW.is_STARTUP) {
            case IN_Command_motor_startup:
-            if ((rtDW.Delay1_DSTATE == RUNNING) && (rtDW.Delay2_DSTATE ==
-                 DRV_START_REQ)) {
+            if (rtDW.Delay1_DSTATE == RUNNING) {
               rtDW.is_STARTUP = IN_Send_ReadyToDrive;
               rtDW.GOV_e_diCmd = READY_TO_DRIVE;
             }
@@ -516,7 +573,7 @@ void controller_autogen_step(void)
             /* case IN_Send_ReadyToDrive: */
             rtDW.GOV_e_diCmd = READY_TO_DRIVE;
             if (rtDW.Delay2_DSTATE == DI_RUNNING) {
-              rtDW.is_STARTUP = IN_NO_ACTIVE_CHILD_o;
+              rtDW.is_STARTUP = IN_NO_ACTIVE_CHILD_p;
               rtDW.is_c1_governor_lib = IN_RUNNING;
             }
             break;
@@ -534,7 +591,7 @@ void controller_autogen_step(void)
 
        case IN_Err_reset:
         if (rtDW.Delay1_DSTATE == OFF) {
-          rtDW.is_STARTUP_ERROR = IN_NO_ACTIVE_CHILD_o;
+          rtDW.is_STARTUP_ERROR = IN_NO_ACTIVE_CHILD_p;
           rtDW.is_c1_governor_lib = IN_STARTUP;
           rtDW.is_STARTUP = IN_HV_startup;
         } else {
@@ -579,14 +636,14 @@ void controller_autogen_step(void)
    *  Inport: '<Root>/DI_V_AccelPedalPos1'
    *  Product: '<S18>/Divide'
    */
-  rtb_Gain_c = (real32_T)rtU.DI_V_AccelPedalPos1 / 4095.0F * 100.0F;
+  rtb_Gain = (real32_T)rtU.DI_V_AccelPedalPos1 / 4095.0F * 100.0F;
 
   /* Gain: '<S20>/Gain' incorporates:
    *  DataTypeConversion: '<S14>/Data Type Conversion1'
    *  Inport: '<Root>/DI_V_AccelPedalPos2'
    *  Product: '<S20>/Divide'
    */
-  rtb_Gain_ps = (real32_T)rtU.DI_V_AccelPedalPos2 / 4095.0F * 100.0F;
+  rtb_Gain_i = (real32_T)rtU.DI_V_AccelPedalPos2 / 4095.0F * 100.0F;
 
   /* Logic: '<S2>/b_DriverInterfaceError' incorporates:
    *  Abs: '<S8>/Abs'
@@ -612,14 +669,14 @@ void controller_autogen_step(void)
   rtb_b_DriverInterfaceError = (rtb_NOT_g || ((!(rtU.DI_V_AccelPedalPos2 >= 0.0))
     || (!(rtU.DI_V_AccelPedalPos2 <= 4095.0))) || rtb_NOT_j ||
     ((!(rtU.DI_V_SteeringAngle >= 0.0)) || (!(rtU.DI_V_SteeringAngle <= 4095.0)))
-    || (fabsf(rtb_Gain_c - rtb_Gain_ps) > 614.25F));
+    || (fabsf(rtb_Gain - rtb_Gain_i) > 614.25F));
 
   /* Gain: '<S22>/Gain' incorporates:
    *  DataTypeConversion: '<S15>/Data Type Conversion1'
    *  Inport: '<Root>/DI_V_BrakePedalPos'
    *  Product: '<S22>/Divide'
    */
-  rtb_Gain_h = (real32_T)rtU.DI_V_BrakePedalPos / 4095.0F * 100.0F;
+  rtb_Gain_c = (real32_T)rtU.DI_V_BrakePedalPos / 4095.0F * 100.0F;
 
   /* Chart: '<S2>/Chart' incorporates:
    *  Delay: '<S2>/Delay1'
@@ -630,9 +687,9 @@ void controller_autogen_step(void)
     rtDW.temporalCounter_i1++;
   }
 
-  if (rtDW.is_active_c1_driver_interface_l == 0U) {
-    rtDW.is_active_c1_driver_interface_l = 1U;
-    rtDW.is_c1_driver_interface_lib = IN_INIT;
+  if (rtDW.is_active_c2_driver_interface_l == 0U) {
+    rtDW.is_active_c2_driver_interface_l = 1U;
+    rtDW.is_c2_driver_interface_lib = IN_INIT;
     rtDW.temporalCounter_i1 = 0U;
     rtDW.GOV_e_diSts = DI_STS_INIT;
     rtDW.b_ReadyToDrive = false;
@@ -646,16 +703,16 @@ void controller_autogen_step(void)
     /* Outport: '<Root>/DI_p_PWMstatusLightFreq' */
     rtY.DI_p_PWMstatusLightFreq = 1.0;
   } else {
-    switch (rtDW.is_c1_driver_interface_lib) {
+    switch (rtDW.is_c2_driver_interface_lib) {
      case IN_DI_error:
       rtDW.GOV_e_diSts = DI_ERROR;
       break;
 
      case IN_DI_running:
       if (rtb_b_DriverInterfaceError) {
-        rtDW.is_Ready_to_drive = IN_NO_ACTIVE_CHILD_o;
-        rtDW.is_DI_running = IN_NO_ACTIVE_CHILD_o;
-        rtDW.is_c1_driver_interface_lib = IN_DI_error;
+        rtDW.is_Ready_to_drive = IN_NO_ACTIVE_CHILD_p;
+        rtDW.is_DI_running = IN_NO_ACTIVE_CHILD_p;
+        rtDW.is_c2_driver_interface_lib = IN_DI_error;
         rtDW.GOV_e_diSts = DI_ERROR;
       } else {
         switch (rtDW.is_DI_running) {
@@ -681,7 +738,7 @@ void controller_autogen_step(void)
 
           /* Outport: '<Root>/DI_p_PWMstatusLightFreq' */
           rtY.DI_p_PWMstatusLightFreq = 10.0;
-          if ((rtDW.GOV_e_diCmd == READY_TO_DRIVE) && (rtb_Gain_h > 50.0F)) {
+          if ((rtDW.GOV_e_diCmd == READY_TO_DRIVE) && (rtb_Gain_c > 10.0F)) {
             rtDW.is_DI_running = IN_Ready_to_drive;
             rtDW.b_ReadyToDrive = true;
             rtDW.GOV_e_diSts = DI_RUNNING;
@@ -703,15 +760,15 @@ void controller_autogen_step(void)
           /* Outport: '<Root>/DI_p_PWMstatusLightFreq' */
           rtY.DI_p_PWMstatusLightFreq = 10.0;
           if (rtDW.GOV_e_diCmd == SYSTEM_ERROR) {
-            rtDW.is_Ready_to_drive = IN_NO_ACTIVE_CHILD_o;
-            rtDW.is_DI_running = IN_NO_ACTIVE_CHILD_o;
-            rtDW.is_c1_driver_interface_lib = IN_Vehicle_coasting;
+            rtDW.is_Ready_to_drive = IN_NO_ACTIVE_CHILD_p;
+            rtDW.is_DI_running = IN_NO_ACTIVE_CHILD_p;
+            rtDW.is_c2_driver_interface_lib = IN_Vehicle_coasting;
             rtDW.b_ReadyToDrive = false;
             rtDW.GOV_e_diSts = DI_IDLE;
           } else if (rtDW.Delay1_DSTATE_l == OFF) {
-            rtDW.is_Ready_to_drive = IN_NO_ACTIVE_CHILD_o;
-            rtDW.is_DI_running = IN_NO_ACTIVE_CHILD_o;
-            rtDW.is_c1_driver_interface_lib = IN_INIT;
+            rtDW.is_Ready_to_drive = IN_NO_ACTIVE_CHILD_p;
+            rtDW.is_DI_running = IN_NO_ACTIVE_CHILD_p;
+            rtDW.is_c2_driver_interface_lib = IN_INIT;
             rtDW.temporalCounter_i1 = 0U;
             rtDW.GOV_e_diSts = DI_STS_INIT;
             rtDW.b_ReadyToDrive = false;
@@ -774,7 +831,7 @@ void controller_autogen_step(void)
       /* Outport: '<Root>/DI_p_PWMstatusLightFreq' */
       rtY.DI_p_PWMstatusLightFreq = 1.0;
       if (rtDW.temporalCounter_i1 >= 2000U) {
-        rtDW.is_c1_driver_interface_lib = IN_DI_running;
+        rtDW.is_c2_driver_interface_lib = IN_DI_running;
         rtDW.is_DI_running = IN_Waiting_for_driver;
         rtDW.GOV_e_diSts = WAITING_FOR_DRVR;
 
@@ -804,20 +861,20 @@ void controller_autogen_step(void)
     /* Outputs for IfAction SubSystem: '<S2>/If Action Subsystem' incorporates:
      *  ActionPort: '<S10>/Action Port'
      */
-    rtb_Gain_c = 0.0F;
+    rtb_Gain = 0.0F;
 
     /* End of Outputs for SubSystem: '<S2>/If Action Subsystem' */
   } else if (rtb_NOT_g) {
     /* Outputs for IfAction SubSystem: '<S2>/If Action Subsystem2' incorporates:
      *  ActionPort: '<S12>/Action Port'
      */
-    rtb_Gain_c = rtb_Gain_ps;
+    rtb_Gain = rtb_Gain_i;
 
     /* End of Outputs for SubSystem: '<S2>/If Action Subsystem2' */
   }
 
-  rtb_Gain_c = look1_iflf_binlc(rtb_Gain_c, rtConstP.pooled9, rtConstP.pooled9,
-    20U);
+  rtb_Gain = look1_iflf_binlc(rtb_Gain, rtConstP.AccelPedalPos1LUT_bp01Data,
+    rtConstP.AccelPedalPos1LUT_tableData, 99U);
 
   /* End of If: '<S2>/If' */
 
@@ -825,42 +882,61 @@ void controller_autogen_step(void)
    *  Constant: '<S2>/Constant1'
    */
   if (rtb_NOT_j) {
-    rtb_Gain_h = 0.0F;
+    rtb_Gain_c = 0.0F;
   }
 
   /* Lookup_n-D: '<S2>/BrakePedalPos1 LUT1' incorporates:
    *  Switch: '<S2>/Switch2'
    */
-  rtb_Gain_h = look1_iflf_binlc(rtb_Gain_h, rtConstP.pooled9, rtConstP.pooled9,
+  rtb_Gain_c = look1_iflf_binlc(rtb_Gain_c, rtConstP.pooled8, rtConstP.pooled8,
     20U);
 
   /* Switch: '<S5>/Switch' */
-  rtb_Switch = (rtb_Gain_h > 10.0F);
+  rtb_Switch = (rtb_Gain_c > 10.0F);
 
   /* Chart: '<S5>/Chart' */
-  if (rtDW.is_active_c3_controller_autogen == 0U) {
-    rtDW.is_active_c3_controller_autogen = 1U;
-    rtDW.is_c3_controller_autogen = IN_Run;
-  } else if (rtDW.is_c3_controller_autogen == IN_Run) {
-    if ((rtb_Gain_c >= 20.0F) && (rtb_Switch != 0.0)) {
-      rtDW.is_c3_controller_autogen = IN_Stop;
-      rtb_Gain_c = 0.0F;
+  if (rtDW.is_active_c3_simp_vd_lib == 0U) {
+    rtDW.is_active_c3_simp_vd_lib = 1U;
+    rtDW.is_c3_simp_vd_lib = IN_Run;
+  } else if (rtDW.is_c3_simp_vd_lib == IN_Run) {
+    if ((rtb_Gain >= 20.0F) && (rtb_Switch != 0.0)) {
+      rtDW.is_c3_simp_vd_lib = IN_Stop;
+      rtb_Gain = 0.0F;
     }
 
     /* case IN_Stop: */
-  } else if ((rtb_Gain_c < 5.0F) && (!(rtb_Switch != 0.0))) {
-    rtDW.is_c3_controller_autogen = IN_Run;
+  } else if ((rtb_Gain < 5.0F) && (!(rtb_Switch != 0.0))) {
+    rtDW.is_c3_simp_vd_lib = IN_Run;
   } else {
-    rtb_Gain_c = 0.0F;
+    rtb_Gain = 0.0F;
   }
 
   /* End of Chart: '<S5>/Chart' */
 
-  /* Gain: '<S5>/Gain' incorporates:
-   *  Constant: '<S5>/Constant6'
-   *  Product: '<S5>/Divide'
-   */
-  rtb_Switch = rtb_Gain_c / 100.0 * 500.0;
+  /* Lookup_n-D: '<S5>/%pedal to %torque' */
+  rtDW.pedaltotorque = look1_iflf_binlx(rtb_Gain,
+    rtConstP.pedaltotorque_bp01Data, rtConstP.pedaltotorque_tableData, 100U);
+
+  /* SignalConversion generated from: '<S29>/Vector Concatenate' */
+  rtb_VectorConcatenate[0] = rtDW.pedaltotorque;
+
+  /* S-Function (sfix_udelay): '<S29>/Tapped Delay' */
+  for (i = 0; i < 5; i++) {
+    rtb_VectorConcatenate[i + 1] = rtDW.TappedDelay_X[i];
+  }
+
+  /* End of S-Function (sfix_udelay): '<S29>/Tapped Delay' */
+
+  /* Sum: '<S29>/Sum of Elements' */
+  rtb_Gain = -0.0F;
+  for (i = 0; i < 6; i++) {
+    rtb_Gain += rtb_VectorConcatenate[i];
+  }
+
+  /* End of Sum: '<S29>/Sum of Elements' */
+
+  /* Product: '<S29>/Divide' */
+  rtb_Switch = rtb_Gain / 6.0;
 
   /* Chart: '<S4>/RIGHT_MOTOR' incorporates:
    *  DataTypeConversion: '<S4>/Cast To Single1'
@@ -930,36 +1006,18 @@ void controller_autogen_step(void)
   rtb_b_DriverInterfaceError = !rtU.BM_b_HVnegContactorSts;
 
   /* Chart: '<S1>/Chart' */
-  if (rtDW.temporalCounter_i1_g < 32767U) {
-    rtDW.temporalCounter_i1_g++;
+  if (rtDW.temporalCounter_i1_m < 32767U) {
+    rtDW.temporalCounter_i1_m++;
   }
 
-  if (rtDW.is_active_c2_battery_monitor_li == 0U) {
-    rtDW.is_active_c2_battery_monitor_li = 1U;
-    rtDW.is_c2_battery_monitor_lib = IN_InitialState;
+  if (rtDW.is_active_c4_battery_monitor_li == 0U) {
+    rtDW.is_active_c4_battery_monitor_li = 1U;
+    rtDW.is_c4_battery_monitor_lib = IN_InitialState;
     rtb_GOV_BM_STATUS = BM_INIT;
   } else {
-    switch (rtDW.is_c2_battery_monitor_lib) {
-     case IN_ErrorAllClosedState:
-      rtb_GOV_BM_STATUS = ERR_ALL_CLOSED;
-      break;
-
-     case IN_ErrorHVPositive:
-      rtb_GOV_BM_STATUS = ERR_HV_POSITIVE;
-      break;
-
-     case IN_ErrorInitializePrechargeStat:
-      rtb_GOV_BM_STATUS = ERR_INIT_PRECHARGE;
-      break;
-
-     case IN_ErrorPrechargeClosedState:
-      rtb_GOV_BM_STATUS = ERR_PRECHARGE_CLOSED;
-      break;
-
-     case IN_ErrorPrechargeState:
-      rtb_GOV_BM_STATUS = ERR_PRECHARGE;
-      break;
-
+    boolean_T guard1 = false;
+    guard1 = false;
+    switch (rtDW.is_c4_battery_monitor_lib) {
      case IN_ErrorStartupState:
       rtb_GOV_BM_STATUS = ERR_STARTUP;
       break;
@@ -969,18 +1027,19 @@ void controller_autogen_step(void)
         boolean_T tmp_0;
         boolean_T tmp_1;
         rtb_GOV_BM_STATUS = BM_INIT;
-        rtb_b_DriverInterfaceError = !rtb_b_DriverInterfaceError;
-        tmp_0 = !rtb_NOT_j;
-        tmp_1 = ((!rtb_NOT_g) && rtb_b_DriverInterfaceError);
-        if (tmp_1 && tmp_0 && (rtDW.GOV_e_diSts == DRV_START_REQ)) {
-          rtDW.is_c2_battery_monitor_lib = IN_StartupState1;
-          rtb_GOV_BM_STATUS = BM_IDLE;
-        } else if (rtb_NOT_g && rtb_b_DriverInterfaceError && tmp_0) {
-          rtDW.is_c2_battery_monitor_lib = IN_ErrorPrechargeClosedState;
-          rtb_GOV_BM_STATUS = ERR_PRECHARGE_CLOSED;
-        } else if (tmp_1 && rtb_NOT_j) {
-          rtDW.is_c2_battery_monitor_lib = IN_ErrorHVPositive;
-          rtb_GOV_BM_STATUS = ERR_HV_POSITIVE;
+        tmp_0 = !rtb_b_DriverInterfaceError;
+        tmp_1 = !rtb_NOT_j;
+        if ((rtb_NOT_g && tmp_0 && tmp_1) || (rtb_NOT_g &&
+             rtb_b_DriverInterfaceError && rtb_NOT_j)) {
+          guard1 = true;
+        } else {
+          tmp_0 = ((!rtb_NOT_g) && tmp_0);
+          if (tmp_0 && rtb_NOT_j) {
+            guard1 = true;
+          } else if (tmp_0 && tmp_1 && (rtDW.GOV_e_diSts == DRV_START_REQ)) {
+            rtDW.is_c4_battery_monitor_lib = IN_StartupState1;
+            rtb_GOV_BM_STATUS = BM_IDLE;
+          }
         }
       }
       break;
@@ -988,33 +1047,33 @@ void controller_autogen_step(void)
      case IN_InitializePrechargeState:
       rtb_GOV_BM_STATUS = INIT_PRECHARGE;
       if (rtb_NOT_g && rtb_b_DriverInterfaceError && rtb_NOT_j) {
-        rtDW.is_c2_battery_monitor_lib = IN_PrechargeState;
-        rtDW.temporalCounter_i1_g = 0U;
+        rtDW.is_c4_battery_monitor_lib = IN_PrechargeState;
+        rtDW.temporalCounter_i1_m = 0U;
         rtb_GOV_BM_STATUS = PRECHARGE;
-      } else if (rtDW.temporalCounter_i1_g >= 20000U) {
-        rtDW.is_c2_battery_monitor_lib = IN_ErrorInitializePrechargeStat;
-        rtb_GOV_BM_STATUS = ERR_INIT_PRECHARGE;
+      } else if (rtDW.temporalCounter_i1_m >= 20000U) {
+        rtDW.is_c4_battery_monitor_lib = IN_ErrorStartupState;
+        rtb_GOV_BM_STATUS = ERR_STARTUP;
       }
       break;
 
      case IN_PrechargeState:
       rtb_GOV_BM_STATUS = PRECHARGE;
       if ((!rtb_NOT_g) && rtb_b_DriverInterfaceError && rtb_NOT_j) {
-        rtDW.is_c2_battery_monitor_lib = IN_RunningState;
+        rtDW.is_c4_battery_monitor_lib = IN_RunningState;
         rtb_GOV_BM_STATUS = BM_RUNNING;
-      } else if (rtDW.temporalCounter_i1_g >= 20000U) {
-        rtDW.is_c2_battery_monitor_lib = IN_ErrorPrechargeState;
-        rtb_GOV_BM_STATUS = ERR_PRECHARGE;
+      } else if (rtDW.temporalCounter_i1_m >= 20000U) {
+        rtDW.is_c4_battery_monitor_lib = IN_ErrorStartupState;
+        rtb_GOV_BM_STATUS = ERR_STARTUP;
       }
       break;
 
      case IN_RunningState:
       rtb_GOV_BM_STATUS = BM_RUNNING;
-      if (rtDW.GOV_e_bmCmd == 0) {
-        rtDW.is_c2_battery_monitor_lib = IN_InitialState;
+      if (rtDW.GOV_e_bmCmd == 1) {
+        rtDW.is_c4_battery_monitor_lib = IN_InitialState;
         rtb_GOV_BM_STATUS = BM_INIT;
       } else if ((!rtb_NOT_g) && rtb_b_DriverInterfaceError && rtb_NOT_j) {
-        rtDW.is_c2_battery_monitor_lib = IN_RunningState;
+        rtDW.is_c4_battery_monitor_lib = IN_RunningState;
         rtb_GOV_BM_STATUS = BM_RUNNING;
       }
       break;
@@ -1022,11 +1081,11 @@ void controller_autogen_step(void)
      case IN_StartupState:
       rtb_GOV_BM_STATUS = BM_STARTUP;
       if (rtb_NOT_g && rtb_b_DriverInterfaceError && (!rtb_NOT_j)) {
-        rtDW.is_c2_battery_monitor_lib = IN_InitializePrechargeState;
-        rtDW.temporalCounter_i1_g = 0U;
+        rtDW.is_c4_battery_monitor_lib = IN_InitializePrechargeState;
+        rtDW.temporalCounter_i1_m = 0U;
         rtb_GOV_BM_STATUS = INIT_PRECHARGE;
-      } else if (rtDW.temporalCounter_i1_g >= 20000U) {
-        rtDW.is_c2_battery_monitor_lib = IN_ErrorStartupState;
+      } else if (rtDW.temporalCounter_i1_m >= 20000U) {
+        rtDW.is_c4_battery_monitor_lib = IN_ErrorStartupState;
         rtb_GOV_BM_STATUS = ERR_STARTUP;
       }
       break;
@@ -1035,24 +1094,29 @@ void controller_autogen_step(void)
       /* case IN_StartupState1: */
       rtb_GOV_BM_STATUS = BM_IDLE;
       if ((!rtb_NOT_g) && rtb_b_DriverInterfaceError && (!rtb_NOT_j)) {
-        rtDW.is_c2_battery_monitor_lib = IN_StartupState;
-        rtDW.temporalCounter_i1_g = 0U;
+        rtDW.is_c4_battery_monitor_lib = IN_StartupState;
+        rtDW.temporalCounter_i1_m = 0U;
         rtb_GOV_BM_STATUS = BM_STARTUP;
       }
       break;
+    }
+
+    if (guard1) {
+      rtDW.is_c4_battery_monitor_lib = IN_ErrorStartupState;
+      rtb_GOV_BM_STATUS = ERR_STARTUP;
     }
   }
 
   /* End of Chart: '<S1>/Chart' */
 
   /* Chart: '<S1>/Chart1' */
-  if (rtDW.temporalCounter_i1_b < 2047U) {
-    rtDW.temporalCounter_i1_b++;
+  if (rtDW.temporalCounter_i1_a < 2047U) {
+    rtDW.temporalCounter_i1_a++;
   }
 
-  if (rtDW.is_active_c4_battery_monitor_li == 0U) {
-    rtDW.is_active_c4_battery_monitor_li = 1U;
-    rtDW.is_c4_battery_monitor_lib = IN_StartupCMD;
+  if (rtDW.is_active_c5_battery_monitor_li == 0U) {
+    rtDW.is_active_c5_battery_monitor_li = 1U;
+    rtDW.is_c5_battery_monitor_lib = IN_StartupCMD;
 
     /* Outport: '<Root>/BM_b_prechargeContactorCMD' */
     rtY.BM_b_prechargeContactorCMD = 0.0;
@@ -1063,12 +1127,12 @@ void controller_autogen_step(void)
     /* Outport: '<Root>/BM_b_HVposContactorCMD' */
     rtY.BM_b_HVposContactorCMD = 0.0;
   } else {
-    switch (rtDW.is_c4_battery_monitor_lib) {
+    switch (rtDW.is_c5_battery_monitor_lib) {
      case IN_Close_HVneg1:
-      if ((rtDW.temporalCounter_i1_b >= 20U) && (rtb_GOV_BM_STATUS == BM_STARTUP))
+      if ((rtDW.temporalCounter_i1_a >= 20U) && (rtb_GOV_BM_STATUS == BM_STARTUP))
       {
-        rtDW.is_c4_battery_monitor_lib = IN_Close_precharge;
-        rtDW.temporalCounter_i1_b = 0U;
+        rtDW.is_c5_battery_monitor_lib = IN_Close_precharge;
+        rtDW.temporalCounter_i1_a = 0U;
 
         /* Outport: '<Root>/BM_b_prechargeContactorCMD' */
         rtY.BM_b_prechargeContactorCMD = 1.0;
@@ -1082,10 +1146,9 @@ void controller_autogen_step(void)
       break;
 
      case IN_Close_HVpos:
-      if ((rtDW.temporalCounter_i1_b >= 20U) && (rtb_GOV_BM_STATUS == PRECHARGE))
+      if ((rtDW.temporalCounter_i1_a >= 20U) && (rtb_GOV_BM_STATUS == PRECHARGE))
       {
-        rtDW.is_c4_battery_monitor_lib = IN_Open_precharge;
-        rtDW.temporalCounter_i1_b = 0U;
+        rtDW.is_c5_battery_monitor_lib = IN_Open_precharge;
 
         /* Outport: '<Root>/BM_b_prechargeContactorCMD' */
         rtY.BM_b_prechargeContactorCMD = 0.0;
@@ -1099,10 +1162,10 @@ void controller_autogen_step(void)
       break;
 
      case IN_Close_precharge:
-      if ((rtDW.temporalCounter_i1_b >= 1300U) && (rtb_GOV_BM_STATUS ==
+      if ((rtDW.temporalCounter_i1_a >= 1300U) && (rtb_GOV_BM_STATUS ==
            INIT_PRECHARGE)) {
-        rtDW.is_c4_battery_monitor_lib = IN_Close_HVpos;
-        rtDW.temporalCounter_i1_b = 0U;
+        rtDW.is_c5_battery_monitor_lib = IN_Close_HVpos;
+        rtDW.temporalCounter_i1_a = 0U;
 
         /* Outport: '<Root>/BM_b_prechargeContactorCMD' */
         rtY.BM_b_prechargeContactorCMD = 1.0;
@@ -1117,8 +1180,7 @@ void controller_autogen_step(void)
 
      case IN_Open_precharge:
       if (rtb_GOV_BM_STATUS == BM_RUNNING) {
-        rtDW.is_c4_battery_monitor_lib = IN_Open_precharge;
-        rtDW.temporalCounter_i1_b = 0U;
+        rtDW.is_c5_battery_monitor_lib = IN_Open_precharge;
 
         /* Outport: '<Root>/BM_b_prechargeContactorCMD' */
         rtY.BM_b_prechargeContactorCMD = 0.0;
@@ -1128,8 +1190,8 @@ void controller_autogen_step(void)
 
         /* Outport: '<Root>/BM_b_HVposContactorCMD' */
         rtY.BM_b_HVposContactorCMD = 1.0;
-      } else if (rtDW.temporalCounter_i1_b >= 100U) {
-        rtDW.is_c4_battery_monitor_lib = IN_StartupCMD;
+      } else if (rtDW.GOV_e_bmCmd == 1) {
+        rtDW.is_c5_battery_monitor_lib = IN_StartupCMD;
 
         /* Outport: '<Root>/BM_b_prechargeContactorCMD' */
         rtY.BM_b_prechargeContactorCMD = 0.0;
@@ -1154,8 +1216,8 @@ void controller_autogen_step(void)
      default:
       /* case IN_StartupCMD: */
       if (rtb_GOV_BM_STATUS == BM_IDLE) {
-        rtDW.is_c4_battery_monitor_lib = IN_Close_HVneg1;
-        rtDW.temporalCounter_i1_b = 0U;
+        rtDW.is_c5_battery_monitor_lib = IN_Close_HVneg1;
+        rtDW.temporalCounter_i1_a = 0U;
 
         /* Outport: '<Root>/BM_b_prechargeContactorCMD' */
         rtY.BM_b_prechargeContactorCMD = 0.0;
@@ -1175,7 +1237,7 @@ void controller_autogen_step(void)
   /* Outport: '<Root>/DI_b_brakeLightEn' incorporates:
    *  Switch: '<S2>/Switch'
    */
-  rtY.DI_b_brakeLightEn = (real32_T)(rtb_Gain_h > 10.0F);
+  rtY.DI_b_brakeLightEn = (real32_T)(rtb_Gain_c > 10.0F);
 
   /* Switch: '<S4>/overallMotorState' incorporates:
    *  Delay: '<S4>/Delay'
@@ -1216,6 +1278,13 @@ void controller_autogen_step(void)
 
   /* Update for Delay: '<S2>/Delay1' */
   rtDW.Delay1_DSTATE_l = rtb_Switch_m;
+
+  /* Update for S-Function (sfix_udelay): '<S29>/Tapped Delay' */
+  rtDW.TappedDelay_X[0] = rtDW.TappedDelay_X[1];
+  rtDW.TappedDelay_X[1] = rtDW.TappedDelay_X[2];
+  rtDW.TappedDelay_X[2] = rtDW.TappedDelay_X[3];
+  rtDW.TappedDelay_X[3] = rtDW.TappedDelay_X[4];
+  rtDW.TappedDelay_X[4] = rtDW.pedaltotorque;
 
   /* Update for Delay: '<S4>/Delay' */
   rtDW.Delay_DSTATE = rtb_overallMotorState;

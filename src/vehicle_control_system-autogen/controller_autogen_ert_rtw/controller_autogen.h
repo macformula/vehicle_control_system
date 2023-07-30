@@ -7,9 +7,9 @@
  *
  * Code generated for Simulink model 'controller_autogen'.
  *
- * Model version                  : 1.33
+ * Model version                  : 1.35
  * Simulink Coder version         : 9.8 (R2022b) 13-May-2022
- * C/C++ source code generated on : Tue Jul 18 16:58:04 2023
+ * C/C++ source code generated on : Sun Jul 30 14:02:34 2023
  *
  * Target selection: ert.tlc
  * Embedded hardware selection: ARM Compatible->ARM Cortex-M
@@ -119,6 +119,22 @@ typedef enum {
 
 #endif
 
+#ifndef DEFINED_TYPEDEF_FOR_GOV_STATUSES_
+#define DEFINED_TYPEDEF_FOR_GOV_STATUSES_
+
+typedef enum {
+  GOV_INIT = 0,                        /* Default value */
+  GOV_STARTUP,
+  GOV_RUNNING,
+  HV_STARTUP_ERROR,
+  MOTOR_STARTUP_ERROR,
+  GOV_DI_ERROR,
+  HV_RUN_ERROR,
+  MOTOR_RUN_ERROR
+} GOV_STATUSES;
+
+#endif
+
 /* Block signals and states (default storage) for system '<S4>/LEFT_MOTOR' */
 typedef struct {
   uint8_T is_c1_motor_interface_lib;   /* '<S4>/LEFT_MOTOR' */
@@ -132,6 +148,8 @@ typedef struct {
 typedef struct {
   DW_LEFT_MOTOR sf_RIGHT_MOTOR;        /* '<S4>/RIGHT_MOTOR' */
   DW_LEFT_MOTOR sf_LEFT_MOTOR;         /* '<S4>/LEFT_MOTOR' */
+  real32_T TappedDelay_X[5];           /* '<S29>/Tapped Delay' */
+  real32_T pedaltotorque;              /* '<S5>/%pedal to %torque' */
   MI_STATUSES MI_motorStatus;          /* '<S4>/RIGHT_MOTOR' */
   MI_STATUSES MI_motorStatus_b;        /* '<S4>/LEFT_MOTOR' */
   MI_STATUSES Delay1_DSTATE;           /* '<S3>/Delay1' */
@@ -144,24 +162,24 @@ typedef struct {
   MI_CMD GOV_e_miCmd;                  /* '<S3>/Chart' */
   uint16_T motorStartCount;            /* '<S3>/Chart' */
   uint16_T temporalCounter_i1;         /* '<S2>/Chart' */
-  uint16_T temporalCounter_i1_b;       /* '<S1>/Chart1' */
-  uint16_T temporalCounter_i1_g;       /* '<S1>/Chart' */
+  uint16_T temporalCounter_i1_a;       /* '<S1>/Chart1' */
+  uint16_T temporalCounter_i1_m;       /* '<S1>/Chart' */
   uint8_T GOV_e_bmCmd;                 /* '<S3>/Chart' */
-  uint8_T is_c3_controller_autogen;    /* '<S5>/Chart' */
-  uint8_T is_active_c3_controller_autogen;/* '<S5>/Chart' */
+  uint8_T is_c3_simp_vd_lib;           /* '<S5>/Chart' */
+  uint8_T is_active_c3_simp_vd_lib;    /* '<S5>/Chart' */
   uint8_T is_c1_governor_lib;          /* '<S3>/Chart' */
   uint8_T is_STARTUP;                  /* '<S3>/Chart' */
   uint8_T is_STARTUP_ERROR;            /* '<S3>/Chart' */
   uint8_T is_RUNNING_ERROR;            /* '<S3>/Chart' */
   uint8_T is_active_c1_governor_lib;   /* '<S3>/Chart' */
-  uint8_T is_c1_driver_interface_lib;  /* '<S2>/Chart' */
+  uint8_T is_c2_driver_interface_lib;  /* '<S2>/Chart' */
   uint8_T is_DI_running;               /* '<S2>/Chart' */
   uint8_T is_Ready_to_drive;           /* '<S2>/Chart' */
-  uint8_T is_active_c1_driver_interface_l;/* '<S2>/Chart' */
-  uint8_T is_c4_battery_monitor_lib;   /* '<S1>/Chart1' */
-  uint8_T is_active_c4_battery_monitor_li;/* '<S1>/Chart1' */
-  uint8_T is_c2_battery_monitor_lib;   /* '<S1>/Chart' */
-  uint8_T is_active_c2_battery_monitor_li;/* '<S1>/Chart' */
+  uint8_T is_active_c2_driver_interface_l;/* '<S2>/Chart' */
+  uint8_T is_c5_battery_monitor_lib;   /* '<S1>/Chart1' */
+  uint8_T is_active_c5_battery_monitor_li;/* '<S1>/Chart1' */
+  uint8_T is_c4_battery_monitor_lib;   /* '<S1>/Chart' */
+  uint8_T is_active_c4_battery_monitor_li;/* '<S1>/Chart' */
   boolean_T b_ReadyToDrive;            /* '<S2>/Chart' */
 } DW;
 
@@ -175,12 +193,30 @@ typedef struct {
 
 /* Constant parameters (default storage) */
 typedef struct {
-  /* Pooled Parameter (Expression: [0 5 10 15 20 25 30 35 40 45 50 55 60 65 70 75 80 85 90 95 100])
-   * Referenced by:
-   *   '<S2>/AccelPedalPos1 LUT'
-   *   '<S2>/BrakePedalPos1 LUT1'
+  /* Computed Parameter: AccelPedalPos1LUT_tableData
+   * Referenced by: '<S2>/AccelPedalPos1 LUT'
    */
-  real32_T pooled9[21];
+  real32_T AccelPedalPos1LUT_tableData[100];
+
+  /* Computed Parameter: AccelPedalPos1LUT_bp01Data
+   * Referenced by: '<S2>/AccelPedalPos1 LUT'
+   */
+  real32_T AccelPedalPos1LUT_bp01Data[100];
+
+  /* Pooled Parameter (Expression: [0 5 10 15 20 25 30 35 40 45 50 55 60 65 70 75 80 85 90 95 100])
+   * Referenced by: '<S2>/BrakePedalPos1 LUT1'
+   */
+  real32_T pooled8[21];
+
+  /* Computed Parameter: pedaltotorque_tableData
+   * Referenced by: '<S5>/%pedal to %torque'
+   */
+  real32_T pedaltotorque_tableData[101];
+
+  /* Computed Parameter: pedaltotorque_bp01Data
+   * Referenced by: '<S5>/%pedal to %torque'
+   */
+  real32_T pedaltotorque_bp01Data[101];
 } ConstP;
 
 /* External inputs (root inport signals with default storage) */
@@ -338,6 +374,7 @@ extern RT_MODEL *const rtM;
  * '<S26>'  : 'controller_autogen/motor_interface/LEFT_MOTOR'
  * '<S27>'  : 'controller_autogen/motor_interface/RIGHT_MOTOR'
  * '<S28>'  : 'controller_autogen/simp_vd_interface/Chart'
+ * '<S29>'  : 'controller_autogen/simp_vd_interface/Running Avg'
  */
 #endif                                 /* RTW_HEADER_controller_autogen_h_ */
 
