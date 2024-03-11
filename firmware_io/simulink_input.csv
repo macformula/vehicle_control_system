@@ -1,0 +1,2 @@
+Variable Name, Datatype, Minimum Value, Maximum Value, Name Description, Value Description,
+DI_V_SteeringAngle, float,-1,1, Steering wheel angle," ""-1 is full left turn"," +1 is full right turn. THIS IS JUST AN EXAMPLE"""
