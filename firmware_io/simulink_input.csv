@@ -1,7 +1,7 @@
 Variable Name,Datatype,Unit,Minimum Value,Maximum Value,Name Description,Value Description,
-DI_SteeringAngle,float,%,0,1,Steering wheel angle,0 is full left turn,1 is full right turn
-DI_AccelPedalPos,float,%,0,1,Accelerator pedal position,0 is released,1 is fully pressed
-DI_BrakePedalPos,float,%,0,1,Brake pedal position,0 is released,1 is fully pressed
+DI_SteeringAngle,float,fraction,0,1,Steering wheel angle,0 is full left turn,1 is full right turn
+DI_AccelPedalPos,float,fraction,0,1,Accelerator pedal position,0 is released,1 is fully pressed
+DI_BrakePedalPos,float,fraction,0,1,Brake pedal position,0 is released,1 is fully pressed
 DI_StartButton,bool,,0,1,Start button on dash (active low),0 is released,1 is pressed
 VD_FrtWheelSpd,int,rpm,-2000,2000,Average wheel speed of the front wheels,,
 BM_HvilFeedback,bool,,0,1,HVIL status,0 is open,1 is closed

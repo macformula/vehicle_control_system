@@ -2,10 +2,10 @@ Variable Name,Datatype,Unit,Minimum Value,Maximum Value,Name Description,Value D
 DI_BrakeLightEn,bool,,0,1,Command to brake light,0 - Light off,1 - Light On
 DI_DriverSpeaker,bool,,0,1,Command to ready to drive speaker,0 - Speaker off,1 - Light On
 DI_PWMstatusLightCycle,uint,%,0,100,PWM percentage of start button light,0 - 0% PWM On,100 - 100% PWM On
-DI_PWMstatusLightFreq,uint,%,0,1000,Freq of start button light,0 - Off,1000 - Max Freq
-BM_PrechargeContactorCmd,bool,,0,1,Command to pre charge contactor,0 - Open Contact Command,1 - Close Contact Command
-BM_HVposContactorCmd,bool,,0,1,Command to high voltage positive contactor,0 - Open Contact Command,1 - Close Contact Command
-BM_HVnegContactorCmd,bool,,0,1,Command to high voltage negative contactor,0 - Open Contact Command,1 - Close Contact Command
+DI_PWMstatusLightFreq,uint,Hz,0,1000,Freq of start button light,0 - Off,1000 - Max Freq
+BM_PrechargeContactorCmd,bool,,0,1,Command to pre charge contactor,0 - Open Contactor Command,1 - Close Contactor Command
+BM_HVposContactorCmd,bool,,0,1,Command to high voltage positive contactor,0 - Open Contactor Command,1 - Close Contactor Command
+BM_HVnegContactorCmd,bool,,0,1,Command to high voltage negative contactor,0 - Open Contactor Command,1 - Close Contactor Command
 BM_HvilLED,bool,,0,1,Command to Hvil LED on dash,0 - LED off,1 - LED on
 MI_InverterEn,bool,,0,1,Physical button replacement for inverter enable,0 - inverter off,1 - inverter on
 AMK0_TargetVelocity,int,RPM,-20000,20000,Target velocity command to motor,0 - No velocity command,20000 - Max velocity command
@@ -13,7 +13,7 @@ AMK0_TorqueLimitNegativ,uint,0.10%,0,1000,Negative torque limit command,0 - No t
 AMK0_TorqueLimitPositiv,uint,0.10%,0,1000,Positive torque limit command,0 - No torque requested,1000 - Max torque requested
 AMK0_bDcOn,bool,,0,1,HV activation,0 - No HV activation,1 - HV activation
 AMK0_bEnable,bool,,0,1,Driver enable,,
-AMK0_bErrorReset,bool,,0,1,Remove error (setpoint must be 0 before reset),,
+AMK0_bErrorReset,bool,,0,1,Remove error by setting it to 1 (setpoint must be 0 before reset),,
 AMK0_bInverterOn,bool,,0,1,Controller enable,,
 AMK1_TargetVelocity,int,RPM,-20000,20000,Target velocity command to motor,0 - No velocity command,20000 - Max velocity command
 AMK1_TorqueLimitNegativ,uint,0.10%,0,1000,Negative torque limit command,0 - No torque requested,1000 - Max torque requested
