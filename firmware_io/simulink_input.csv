@@ -1,2 +1,51 @@
-Variable Name, Datatype, Minimum Value, Maximum Value, Name Description, Value Description,
-DI_V_SteeringAngle, float,-1,1, Steering wheel angle," ""-1 is full left turn"," +1 is full right turn. THIS IS JUST AN EXAMPLE"""
+Variable Name,Datatype,Unit,Minimum Value,Maximum Value,Name Description,Value Description,
+DI_SteeringAngle,float,fraction,0,1,Steering wheel angle,0 is full left turn,1 is full right turn
+DI_AccelPedalPos,float,fraction,0,1,Accelerator pedal position,0 is released,1 is fully pressed
+DI_BrakePedalPos,float,fraction,0,1,Brake pedal position,0 is released,1 is fully pressed
+DI_StartButton,bool,,0,1,Start button on dash (active low),0 is released,1 is pressed
+VD_FrtWheelSpd,float,rpm,-2000,2000,Average wheel speed of the front wheels,,
+BM_HvilFeedback,bool,,0,1,HVIL status,0 is open,1 is closed
+BM_prechrgContactorSts,bool,,0,1,Precharge contactor status,0 is open,1 is closed
+BM_HVposContactorSts,bool,,0,1,HV positive contactor status,0 is open,1 is closed
+BM_HVnegContactorSts,bool,,0,1,HV negative contactor status,0 is open,1 is closed
+BM_PackSOC,float,%,0,100,HV battery state of charge,0 is empty,100 is full
+BM_LowThermValue,float,C,-128,127,Lowest thermistor value reported by TMS,,
+BM_HighThermValue,float,C,-128,127,Highest thermistor value reported by TMS,,
+BM_AvgThermValue,float,C,-128,127,Average thermistor value reported by TMS,,
+VD_AccelerationX,float,m/s^2,-64,63.875,X acceleration reported by IMU,X acceleration with a resolution of 0.125 m/s^2,
+VD_AccelerationY,float,m/s^2,-64,63.875,Y acceleration reported by IMU,Y acceleration with a resolution of 0.125 m/s^2,
+VD_AccelerationZ,float,m/s^2,-64,63.875,Z acceleration reported by IMU,Z acceleration with a resolution of 0.125 m/s^2,
+VD_AngularRateX,float,deg/s,-256,255.75,Roll velocity,X angular rate with a resolution of 0.25 deg/s,
+VD_AngularRateY,float,deg/s,-256,255.75,Pitch velocity,Y angular rate with a resolution of 0.25 deg/s,
+VD_AngularRateZ,float,deg/s,-256,255.75,Yaw velocity,Z angular rate with a resolution of 0.25 deg/s,
+VD_ImuValid,bool,,0,1,IMU status signal,0 - IMU invalid,1 - IMU valid
+AMK0_bSystemReady,bool,,0,1,System Ready ,,
+AMK0_bError,bool,,0,1,Error,,
+AMK0_bWarn,bool,,0,1,Warning,,
+AMK0_bQuitDcOn,bool,,0,1,HV activation acknloedgement,,
+AMK0_bDcOn,bool,,0,1,HV activation level,,
+AMK0_bQuitInverterOn,bool,,0,1,Controller enable acknowledgment,,
+AMK0_bInverterOn,bool,,0,1,Controller enable level,,
+AMK0_bDerating,bool,,0,1,Derating (torque limitation active),,
+AMK0_ActualVelocity,float,rpm,-32768,32767,,,
+AMK0_TorqueCurrent,float,,-32768,32767,,,
+AMK0_MagnetizingCurrent,float,,-32768,32767,,,
+AMK0_TempMotor,float,C,-326,327,Motor temperature,,
+AMK0_TempInverter,float,C,-326,327,Cold plate temperature,,
+AMK0_ErrorInfo,uint,,0,65535,CAN diagnostic message from inverter,,
+AMK0_TempIGBT,float,C,-326,327,IGBT temperature,,
+AMK1_bSystemReady,bool,,0,1,System Ready ,,
+AMK1_bError,bool,,0,1,Error,,
+AMK1_bWarn,bool,,0,1,Warning,,
+AMK1_bQuitDcOn,bool,,0,1,HV activation acknloedgement,,
+AMK1_bDcOn,bool,,0,1,HV activation level,,
+AMK1_bQuitInverterOn,bool,,0,1,Controller enable acknowledgment,,
+AMK1_bInverterOn,bool,,0,1,Controller enable level,,
+AMK1_bDerating,bool,,0,1,Derating (torque limitation active),,
+AMK1_ActualVelocity,float,rpm,-32768,32767,,,
+AMK1_TorqueCurrent,float,,-32768,32767,,,
+AMK1_MagnetizingCurrent,float,,-32768,32767,,,
+AMK1_TempMotor,float,C,-326,327,Motor temperature,,
+AMK1_TempInverter,float,C,-326,327,Cold plate temperature,,
+AMK1_ErrorInfo,uint,,0,65535,CAN diagnostic message from inverter,,
+AMK1_TempIGBT,float,C,-326,327,IGBT temperature,,
