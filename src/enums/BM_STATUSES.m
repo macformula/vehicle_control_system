@@ -8,5 +8,7 @@ classdef BM_STATUSES < Simulink.IntEnumType
         PRECHARGE(5)
         BM_RUNNING(6)
         HVIL_INTERRUPT(7)
+        BM_LOW_SOC(8)
+        ERR_RUNNING(9)
     end
 end
