@@ -5,8 +5,9 @@ classdef DI_STATUSES < Simulink.IntEnumType
         DI_IDLE(2)
         DI_STARTUP(3)
         WAITING_FOR_DRVR(4)
-        DRV_START_REQ(5)
-        DI_RUNNING(6)
-        DI_ERROR(7)
+        READY_TO_DRIVE_REQ(5)
+        HV_START_REQ(6)
+        DI_RUNNING(7)
+        DI_ERROR(8)
     end
 end
