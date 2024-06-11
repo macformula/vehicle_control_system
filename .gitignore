@@ -364,6 +364,7 @@ helpsearch*/
 # Simulink code generation folders
 slprj/
 sccprj/
+resources/
 
 # Matlab code generation folders
 codegen/

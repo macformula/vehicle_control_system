@@ -1,8 +1,6 @@
 Variable Name,Datatype,Unit,Minimum Value,Maximum Value,Name Description,Value Description,
 DI_BrakeLightEn,bool,,0,1,Command to brake light,0 - Light off,1 - Light On
 DI_DriverSpeaker,bool,,0,1,Command to ready to drive speaker,0 - Speaker off,1 - Light On
-DI_PWMstatusLightCycle,uint,%,0,100,PWM percentage of start button light,0 - 0% PWM On,100 - 100% PWM On
-DI_PWMstatusLightFreq,uint,Hz,0,1000,Freq of start button light,0 - Off,1000 - Max Freq
 BM_PrechargeContactorCmd,bool,,0,1,Command to pre charge contactor,0 - Open Contactor Command,1 - Close Contactor Command
 BM_HVposContactorCmd,bool,,0,1,Command to high voltage positive contactor,0 - Open Contactor Command,1 - Close Contactor Command
 BM_HVnegContactorCmd,bool,,0,1,Command to high voltage negative contactor,0 - Open Contactor Command,1 - Close Contactor Command
@@ -11,14 +9,15 @@ MI_InverterEn,bool,,0,1,Physical button replacement for inverter enable,0 - inve
 AMK0_TargetVelocity,float,RPM,-20000,20000,Target velocity command to motor,0 - No velocity command,20000 - Max velocity command
 AMK0_TorqueLimitNegativ,float,%,0,100,Negative torque limit command,0 - No torque requested,100 - Max torque requested
 AMK0_TorqueLimitPositiv,float,%,0,100,Positive torque limit command,0 - No torque requested,100 - Max torque requested
-AMK0_bDcOn,bool,,0,1,HV activation,0 - No HV activation,1 - HV activation
+AMK0_bDcOn_tx,bool,,0,1,HV activation,0 - No HV activation,1 - HV activation
 AMK0_bEnable,bool,,0,1,Driver enable,,
 AMK0_bErrorReset,bool,,0,1,Remove error by setting it to 1 (setpoint must be 0 before reset),,
-AMK0_bInverterOn,bool,,0,1,Controller enable,,
+AMK0_bInverterOn_tx,bool,,0,1,Controller enable,,
 AMK1_TargetVelocity,float,RPM,-20000,20000,Target velocity command to motor,0 - No velocity command,20000 - Max velocity command
 AMK1_TorqueLimitNegativ,float,%,0,100,Negative torque limit command,0 - No torque requested,100 - Max torque requested
 AMK1_TorqueLimitPositiv,float,%,0,100,Positive torque limit command,0 - No torque requested,100 - Max torque requested
-AMK1_bDcOn,bool,,0,1,HV activation,0 - No HV activation,1 - HV activation
+AMK1_bDcOn_tx,bool,,0,1,HV activation,0 - No HV activation,1 - HV activation
 AMK1_bEnable,bool,,0,1,Driver enable,,
 AMK1_bErrorReset,bool,,0,1,Remove error (setpoint must be 0 before reset),,
-AMK1_bInverterOn,bool,,0,1,Controller enable,,
+AMK1_bInverterOn_tx,bool,,0,1,Controller enable,,
+GOV_Status,uint,,0,8,Control governer status,Refer to enums folder,

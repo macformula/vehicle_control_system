@@ -2,7 +2,7 @@
 ## Makefile generated for component 'controller_autogen'. 
 ## 
 ## Makefile     : controller_autogen.mk
-## Generated on : Tue Jul 18 16:58:07 2023
+## Generated on : Sun Apr 14 23:44:22 2024
 ## Final product: $(RELATIVE_PATH_TO_ANCHOR)/controller_autogen.exe
 ## Product type : executable
 ## 
@@ -22,7 +22,7 @@ MAKEFILE                  = controller_autogen.mk
 MATLAB_ROOT               = C:/PROGRA~1/MATLAB/R2022b
 MATLAB_BIN                = C:/PROGRA~1/MATLAB/R2022b/bin
 MATLAB_ARCH_BIN           = $(MATLAB_BIN)/win64
-START_DIR                 = C:/Users/LinF/Documents/MACFE/Controls/vehicle_control_system/src/vehicle_control_system-autogen
+START_DIR                 = C:/Users/LinF/Documents/MACFE/Controls/repos/vehicle_control_system/src/vehicle_control_system-autogen
 SOLVER                    = 
 SOLVER_OBJ                = 
 CLASSIC_INTERFACE         = 0
