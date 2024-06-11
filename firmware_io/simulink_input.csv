@@ -7,6 +7,7 @@ DI_RearBrakePressure,float,fraction,0,1,Brake pedal position,0 is released,1 is 
 DI_StartButton,bool,,0,1,Start button on dash (active low),0 is released,1 is pressed
 VD_LFWheelSpeed,float,rpm,-2000,2000,Wheel speed of the left front wheel,,
 VD_RFWheelSpeed,float,rpm,-2000,2000,Wheel speed of the right front wheel,,
+VD_FrontWheelSpd,float,rpm,-2000,2000,Average wheel speed of the front wheels,,
 BM_HvilFeedback,bool,,0,1,HVIL status,0 is open,1 is closed
 BM_prechrgContactorSts,bool,,0,1,Precharge contactor status,0 is open,1 is closed
 BM_HVposContactorSts,bool,,0,1,HV positive contactor status,0 is open,1 is closed
