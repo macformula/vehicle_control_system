@@ -7,9 +7,9 @@
 //
 // Code generated for Simulink model 'controller_autogen'.
 //
-// Model version                  : 1.86
+// Model version                  : 1.91
 // Simulink Coder version         : 9.8 (R2022b) 13-May-2022
-// C/C++ source code generated on : Mon Apr 29 17:06:21 2024
+// C/C++ source code generated on : Thu Jun 13 00:14:43 2024
 //
 // Target selection: ert.tlc
 // Embedded hardware selection: ARM Compatible->ARM Cortex-M
@@ -150,43 +150,39 @@ class controller_autogen final
 {
   // public data and function members
  public:
-  // Block signals and states (default storage) for system '<S4>/mi_left'
-  struct DW_mi_left {
-    uint16_T temporalCounter_i1;       // '<S4>/mi_left'
-    uint8_T is_c9_motor_interface_lib; // '<S4>/mi_left'
-    uint8_T is_AMK_startup;            // '<S4>/mi_left'
-    uint8_T is_AMK_errorReset;         // '<S4>/mi_left'
-    uint8_T is_active_c9_motor_interface_li;// '<S4>/mi_left'
-  };
-
   // Block signals and states (default storage) for system '<Root>'
   struct DW {
-    DW_mi_left sf_mi_right;            // '<S4>/mi_right'
-    DW_mi_left sf_mi_left;             // '<S4>/mi_left'
     real_T TappedDelay_X[10];          // '<S25>/Tapped Delay'
     real_T pedaltotorque;              // '<S5>/%pedal to %torque'
     real_T MI_InverterEn;              // '<S4>/mi_right'
-    real_T MI_InverterEn_j;            // '<S4>/mi_left'
+    real_T MI_InverterEn_p;            // '<S4>/mi_left'
     BM_STATUSES Delay_DSTATE;          // '<S3>/Delay'
     DI_CMD GOV_e_diCmd;                // '<S3>/governer_stateflow'
     DI_STATUSES Delay2_DSTATE;         // '<S3>/Delay2'
     MI_STATUSES MI_motorStatus;        // '<S4>/mi_right'
-    MI_STATUSES MI_motorStatus_h;      // '<S4>/mi_left'
+    MI_STATUSES MI_motorStatus_o;      // '<S4>/mi_left'
     MI_STATUSES Delay1_DSTATE;         // '<S3>/Delay1'
     MI_STATUSES Delay_DSTATE_k;        // '<S4>/Delay'
     MI_CMD GOV_e_miCmd;                // '<S3>/governer_stateflow'
     GOV_STATUSES GOV_e_govSts;         // '<S3>/governer_stateflow'
     BM_CMD GOV_e_bmCmd;                // '<S3>/governer_stateflow'
+    uint16_T temporalCounter_i1;       // '<S4>/mi_right'
+    uint16_T temporalCounter_i1_n;     // '<S4>/mi_left'
     uint16_T motorStartCount;          // '<S3>/governer_stateflow'
-    uint16_T temporalCounter_i1;       // '<S3>/governer_stateflow'
+    uint16_T temporalCounter_i1_j;     // '<S3>/governer_stateflow'
     uint16_T temporalCounter_i1_h;     // '<S2>/driver_interface'
     uint16_T temporalCounter_i1_o;     // '<S1>/bm_control'
     uint16_T temporalCounter_i1_e;     // '<S1>/battery_monitor'
-    uint8_T is_c3_simp_vd_lib;         // '<S5>/vd_screenshot_check'
-    uint8_T is_active_c3_simp_vd_lib;  // '<S5>/vd_screenshot_check'
-    uint8_T is_c1_simp_vd_lib;         // '<S26>/vd_tc'
-    uint8_T is_active_c1_simp_vd_lib;  // '<S26>/vd_tc'
-    uint8_T temporalCounter_i1_m;      // '<S26>/vd_tc'
+    uint8_T is_c3_controller_autogen;  // '<S5>/vd_screenshot_check'
+    uint8_T is_active_c3_controller_autogen;// '<S5>/vd_screenshot_check'
+    uint8_T is_c10_controller_autogen; // '<S4>/mi_right'
+    uint8_T is_AMK_startup;            // '<S4>/mi_right'
+    uint8_T is_AMK_errorReset;         // '<S4>/mi_right'
+    uint8_T is_active_c10_controller_autoge;// '<S4>/mi_right'
+    uint8_T is_c9_controller_autogen;  // '<S4>/mi_left'
+    uint8_T is_AMK_startup_e;          // '<S4>/mi_left'
+    uint8_T is_AMK_errorReset_d;       // '<S4>/mi_left'
+    uint8_T is_active_c9_controller_autogen;// '<S4>/mi_left'
     uint8_T is_c8_governor_lib;        // '<S3>/governer_stateflow'
     uint8_T is_STARTUP;                // '<S3>/governer_stateflow'
     uint8_T is_STARTUP_ERROR;          // '<S3>/governer_stateflow'
@@ -200,17 +196,8 @@ class controller_autogen final
     uint8_T is_StartupSuperstate;      // '<S1>/bm_control'
     uint8_T is_active_c5_battery_monitor_li;// '<S1>/bm_control'
     uint8_T is_c4_battery_monitor_lib; // '<S1>/battery_monitor'
-    uint8_T is_StartupSuperstate_a;    // '<S1>/battery_monitor'
     uint8_T is_active_c4_battery_monitor_li;// '<S1>/battery_monitor'
     boolean_T b_ReadyToDrive;          // '<S2>/driver_interface'
-  };
-
-  // Invariant block signals (default storage)
-  struct ConstB {
-    real32_T CastToSingle;             // '<S4>/Cast To Single'
-    real32_T CastToSingle2;            // '<S4>/Cast To Single2'
-    real32_T CastToSingle3;            // '<S4>/Cast To Single3'
-    real32_T CastToSingle5;            // '<S4>/Cast To Single5'
   };
 
   // Constant parameters (default storage)
@@ -225,7 +212,7 @@ class controller_autogen final
 
     real_T pooled4[21];
 
-    // Expression: [linspace(0,1000,101)]
+    // Expression: [linspace(0,600,101)]
     //  Referenced by: '<S5>/%pedal to %torque'
 
     real_T pedaltotorque_tableData[101];
@@ -270,7 +257,6 @@ class controller_autogen final
     int16_T AMK0_TempInverter;         // '<Root>/AMK0_TempInverter'
     uint16_T AMK0_ErrorInfo;           // '<Root>/AMK0_ErrorInfo'
     int16_T AMK0_TempIGBT;             // '<Root>/AMK0_TempIGBT'
-    real_T DI_SteeringAngle;           // '<Root>/DI_SteeringAngle'
     real_T DI_FrontBrakePressure;      // '<Root>/DI_FrontBrakePressure'
     real_T DI_RearBrakePressure;       // '<Root>/DI_RearBrakePressure'
     boolean_T DI_StartButton;          // '<Root>/DI_StartButton'
@@ -280,12 +266,6 @@ class controller_autogen final
     boolean_T BM_HVposContactorSts;    // '<Root>/BM_HVposContactorSts'
     boolean_T BM_HVnegContactorSts;    // '<Root>/BM_HVnegContactorSts'
     boolean_T BM_HvilFeedback;         // '<Root>/BM_HvilFeedback'
-    int8_T BM_LowThermValue;           // '<Root>/BM_LowThermValue'
-    int8_T BM_HighThermValue;          // '<Root>/BM_HighThermValue'
-    int8_T BM_AvgThermValue;           // '<Root>/BM_AvgThermValue'
-    real_T BM_PackSOC;                 // '<Root>/BM_PackSOC'
-    int16_T VD_LFWheelSpeed;           // '<Root>/VD_LFWheelSpeed'
-    int16_T VD_RFWheelSpeed;           // '<Root>/VD_RFWheelSpeed'
   };
 
   // External outputs (root outports fed by signals with default storage)
@@ -310,6 +290,9 @@ class controller_autogen final
     boolean_T DI_DriverSpeaker;        // '<Root>/DI_DriverSpeaker'
     boolean_T DI_BrakeLightEn;         // '<Root>/DI_BrakeLightEn'
     uint8_T GOV_Status;                // '<Root>/GOV_Status'
+    uint8_T MI_Status;                 // '<Root>/MI_Status'
+    uint8_T Di_Status;                 // '<Root>/Di_Status'
+    uint8_T BM_Status;                 // '<Root>/BM_Status'
     boolean_T MI_InverterEn;           // '<Root>/MI_InverterEn'
   };
 
@@ -371,32 +354,9 @@ class controller_autogen final
   // Block states
   DW rtDW;
 
-  // private member function(s) for subsystem '<S4>/mi_left'
-  static void mi_left_Init(MI_STATUSES *rty_MI_motorStatus, uint8_T
-    *rty_AMK_bInverterOn_tx, uint8_T *rty_AMK_bDcOn_tx, uint8_T *rty_AMK_bEnable,
-    uint8_T *rty_AMK_bErrorReset, real32_T *rty_AMK_TargetVelocity, real32_T
-    *rty_AMK_TorqueLimitPositiv, real32_T *rty_AMK_TorqueLimitNegativ, real_T
-    *rty_MI_InverterEn);
-  static void mi_left(MI_CMD rtu_GOV_e_miCmd, boolean_T rtu_AMK_bDcOn_rx,
-                      boolean_T rtu_AMK_bError, boolean_T rtu_AMK_bInverterOn_rx,
-                      boolean_T rtu_AMK_bQuitDcOn, boolean_T
-                      rtu_AMK_bQuitInverterOn, boolean_T rtu_AMK_bSystemReady,
-                      real32_T rtu_VD_T_motorSpeedRequest, real32_T
-                      rtu_VD_T_motorTorqueLimitPositi, real32_T
-                      rtu_VD_T_motorTorqueLimitNegati, MI_STATUSES
-                      *rty_MI_motorStatus, uint8_T *rty_AMK_bInverterOn_tx,
-                      uint8_T *rty_AMK_bDcOn_tx, uint8_T *rty_AMK_bEnable,
-                      uint8_T *rty_AMK_bErrorReset, real32_T
-                      *rty_AMK_TargetVelocity, real32_T
-                      *rty_AMK_TorqueLimitPositiv, real32_T
-                      *rty_AMK_TorqueLimitNegativ, real_T *rty_MI_InverterEn,
-                      DW_mi_left *localDW);
-
   // Real-Time Model
   RT_MODEL rtM;
 };
-
-extern const controller_autogen::ConstB rtConstB;// constant block i/o
 
 // Constant parameters (default storage)
 extern const controller_autogen::ConstP rtConstP;
@@ -453,11 +413,7 @@ extern const controller_autogen::ConstP rtConstP;
 //  '<S23>'  : 'controller_autogen/motor_interface/mi_left'
 //  '<S24>'  : 'controller_autogen/motor_interface/mi_right'
 //  '<S25>'  : 'controller_autogen/simp_vd_interface/Running Avg'
-//  '<S26>'  : 'controller_autogen/simp_vd_interface/TC'
-//  '<S27>'  : 'controller_autogen/simp_vd_interface/avg'
-//  '<S28>'  : 'controller_autogen/simp_vd_interface/return greater'
-//  '<S29>'  : 'controller_autogen/simp_vd_interface/vd_screenshot_check'
-//  '<S30>'  : 'controller_autogen/simp_vd_interface/TC/vd_tc'
+//  '<S26>'  : 'controller_autogen/simp_vd_interface/vd_screenshot_check'
 
 #endif                                 // RTW_HEADER_controller_autogen_h_
 

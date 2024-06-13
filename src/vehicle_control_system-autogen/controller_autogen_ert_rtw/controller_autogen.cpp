@@ -7,9 +7,9 @@
 //
 // Code generated for Simulink model 'controller_autogen'.
 //
-// Model version                  : 1.86
+// Model version                  : 1.91
 // Simulink Coder version         : 9.8 (R2022b) 13-May-2022
-// C/C++ source code generated on : Mon Apr 29 17:06:21 2024
+// C/C++ source code generated on : Thu Jun 13 00:14:43 2024
 //
 // Target selection: ert.tlc
 // Embedded hardware selection: ARM Compatible->ARM Cortex-M
@@ -23,57 +23,14 @@
 #include <cmath>
 #include <cstring>
 
-// Named constants for Chart: '<S4>/mi_left'
-const uint8_T IN_AMK_errorDetected{ 1U };
-
-const uint8_T IN_AMK_errorReset{ 2U };
-
-const uint8_T IN_AMK_ready{ 3U };
-
-const uint8_T IN_AMK_running{ 4U };
-
-const uint8_T IN_AMK_shutdown{ 5U };
-
-const uint8_T IN_AMK_startup{ 6U };
-
-const uint8_T IN_NO_ACTIVE_CHILD{ 0U };
-
-const uint8_T IN_commandOn{ 1U };
-
-const uint8_T IN_enforceSetpointsZero{ 2U };
-
-const uint8_T IN_enforceSetpointsZero_k{ 1U };
-
-const uint8_T IN_motorOff_waitingForGov{ 7U };
-
-const uint8_T IN_sendReset{ 2U };
-
-const uint8_T IN_toggleDCon{ 3U };
-
-const uint8_T IN_toggleEnable{ 3U };
-
-const uint8_T IN_toggleReset{ 4U };
-
-const uint8_T IN_waiting_sysReady{ 4U };
-
 // Named constants for Chart: '<S1>/battery_monitor'
 const uint8_T IN_InitialState{ 1U };
-
-const uint8_T IN_InitializePrechargeState{ 1U };
 
 const uint8_T IN_InterruptState{ 2U };
 
 const uint8_T IN_LowSoC{ 3U };
 
-const uint8_T IN_NO_ACTIVE_CHILD_i{ 0U };
-
-const uint8_T IN_PrechargeState{ 2U };
-
-const uint8_T IN_RunningState{ 3U };
-
-const uint8_T IN_StartupState{ 4U };
-
-const uint8_T IN_StartupState1{ 5U };
+const uint8_T IN_NO_ACTIVE_CHILD{ 0U };
 
 const uint8_T IN_StartupSuperstate{ 4U };
 
@@ -144,12 +101,36 @@ const uint8_T IN_Send_ReadyToDrive{ 4U };
 
 const uint8_T IN_Vehicle_shutdown{ 6U };
 
-// Named constants for Chart: '<S26>/vd_tc'
-const uint8_T IN_TC_off{ 1U };
+// Named constants for Chart: '<S4>/mi_left'
+const uint8_T IN_AMK_errorDetected{ 1U };
 
-const uint8_T IN_TC_on{ 2U };
+const uint8_T IN_AMK_errorReset{ 2U };
 
-const uint8_T IN_TC_on1{ 3U };
+const uint8_T IN_AMK_ready{ 3U };
+
+const uint8_T IN_AMK_running{ 4U };
+
+const uint8_T IN_AMK_shutdown{ 5U };
+
+const uint8_T IN_AMK_startup{ 6U };
+
+const uint8_T IN_commandOn{ 1U };
+
+const uint8_T IN_enforceSetpointsZero{ 2U };
+
+const uint8_T IN_enforceSetpointsZero_b{ 1U };
+
+const uint8_T IN_motorOff_waitingForGov{ 7U };
+
+const uint8_T IN_sendReset{ 2U };
+
+const uint8_T IN_toggleDCon{ 3U };
+
+const uint8_T IN_toggleEnable{ 3U };
+
+const uint8_T IN_toggleReset{ 4U };
+
+const uint8_T IN_waiting_sysReady{ 4U };
 
 // Named constants for Chart: '<S5>/vd_screenshot_check'
 const uint8_T IN_Run{ 1U };
@@ -276,245 +257,6 @@ static real_T look1_binlx(real_T u0, const real_T bp0[], const real_T table[],
   return (table[iLeft + 1U] - yL_0d0) * frac + yL_0d0;
 }
 
-//
-// System initialize for atomic system:
-//    '<S4>/mi_left'
-//    '<S4>/mi_right'
-//
-void controller_autogen::mi_left_Init(MI_STATUSES *rty_MI_motorStatus, uint8_T
-  *rty_AMK_bInverterOn_tx, uint8_T *rty_AMK_bDcOn_tx, uint8_T *rty_AMK_bEnable,
-  uint8_T *rty_AMK_bErrorReset, real32_T *rty_AMK_TargetVelocity, real32_T
-  *rty_AMK_TorqueLimitPositiv, real32_T *rty_AMK_TorqueLimitNegativ, real_T
-  *rty_MI_InverterEn)
-{
-  *rty_MI_motorStatus = MI_STATUSES::UNKNOWN;
-  *rty_AMK_bInverterOn_tx = 0U;
-  *rty_AMK_bDcOn_tx = 0U;
-  *rty_AMK_bEnable = 0U;
-  *rty_AMK_bErrorReset = 0U;
-  *rty_AMK_TargetVelocity = 0.0F;
-  *rty_AMK_TorqueLimitPositiv = 0.0F;
-  *rty_AMK_TorqueLimitNegativ = 0.0F;
-  *rty_MI_InverterEn = 0.0;
-}
-
-//
-// Output and update for atomic system:
-//    '<S4>/mi_left'
-//    '<S4>/mi_right'
-//
-void controller_autogen::mi_left(MI_CMD rtu_GOV_e_miCmd, boolean_T
-  rtu_AMK_bDcOn_rx, boolean_T rtu_AMK_bError, boolean_T rtu_AMK_bInverterOn_rx,
-  boolean_T rtu_AMK_bQuitDcOn, boolean_T rtu_AMK_bQuitInverterOn, boolean_T
-  rtu_AMK_bSystemReady, real32_T rtu_VD_T_motorSpeedRequest, real32_T
-  rtu_VD_T_motorTorqueLimitPositi, real32_T rtu_VD_T_motorTorqueLimitNegati,
-  MI_STATUSES *rty_MI_motorStatus, uint8_T *rty_AMK_bInverterOn_tx, uint8_T
-  *rty_AMK_bDcOn_tx, uint8_T *rty_AMK_bEnable, uint8_T *rty_AMK_bErrorReset,
-  real32_T *rty_AMK_TargetVelocity, real32_T *rty_AMK_TorqueLimitPositiv,
-  real32_T *rty_AMK_TorqueLimitNegativ, real_T *rty_MI_InverterEn, DW_mi_left
-  *localDW)
-{
-  if (localDW->temporalCounter_i1 < 511U) {
-    localDW->temporalCounter_i1 = static_cast<uint16_T>
-      (localDW->temporalCounter_i1 + 1U);
-  }
-
-  // Chart: '<S4>/mi_left'
-  if (localDW->is_active_c9_motor_interface_li == 0U) {
-    localDW->is_active_c9_motor_interface_li = 1U;
-    localDW->is_c9_motor_interface_lib = IN_motorOff_waitingForGov;
-    *rty_MI_motorStatus = MI_STATUSES::OFF;
-    *rty_AMK_bInverterOn_tx = 0U;
-    *rty_AMK_bDcOn_tx = 0U;
-    *rty_AMK_bEnable = 0U;
-    *rty_AMK_bErrorReset = 0U;
-    *rty_AMK_TargetVelocity = 0.0F;
-    *rty_AMK_TorqueLimitPositiv = 0.0F;
-    *rty_AMK_TorqueLimitNegativ = 0.0F;
-    *rty_MI_InverterEn = 0.0;
-  } else {
-    switch (localDW->is_c9_motor_interface_lib) {
-     case IN_AMK_errorDetected:
-      if (rtu_GOV_e_miCmd == MI_CMD::ERR_RESET) {
-        localDW->is_c9_motor_interface_lib = IN_AMK_errorReset;
-        localDW->is_AMK_errorReset = IN_enforceSetpointsZero_k;
-        *rty_AMK_TargetVelocity = 0.0F;
-        *rty_AMK_TorqueLimitPositiv = 0.0F;
-        *rty_AMK_TorqueLimitNegativ = 0.0F;
-        *rty_AMK_bInverterOn_tx = 0U;
-      }
-      break;
-
-     case IN_AMK_errorReset:
-      switch (localDW->is_AMK_errorReset) {
-       case IN_enforceSetpointsZero_k:
-        *rty_AMK_bInverterOn_tx = 0U;
-        if (!rtu_AMK_bInverterOn_rx) {
-          localDW->is_AMK_errorReset = IN_toggleEnable;
-          localDW->temporalCounter_i1 = 0U;
-          *rty_AMK_bEnable = 0U;
-        }
-        break;
-
-       case IN_sendReset:
-        *rty_AMK_bErrorReset = 1U;
-        if (localDW->temporalCounter_i1 >= 500U) {
-          localDW->is_AMK_errorReset = IN_toggleReset;
-          *rty_AMK_bErrorReset = 0U;
-        }
-        break;
-
-       case IN_toggleEnable:
-        *rty_AMK_bEnable = 0U;
-        if (localDW->temporalCounter_i1 >= 500U) {
-          localDW->is_AMK_errorReset = IN_sendReset;
-          localDW->temporalCounter_i1 = 0U;
-          *rty_AMK_bErrorReset = 1U;
-        }
-        break;
-
-       default:
-        // case IN_toggleReset:
-        *rty_AMK_bErrorReset = 0U;
-        if (rtu_AMK_bSystemReady) {
-          localDW->is_AMK_errorReset = IN_NO_ACTIVE_CHILD;
-          localDW->is_c9_motor_interface_lib = IN_motorOff_waitingForGov;
-          *rty_MI_motorStatus = MI_STATUSES::OFF;
-          *rty_AMK_bInverterOn_tx = 0U;
-          *rty_AMK_bDcOn_tx = 0U;
-          *rty_AMK_bEnable = 0U;
-          *rty_AMK_bErrorReset = 0U;
-          *rty_AMK_TargetVelocity = 0.0F;
-          *rty_AMK_TorqueLimitPositiv = 0.0F;
-          *rty_AMK_TorqueLimitNegativ = 0.0F;
-          *rty_MI_InverterEn = 0.0;
-        }
-        break;
-      }
-      break;
-
-     case IN_AMK_ready:
-      if (rtu_AMK_bError) {
-        localDW->is_c9_motor_interface_lib = IN_AMK_errorDetected;
-        *rty_MI_motorStatus = MI_STATUSES::MI_STS_ERROR;
-      } else if (rtu_AMK_bQuitInverterOn) {
-        localDW->is_c9_motor_interface_lib = IN_AMK_running;
-      } else {
-        *rty_MI_motorStatus = MI_STATUSES::READY;
-        *rty_MI_InverterEn = 1.0;
-      }
-      break;
-
-     case IN_AMK_running:
-      if (rtu_AMK_bError) {
-        localDW->is_c9_motor_interface_lib = IN_AMK_errorDetected;
-        *rty_MI_motorStatus = MI_STATUSES::MI_STS_ERROR;
-      } else if (rtu_GOV_e_miCmd == MI_CMD::CMD_SHUTDOWN) {
-        localDW->is_c9_motor_interface_lib = IN_AMK_shutdown;
-        localDW->temporalCounter_i1 = 0U;
-        *rty_AMK_TargetVelocity = 0.0F;
-        *rty_AMK_TorqueLimitPositiv = 0.0F;
-        *rty_AMK_TorqueLimitNegativ = 0.0F;
-        *rty_MI_InverterEn = 0.0;
-      } else {
-        *rty_MI_motorStatus = MI_STATUSES::RUNNING;
-        *rty_AMK_TargetVelocity = rtu_VD_T_motorSpeedRequest;
-        *rty_AMK_TorqueLimitPositiv = rtu_VD_T_motorTorqueLimitPositi;
-        *rty_AMK_TorqueLimitNegativ = rtu_VD_T_motorTorqueLimitNegati;
-      }
-      break;
-
-     case IN_AMK_shutdown:
-      if (localDW->temporalCounter_i1 >= 500U) {
-        localDW->is_c9_motor_interface_lib = IN_motorOff_waitingForGov;
-        *rty_MI_motorStatus = MI_STATUSES::OFF;
-        *rty_AMK_bInverterOn_tx = 0U;
-        *rty_AMK_bDcOn_tx = 0U;
-        *rty_AMK_bEnable = 0U;
-        *rty_AMK_bErrorReset = 0U;
-        *rty_AMK_TargetVelocity = 0.0F;
-        *rty_AMK_TorqueLimitPositiv = 0.0F;
-        *rty_AMK_TorqueLimitNegativ = 0.0F;
-        *rty_MI_InverterEn = 0.0;
-      }
-      break;
-
-     case IN_AMK_startup:
-      switch (localDW->is_AMK_startup) {
-       case IN_commandOn:
-        *rty_AMK_bEnable = 1U;
-        *rty_AMK_bInverterOn_tx = 1U;
-        if (rtu_AMK_bInverterOn_rx) {
-          localDW->is_AMK_startup = IN_NO_ACTIVE_CHILD;
-          localDW->is_c9_motor_interface_lib = IN_AMK_ready;
-          *rty_MI_motorStatus = MI_STATUSES::READY;
-          *rty_MI_InverterEn = 1.0;
-        } else if (rtu_AMK_bError) {
-          localDW->is_AMK_startup = IN_NO_ACTIVE_CHILD;
-          localDW->is_c9_motor_interface_lib = IN_AMK_errorDetected;
-          *rty_MI_motorStatus = MI_STATUSES::MI_STS_ERROR;
-        }
-        break;
-
-       case IN_enforceSetpointsZero:
-        if (localDW->temporalCounter_i1 >= 100U) {
-          localDW->is_AMK_startup = IN_commandOn;
-          *rty_AMK_bEnable = 1U;
-          *rty_AMK_bInverterOn_tx = 1U;
-        } else if (rtu_AMK_bError) {
-          localDW->is_AMK_startup = IN_NO_ACTIVE_CHILD;
-          localDW->is_c9_motor_interface_lib = IN_AMK_errorDetected;
-          *rty_MI_motorStatus = MI_STATUSES::MI_STS_ERROR;
-        }
-        break;
-
-       case IN_toggleDCon:
-        *rty_AMK_bDcOn_tx = 1U;
-        if (rtu_AMK_bDcOn_rx && rtu_AMK_bQuitDcOn) {
-          localDW->is_AMK_startup = IN_enforceSetpointsZero;
-          localDW->temporalCounter_i1 = 0U;
-          *rty_AMK_TargetVelocity = 0.0F;
-          *rty_AMK_TorqueLimitPositiv = 0.0F;
-          *rty_AMK_TorqueLimitNegativ = 0.0F;
-        } else if (rtu_AMK_bError) {
-          localDW->is_AMK_startup = IN_NO_ACTIVE_CHILD;
-          localDW->is_c9_motor_interface_lib = IN_AMK_errorDetected;
-          *rty_MI_motorStatus = MI_STATUSES::MI_STS_ERROR;
-        }
-        break;
-
-       default:
-        // case IN_waiting_sysReady:
-        if (rtu_AMK_bSystemReady) {
-          localDW->is_AMK_startup = IN_toggleDCon;
-          *rty_AMK_bDcOn_tx = 1U;
-        } else if (rtu_AMK_bError) {
-          localDW->is_AMK_startup = IN_NO_ACTIVE_CHILD;
-          localDW->is_c9_motor_interface_lib = IN_AMK_errorDetected;
-          *rty_MI_motorStatus = MI_STATUSES::MI_STS_ERROR;
-        }
-        break;
-      }
-      break;
-
-     default:
-      // case IN_motorOff_waitingForGov:
-      *rty_AMK_bInverterOn_tx = 0U;
-      *rty_AMK_bDcOn_tx = 0U;
-      *rty_AMK_bEnable = 0U;
-      *rty_AMK_bErrorReset = 0U;
-      if (rtu_GOV_e_miCmd == MI_CMD::CMD_STARTUP) {
-        localDW->is_c9_motor_interface_lib = IN_AMK_startup;
-        localDW->is_AMK_startup = IN_waiting_sysReady;
-        *rty_MI_motorStatus = MI_STATUSES::STARTUP;
-      }
-      break;
-    }
-  }
-
-  // End of Chart: '<S4>/mi_left'
-}
-
 // Model step function
 void controller_autogen::step()
 {
@@ -523,10 +265,12 @@ void controller_autogen::step()
   real_T rtb_Merge;
   int32_T rtb_Switch;
   boolean_T rtb_NOT1;
-  boolean_T rtb_NOT_b;
-  boolean_T rtb_NOT_ea;
+  boolean_T rtb_NOT_dg;
+  boolean_T rtb_NOT_i;
   boolean_T rtb_b_DriverInterfaceError;
   BM_STATUSES rtb_GOV_e_bmSts;
+  DI_STATUSES rtb_GOV_e_diSts;
+  MI_STATUSES rtb_Switch_m;
   MI_STATUSES rtb_overallMotorState;
 
   // Chart: '<S3>/governer_stateflow' incorporates:
@@ -534,14 +278,15 @@ void controller_autogen::step()
   //   Delay: '<S3>/Delay1'
   //   Delay: '<S3>/Delay2'
 
-  if (rtDW.temporalCounter_i1 < 2047U) {
-    rtDW.temporalCounter_i1 = static_cast<uint16_T>(rtDW.temporalCounter_i1 + 1U);
+  if (rtDW.temporalCounter_i1_j < 2047U) {
+    rtDW.temporalCounter_i1_j = static_cast<uint16_T>(rtDW.temporalCounter_i1_j
+      + 1U);
   }
 
   if (rtDW.is_active_c8_governor_lib == 0U) {
     rtDW.is_active_c8_governor_lib = 1U;
     rtDW.is_c8_governor_lib = IN_Initialize_outputs;
-    rtDW.temporalCounter_i1 = 0U;
+    rtDW.temporalCounter_i1_j = 0U;
     rtDW.GOV_e_govSts = GOV_STATUSES::GOV_INIT;
     rtDW.GOV_e_diCmd = DI_CMD::DI_CMD_INIT;
     rtDW.GOV_e_bmCmd = BM_CMD::BM_CMD_INIT;
@@ -552,7 +297,7 @@ void controller_autogen::step()
       rtDW.GOV_e_govSts = GOV_STATUSES::GOV_INIT;
       rtDW.GOV_e_diCmd = DI_CMD::DI_CMD_INIT;
       rtDW.GOV_e_bmCmd = BM_CMD::BM_CMD_INIT;
-      if ((rtDW.temporalCounter_i1 >= 2000U) && (rtDW.Delay2_DSTATE ==
+      if ((rtDW.temporalCounter_i1_j >= 2000U) && (rtDW.Delay2_DSTATE ==
            DI_STATUSES::HV_START_REQ)) {
         rtDW.is_c8_governor_lib = IN_STARTUP;
         rtDW.GOV_e_govSts = GOV_STATUSES::GOV_STARTUP;
@@ -597,25 +342,25 @@ void controller_autogen::step()
       {
         rtDW.GOV_e_govSts = GOV_STATUSES::GOV_STARTUP;
         if (rtDW.Delay_DSTATE == BM_STATUSES::HVIL_INTERRUPT) {
-          rtDW.is_STARTUP = IN_NO_ACTIVE_CHILD_i;
+          rtDW.is_STARTUP = IN_NO_ACTIVE_CHILD;
           rtDW.is_c8_governor_lib = IN_STARTUP_ERROR;
           rtDW.is_STARTUP_ERROR = IN_HV_startup_error;
           rtDW.GOV_e_govSts = GOV_STATUSES::HV_STARTUP_ERROR;
           rtDW.GOV_e_diCmd = DI_CMD::DI_SHUTDOWN;
         } else if (rtDW.Delay2_DSTATE == DI_STATUSES::DI_ERROR) {
-          rtDW.is_STARTUP = IN_NO_ACTIVE_CHILD_i;
+          rtDW.is_STARTUP = IN_NO_ACTIVE_CHILD;
           rtDW.is_c8_governor_lib = IN_STARTUP_ERROR;
           rtDW.is_STARTUP_ERROR = IN_DriverInterface_Error;
           rtDW.GOV_e_govSts = GOV_STATUSES::GOV_DI_ERROR;
         } else if (rtDW.Delay1_DSTATE == MI_STATUSES::MI_STS_ERROR) {
           if (rtDW.motorStartCount >= 5) {
-            rtDW.is_STARTUP = IN_NO_ACTIVE_CHILD_i;
+            rtDW.is_STARTUP = IN_NO_ACTIVE_CHILD;
             rtDW.is_c8_governor_lib = IN_STARTUP_ERROR;
             rtDW.is_STARTUP_ERROR = IN_Motor_faulted;
             rtDW.GOV_e_miCmd = MI_CMD::CMD_SHUTDOWN;
             rtDW.GOV_e_govSts = GOV_STATUSES::MOTOR_STARTUP_ERROR;
           } else {
-            rtDW.is_STARTUP = IN_NO_ACTIVE_CHILD_i;
+            rtDW.is_STARTUP = IN_NO_ACTIVE_CHILD;
             rtDW.is_c8_governor_lib = IN_STARTUP_ERROR;
             rtDW.is_STARTUP_ERROR = IN_Err_reset;
           }
@@ -657,7 +402,7 @@ void controller_autogen::step()
             // case IN_Send_ReadyToDrive:
             rtDW.GOV_e_diCmd = DI_CMD::READY_TO_DRIVE;
             if (rtDW.Delay2_DSTATE == DI_STATUSES::DI_RUNNING) {
-              rtDW.is_STARTUP = IN_NO_ACTIVE_CHILD_i;
+              rtDW.is_STARTUP = IN_NO_ACTIVE_CHILD;
               rtDW.is_c8_governor_lib = IN_RUNNING;
               rtDW.GOV_e_govSts = GOV_STATUSES::GOV_RUNNING;
             }
@@ -675,7 +420,7 @@ void controller_autogen::step()
 
        case IN_Err_reset:
         if (rtDW.Delay1_DSTATE == MI_STATUSES::OFF) {
-          rtDW.is_STARTUP_ERROR = IN_NO_ACTIVE_CHILD_i;
+          rtDW.is_STARTUP_ERROR = IN_NO_ACTIVE_CHILD;
           rtDW.is_c8_governor_lib = IN_STARTUP;
           rtDW.GOV_e_govSts = GOV_STATUSES::GOV_STARTUP;
           rtDW.is_STARTUP = IN_HV_startup;
@@ -689,9 +434,9 @@ void controller_autogen::step()
         rtDW.GOV_e_govSts = GOV_STATUSES::HV_STARTUP_ERROR;
         rtDW.GOV_e_diCmd = DI_CMD::DI_SHUTDOWN;
         if (rtDW.Delay_DSTATE == BM_STATUSES::BM_INIT) {
-          rtDW.is_STARTUP_ERROR = IN_NO_ACTIVE_CHILD_i;
+          rtDW.is_STARTUP_ERROR = IN_NO_ACTIVE_CHILD;
           rtDW.is_c8_governor_lib = IN_Initialize_outputs;
-          rtDW.temporalCounter_i1 = 0U;
+          rtDW.temporalCounter_i1_j = 0U;
           rtDW.GOV_e_govSts = GOV_STATUSES::GOV_INIT;
           rtDW.GOV_e_diCmd = DI_CMD::DI_CMD_INIT;
           rtDW.GOV_e_bmCmd = BM_CMD::BM_CMD_INIT;
@@ -712,7 +457,7 @@ void controller_autogen::step()
       rtDW.GOV_e_diCmd = DI_CMD::DI_SHUTDOWN;
       if (rtDW.Delay_DSTATE == BM_STATUSES::BM_INIT) {
         rtDW.is_c8_governor_lib = IN_Initialize_outputs;
-        rtDW.temporalCounter_i1 = 0U;
+        rtDW.temporalCounter_i1_j = 0U;
         rtDW.GOV_e_govSts = GOV_STATUSES::GOV_INIT;
         rtDW.GOV_e_diCmd = DI_CMD::DI_CMD_INIT;
         rtDW.GOV_e_bmCmd = BM_CMD::BM_CMD_INIT;
@@ -737,8 +482,8 @@ void controller_autogen::step()
   //   RelationalOperator: '<S19>/Lower Test'
   //   RelationalOperator: '<S19>/Upper Test'
 
-  rtb_NOT_ea = ((!(rtU.DI_FrontBrakePressure >= 0.0)) ||
-                (!(rtU.DI_FrontBrakePressure <= 1.0)));
+  rtb_NOT_i = ((!(rtU.DI_FrontBrakePressure >= 0.0)) ||
+               (!(rtU.DI_FrontBrakePressure <= 1.0)));
 
   // Logic: '<S15>/NOT' incorporates:
   //   Constant: '<S15>/LowerPotentiometerLimit1'
@@ -748,8 +493,8 @@ void controller_autogen::step()
   //   RelationalOperator: '<S20>/Lower Test'
   //   RelationalOperator: '<S20>/Upper Test'
 
-  rtb_NOT_b = ((!(rtU.DI_RearBrakePressure >= 0.0)) ||
-               (!(rtU.DI_RearBrakePressure <= 1.0)));
+  rtb_NOT_dg = ((!(rtU.DI_RearBrakePressure >= 0.0)) ||
+                (!(rtU.DI_RearBrakePressure <= 1.0)));
 
   // Logic: '<S2>/b_DriverInterfaceError' incorporates:
   //   Abs: '<S8>/Abs'
@@ -757,31 +502,23 @@ void controller_autogen::step()
   //   Constant: '<S12>/UpperPotentiometerLimit1'
   //   Constant: '<S13>/LowerPotentiometerLimit1'
   //   Constant: '<S13>/UpperPotentiometerLimit1'
-  //   Constant: '<S16>/LowerPotentiometerLimit1'
-  //   Constant: '<S16>/UpperPotentiometerLimit1'
   //   Constant: '<S8>/Constant'
   //   Inport: '<Root>/DI_AccelPedalPosition1'
   //   Inport: '<Root>/DI_AccelPedalPosition2'
-  //   Inport: '<Root>/DI_SteeringAngle'
   //   Logic: '<S12>/NOT'
   //   Logic: '<S13>/NOT'
-  //   Logic: '<S16>/NOT'
   //   Logic: '<S17>/FixPt Logical Operator'
   //   Logic: '<S18>/FixPt Logical Operator'
-  //   Logic: '<S21>/FixPt Logical Operator'
   //   RelationalOperator: '<S17>/Lower Test'
   //   RelationalOperator: '<S17>/Upper Test'
   //   RelationalOperator: '<S18>/Lower Test'
   //   RelationalOperator: '<S18>/Upper Test'
-  //   RelationalOperator: '<S21>/Lower Test'
-  //   RelationalOperator: '<S21>/Upper Test'
   //   RelationalOperator: '<S8>/GreaterThan'
   //   Sum: '<S8>/Subtract'
 
   rtb_b_DriverInterfaceError = ((!(rtU.DI_AccelPedalPosition1 >= 0.0)) ||
     (!(rtU.DI_AccelPedalPosition1 <= 1.0)) || ((!(rtU.DI_AccelPedalPosition2 >=
-    0.0)) || (!(rtU.DI_AccelPedalPosition2 <= 1.0))) || rtb_NOT_ea || rtb_NOT_b ||
-    ((!(rtU.DI_SteeringAngle >= 0.0)) || (!(rtU.DI_SteeringAngle <= 1.0))) ||
+    0.0)) || (!(rtU.DI_AccelPedalPosition2 <= 1.0))) || rtb_NOT_i || rtb_NOT_dg ||
     (std::abs(rtU.DI_AccelPedalPosition1 - rtU.DI_AccelPedalPosition2) > 0.1));
 
   // MinMax: '<S2>/Max' incorporates:
@@ -799,9 +536,7 @@ void controller_autogen::step()
   if (rtDW.is_active_c2_driver_interface_l == 0U) {
     rtDW.is_active_c2_driver_interface_l = 1U;
     rtDW.is_c2_driver_interface_lib = IN_INIT;
-
-    // Update for Delay: '<S3>/Delay2'
-    rtDW.Delay2_DSTATE = DI_STATUSES::DI_STS_INIT;
+    rtb_GOV_e_diSts = DI_STATUSES::DI_STS_INIT;
     rtDW.b_ReadyToDrive = false;
 
     // Outport: '<Root>/DI_DriverSpeaker'
@@ -809,25 +544,20 @@ void controller_autogen::step()
   } else {
     switch (rtDW.is_c2_driver_interface_lib) {
      case IN_DI_error:
-      // Update for Delay: '<S3>/Delay2'
-      rtDW.Delay2_DSTATE = DI_STATUSES::DI_ERROR;
+      rtb_GOV_e_diSts = DI_STATUSES::DI_ERROR;
       break;
 
      case IN_DI_running:
       if (rtb_b_DriverInterfaceError) {
-        rtDW.is_Ready_to_drive = IN_NO_ACTIVE_CHILD_i;
-        rtDW.is_DI_running = IN_NO_ACTIVE_CHILD_i;
+        rtDW.is_Ready_to_drive = IN_NO_ACTIVE_CHILD;
+        rtDW.is_DI_running = IN_NO_ACTIVE_CHILD;
         rtDW.is_c2_driver_interface_lib = IN_DI_error;
-
-        // Update for Delay: '<S3>/Delay2'
-        rtDW.Delay2_DSTATE = DI_STATUSES::DI_ERROR;
+        rtb_GOV_e_diSts = DI_STATUSES::DI_ERROR;
       } else if (rtDW.GOV_e_diCmd == DI_CMD::DI_SHUTDOWN) {
-        rtDW.is_Ready_to_drive = IN_NO_ACTIVE_CHILD_i;
-        rtDW.is_DI_running = IN_NO_ACTIVE_CHILD_i;
+        rtDW.is_Ready_to_drive = IN_NO_ACTIVE_CHILD;
+        rtDW.is_DI_running = IN_NO_ACTIVE_CHILD;
         rtDW.is_c2_driver_interface_lib = IN_INIT;
-
-        // Update for Delay: '<S3>/Delay2'
-        rtDW.Delay2_DSTATE = DI_STATUSES::DI_STS_INIT;
+        rtb_GOV_e_diSts = DI_STATUSES::DI_STS_INIT;
         rtDW.b_ReadyToDrive = false;
 
         // Outport: '<Root>/DI_DriverSpeaker'
@@ -835,25 +565,19 @@ void controller_autogen::step()
       } else {
         switch (rtDW.is_DI_running) {
          case IN_Driver_requested_start:
-          // Update for Delay: '<S3>/Delay2'
-          rtDW.Delay2_DSTATE = DI_STATUSES::HV_START_REQ;
+          rtb_GOV_e_diSts = DI_STATUSES::HV_START_REQ;
           if ((rtDW.GOV_e_diCmd == DI_CMD::HV_ON) && rtb_NOT1) {
             rtDW.is_DI_running = IN_Motor_start_request;
-
-            // Update for Delay: '<S3>/Delay2'
-            rtDW.Delay2_DSTATE = DI_STATUSES::READY_TO_DRIVE_REQ;
+            rtb_GOV_e_diSts = DI_STATUSES::READY_TO_DRIVE_REQ;
           }
           break;
 
          case IN_Motor_start_request:
-          // Update for Delay: '<S3>/Delay2'
-          rtDW.Delay2_DSTATE = DI_STATUSES::READY_TO_DRIVE_REQ;
+          rtb_GOV_e_diSts = DI_STATUSES::READY_TO_DRIVE_REQ;
           if ((rtDW.GOV_e_diCmd == DI_CMD::READY_TO_DRIVE) && (rtb_Max > 0.1)) {
             rtDW.is_DI_running = IN_Ready_to_drive;
             rtDW.b_ReadyToDrive = true;
-
-            // Update for Delay: '<S3>/Delay2'
-            rtDW.Delay2_DSTATE = DI_STATUSES::DI_RUNNING;
+            rtb_GOV_e_diSts = DI_STATUSES::DI_RUNNING;
             rtDW.is_Ready_to_drive = IN_SpeakerOn_;
             rtDW.temporalCounter_i1_h = 0U;
 
@@ -864,17 +588,13 @@ void controller_autogen::step()
 
          case IN_Ready_to_drive:
           rtDW.b_ReadyToDrive = true;
-
-          // Update for Delay: '<S3>/Delay2'
-          rtDW.Delay2_DSTATE = DI_STATUSES::DI_RUNNING;
+          rtb_GOV_e_diSts = DI_STATUSES::DI_RUNNING;
           if (rtDW.GOV_e_diCmd == DI_CMD::RUN_ERROR) {
-            rtDW.is_Ready_to_drive = IN_NO_ACTIVE_CHILD_i;
-            rtDW.is_DI_running = IN_NO_ACTIVE_CHILD_i;
+            rtDW.is_Ready_to_drive = IN_NO_ACTIVE_CHILD;
+            rtDW.is_DI_running = IN_NO_ACTIVE_CHILD;
             rtDW.is_c2_driver_interface_lib = IN_Vehicle_coasting;
             rtDW.b_ReadyToDrive = false;
-
-            // Update for Delay: '<S3>/Delay2'
-            rtDW.Delay2_DSTATE = DI_STATUSES::DI_IDLE;
+            rtb_GOV_e_diSts = DI_STATUSES::DI_IDLE;
           } else if (rtDW.is_Ready_to_drive == IN_SpeakerOff) {
             // Outport: '<Root>/DI_DriverSpeaker'
             rtY.DI_DriverSpeaker = false;
@@ -892,14 +612,11 @@ void controller_autogen::step()
           break;
 
          default:
-          // Update for Delay: '<S3>/Delay2'
           // case IN_Waiting_for_driver:
-          rtDW.Delay2_DSTATE = DI_STATUSES::WAITING_FOR_DRVR;
+          rtb_GOV_e_diSts = DI_STATUSES::WAITING_FOR_DRVR;
           if (rtb_NOT1) {
             rtDW.is_DI_running = IN_Driver_requested_start;
-
-            // Update for Delay: '<S3>/Delay2'
-            rtDW.Delay2_DSTATE = DI_STATUSES::HV_START_REQ;
+            rtb_GOV_e_diSts = DI_STATUSES::HV_START_REQ;
           }
           break;
         }
@@ -907,8 +624,7 @@ void controller_autogen::step()
       break;
 
      case IN_INIT:
-      // Update for Delay: '<S3>/Delay2'
-      rtDW.Delay2_DSTATE = DI_STATUSES::DI_STS_INIT;
+      rtb_GOV_e_diSts = DI_STATUSES::DI_STS_INIT;
       rtDW.b_ReadyToDrive = false;
 
       // Outport: '<Root>/DI_DriverSpeaker'
@@ -916,18 +632,14 @@ void controller_autogen::step()
       if (rtDW.GOV_e_diCmd == DI_CMD::DI_CMD_INIT) {
         rtDW.is_c2_driver_interface_lib = IN_DI_running;
         rtDW.is_DI_running = IN_Waiting_for_driver;
-
-        // Update for Delay: '<S3>/Delay2'
-        rtDW.Delay2_DSTATE = DI_STATUSES::WAITING_FOR_DRVR;
+        rtb_GOV_e_diSts = DI_STATUSES::WAITING_FOR_DRVR;
       }
       break;
 
      default:
       // case IN_Vehicle_coasting:
       rtDW.b_ReadyToDrive = false;
-
-      // Update for Delay: '<S3>/Delay2'
-      rtDW.Delay2_DSTATE = DI_STATUSES::DI_IDLE;
+      rtb_GOV_e_diSts = DI_STATUSES::DI_IDLE;
       break;
     }
   }
@@ -968,7 +680,7 @@ void controller_autogen::step()
   //   Constant: '<S2>/Constant1'
   //   Logic: '<S2>/OR'
 
-  if (rtb_NOT_b || rtb_NOT_ea) {
+  if (rtb_NOT_dg || rtb_NOT_i) {
     rtb_Max = 0.0;
   }
 
@@ -981,18 +693,18 @@ void controller_autogen::step()
   rtb_Switch = (rtb_Max > 0.1);
 
   // Chart: '<S5>/vd_screenshot_check'
-  if (rtDW.is_active_c3_simp_vd_lib == 0U) {
-    rtDW.is_active_c3_simp_vd_lib = 1U;
-    rtDW.is_c3_simp_vd_lib = IN_Run;
-  } else if (rtDW.is_c3_simp_vd_lib == IN_Run) {
+  if (rtDW.is_active_c3_controller_autogen == 0U) {
+    rtDW.is_active_c3_controller_autogen = 1U;
+    rtDW.is_c3_controller_autogen = IN_Run;
+  } else if (rtDW.is_c3_controller_autogen == IN_Run) {
     if ((rtb_Merge >= 0.25) && (rtb_Switch != 0)) {
-      rtDW.is_c3_simp_vd_lib = IN_Stop;
+      rtDW.is_c3_controller_autogen = IN_Stop;
       rtb_Merge = 0.0;
     }
 
     // case IN_Stop:
   } else if ((rtb_Merge < 0.05) && (rtb_Switch == 0)) {
-    rtDW.is_c3_simp_vd_lib = IN_Run;
+    rtDW.is_c3_controller_autogen = IN_Run;
   } else {
     rtb_Merge = 0.0;
   }
@@ -1000,7 +712,7 @@ void controller_autogen::step()
   // End of Chart: '<S5>/vd_screenshot_check'
 
   // Lookup_n-D: '<S5>/%pedal to %torque' incorporates:
-  //   Sum: '<S26>/Subtract'
+  //   Product: '<S25>/Divide'
 
   rtDW.pedaltotorque = look1_binlx(rtb_Merge, rtConstP.pedaltotorque_bp01Data,
     rtConstP.pedaltotorque_tableData, 100U);
@@ -1024,73 +736,611 @@ void controller_autogen::step()
   rtb_Merge /= 11.0;
 
   // Chart: '<S4>/mi_right' incorporates:
-  //   DataTypeConversion: '<S4>/Cast To Single1'
   //   Inport: '<Root>/AMK1_bDcOn'
   //   Inport: '<Root>/AMK1_bError'
   //   Inport: '<Root>/AMK1_bInverterOn'
   //   Inport: '<Root>/AMK1_bQuitDcOn'
   //   Inport: '<Root>/AMK1_bQuitInverterOn'
-  //   Inport: '<Root>/AMK1_bSystemReady'
-  //   Outport: '<Root>/AMK1_TargetVelocity'
-  //   Outport: '<Root>/AMK1_TorqueLimitNegativ'
-  //   Outport: '<Root>/AMK1_TorqueLimitPositiv'
-  //   Outport: '<Root>/AMK1_bDcOn_tx'
-  //   Outport: '<Root>/AMK1_bEnable'
-  //   Outport: '<Root>/AMK1_bErrorReset'
-  //   Outport: '<Root>/AMK1_bInverterOn_tx'
+  //   Inport: '<Root>/AMK1_bWarn'
 
-  mi_left(rtDW.GOV_e_miCmd, rtU.AMK1_bDcOn, rtU.AMK1_bError,
-          rtU.AMK1_bInverterOn, rtU.AMK1_bQuitDcOn, rtU.AMK1_bQuitInverterOn,
-          rtU.AMK1_bSystemReady, rtConstB.CastToSingle, static_cast<real32_T>
-          (rtb_Merge), rtConstB.CastToSingle2, &rtDW.MI_motorStatus,
-          &rtY.AMK1_bInverterOn_tx, &rtY.AMK1_bDcOn_tx, &rtY.AMK1_bEnable,
-          &rtY.AMK1_bErrorReset, &rtY.AMK1_TargetVelocity,
-          &rtY.AMK1_TorqueLimitPositiv, &rtY.AMK1_TorqueLimitNegativ,
-          &rtDW.MI_InverterEn, &rtDW.sf_mi_right);
+  if (rtDW.temporalCounter_i1 < 511U) {
+    rtDW.temporalCounter_i1 = static_cast<uint16_T>(rtDW.temporalCounter_i1 + 1U);
+  }
+
+  if (rtDW.is_active_c10_controller_autoge == 0U) {
+    rtDW.is_active_c10_controller_autoge = 1U;
+    rtDW.is_c10_controller_autogen = IN_motorOff_waitingForGov;
+    rtDW.MI_motorStatus = MI_STATUSES::OFF;
+
+    // Outport: '<Root>/AMK1_bInverterOn_tx'
+    rtY.AMK1_bInverterOn_tx = 0U;
+
+    // Outport: '<Root>/AMK1_bDcOn_tx'
+    rtY.AMK1_bDcOn_tx = 0U;
+
+    // Outport: '<Root>/AMK1_bEnable'
+    rtY.AMK1_bEnable = 0U;
+
+    // Outport: '<Root>/AMK1_bErrorReset'
+    rtY.AMK1_bErrorReset = 0U;
+
+    // Outport: '<Root>/AMK1_TargetVelocity'
+    rtY.AMK1_TargetVelocity = 0.0F;
+
+    // Outport: '<Root>/AMK1_TorqueLimitPositiv'
+    rtY.AMK1_TorqueLimitPositiv = 0.0F;
+
+    // Outport: '<Root>/AMK1_TorqueLimitNegativ'
+    rtY.AMK1_TorqueLimitNegativ = 0.0F;
+    rtDW.MI_InverterEn = 0.0;
+  } else {
+    switch (rtDW.is_c10_controller_autogen) {
+     case IN_AMK_errorDetected:
+      if (rtDW.GOV_e_miCmd == MI_CMD::ERR_RESET) {
+        rtDW.is_c10_controller_autogen = IN_AMK_errorReset;
+        rtDW.is_AMK_errorReset = IN_enforceSetpointsZero_b;
+
+        // Outport: '<Root>/AMK1_TargetVelocity'
+        rtY.AMK1_TargetVelocity = 0.0F;
+
+        // Outport: '<Root>/AMK1_TorqueLimitPositiv'
+        rtY.AMK1_TorqueLimitPositiv = 0.0F;
+
+        // Outport: '<Root>/AMK1_TorqueLimitNegativ'
+        rtY.AMK1_TorqueLimitNegativ = 0.0F;
+
+        // Outport: '<Root>/AMK1_bInverterOn_tx'
+        rtY.AMK1_bInverterOn_tx = 0U;
+      }
+      break;
+
+     case IN_AMK_errorReset:
+      switch (rtDW.is_AMK_errorReset) {
+       case IN_enforceSetpointsZero_b:
+        // Outport: '<Root>/AMK1_bInverterOn_tx'
+        rtY.AMK1_bInverterOn_tx = 0U;
+        if (!rtU.AMK1_bInverterOn) {
+          rtDW.is_AMK_errorReset = IN_toggleEnable;
+          rtDW.temporalCounter_i1 = 0U;
+
+          // Outport: '<Root>/AMK1_bEnable'
+          rtY.AMK1_bEnable = 0U;
+        }
+        break;
+
+       case IN_sendReset:
+        // Outport: '<Root>/AMK1_bErrorReset'
+        rtY.AMK1_bErrorReset = 1U;
+        if (rtDW.temporalCounter_i1 >= 500U) {
+          rtDW.is_AMK_errorReset = IN_toggleReset;
+
+          // Outport: '<Root>/AMK1_bErrorReset'
+          rtY.AMK1_bErrorReset = 0U;
+        }
+        break;
+
+       case IN_toggleEnable:
+        // Outport: '<Root>/AMK1_bEnable'
+        rtY.AMK1_bEnable = 0U;
+        if (rtDW.temporalCounter_i1 >= 500U) {
+          rtDW.is_AMK_errorReset = IN_sendReset;
+          rtDW.temporalCounter_i1 = 0U;
+
+          // Outport: '<Root>/AMK1_bErrorReset'
+          rtY.AMK1_bErrorReset = 1U;
+        }
+        break;
+
+       default:
+        // Outport: '<Root>/AMK1_bErrorReset'
+        // case IN_toggleReset:
+        rtY.AMK1_bErrorReset = 0U;
+        if (rtU.AMK1_bWarn) {
+          rtDW.is_AMK_errorReset = IN_NO_ACTIVE_CHILD;
+          rtDW.is_c10_controller_autogen = IN_motorOff_waitingForGov;
+          rtDW.MI_motorStatus = MI_STATUSES::OFF;
+
+          // Outport: '<Root>/AMK1_bInverterOn_tx'
+          rtY.AMK1_bInverterOn_tx = 0U;
+
+          // Outport: '<Root>/AMK1_bDcOn_tx'
+          rtY.AMK1_bDcOn_tx = 0U;
+
+          // Outport: '<Root>/AMK1_bEnable'
+          rtY.AMK1_bEnable = 0U;
+
+          // Outport: '<Root>/AMK1_TargetVelocity'
+          rtY.AMK1_TargetVelocity = 0.0F;
+
+          // Outport: '<Root>/AMK1_TorqueLimitPositiv'
+          rtY.AMK1_TorqueLimitPositiv = 0.0F;
+
+          // Outport: '<Root>/AMK1_TorqueLimitNegativ'
+          rtY.AMK1_TorqueLimitNegativ = 0.0F;
+          rtDW.MI_InverterEn = 0.0;
+        }
+        break;
+      }
+      break;
+
+     case IN_AMK_ready:
+      if (rtU.AMK1_bError) {
+        rtDW.is_c10_controller_autogen = IN_AMK_errorDetected;
+        rtDW.MI_motorStatus = MI_STATUSES::MI_STS_ERROR;
+      } else if (rtU.AMK1_bQuitInverterOn && (!rtU.AMK1_bError)) {
+        rtDW.is_c10_controller_autogen = IN_AMK_running;
+      } else {
+        rtDW.MI_motorStatus = MI_STATUSES::READY;
+        rtDW.MI_InverterEn = 1.0;
+      }
+      break;
+
+     case IN_AMK_running:
+      if (rtU.AMK1_bError) {
+        rtDW.is_c10_controller_autogen = IN_AMK_errorDetected;
+        rtDW.MI_motorStatus = MI_STATUSES::MI_STS_ERROR;
+      } else if (rtDW.GOV_e_miCmd == MI_CMD::CMD_SHUTDOWN) {
+        rtDW.is_c10_controller_autogen = IN_AMK_shutdown;
+        rtDW.temporalCounter_i1 = 0U;
+
+        // Outport: '<Root>/AMK1_TargetVelocity'
+        rtY.AMK1_TargetVelocity = 0.0F;
+
+        // Outport: '<Root>/AMK1_TorqueLimitPositiv'
+        rtY.AMK1_TorqueLimitPositiv = 0.0F;
+
+        // Outport: '<Root>/AMK1_TorqueLimitNegativ'
+        rtY.AMK1_TorqueLimitNegativ = 0.0F;
+        rtDW.MI_InverterEn = 0.0;
+      } else {
+        rtDW.MI_motorStatus = MI_STATUSES::RUNNING;
+
+        // Outport: '<Root>/AMK1_TargetVelocity'
+        rtY.AMK1_TargetVelocity = 10000.0F;
+
+        // Outport: '<Root>/AMK1_TorqueLimitPositiv' incorporates:
+        //   DataTypeConversion: '<S4>/Cast To Single1'
+
+        rtY.AMK1_TorqueLimitPositiv = static_cast<real32_T>(rtb_Merge);
+
+        // Outport: '<Root>/AMK1_TorqueLimitNegativ'
+        rtY.AMK1_TorqueLimitNegativ = 0.0F;
+      }
+      break;
+
+     case IN_AMK_shutdown:
+      if (rtDW.temporalCounter_i1 >= 500U) {
+        rtDW.is_c10_controller_autogen = IN_motorOff_waitingForGov;
+        rtDW.MI_motorStatus = MI_STATUSES::OFF;
+
+        // Outport: '<Root>/AMK1_bInverterOn_tx'
+        rtY.AMK1_bInverterOn_tx = 0U;
+
+        // Outport: '<Root>/AMK1_bDcOn_tx'
+        rtY.AMK1_bDcOn_tx = 0U;
+
+        // Outport: '<Root>/AMK1_bEnable'
+        rtY.AMK1_bEnable = 0U;
+
+        // Outport: '<Root>/AMK1_bErrorReset'
+        rtY.AMK1_bErrorReset = 0U;
+
+        // Outport: '<Root>/AMK1_TargetVelocity'
+        rtY.AMK1_TargetVelocity = 0.0F;
+
+        // Outport: '<Root>/AMK1_TorqueLimitPositiv'
+        rtY.AMK1_TorqueLimitPositiv = 0.0F;
+
+        // Outport: '<Root>/AMK1_TorqueLimitNegativ'
+        rtY.AMK1_TorqueLimitNegativ = 0.0F;
+        rtDW.MI_InverterEn = 0.0;
+      }
+      break;
+
+     case IN_AMK_startup:
+      switch (rtDW.is_AMK_startup) {
+       case IN_commandOn:
+        // Outport: '<Root>/AMK1_bEnable'
+        rtY.AMK1_bEnable = 1U;
+
+        // Outport: '<Root>/AMK1_bInverterOn_tx'
+        rtY.AMK1_bInverterOn_tx = 1U;
+        if (rtU.AMK1_bInverterOn) {
+          rtDW.is_AMK_startup = IN_NO_ACTIVE_CHILD;
+          rtDW.is_c10_controller_autogen = IN_AMK_ready;
+          rtDW.MI_motorStatus = MI_STATUSES::READY;
+          rtDW.MI_InverterEn = 1.0;
+        } else if (rtU.AMK1_bError) {
+          rtDW.is_AMK_startup = IN_NO_ACTIVE_CHILD;
+          rtDW.is_c10_controller_autogen = IN_AMK_errorDetected;
+          rtDW.MI_motorStatus = MI_STATUSES::MI_STS_ERROR;
+        }
+        break;
+
+       case IN_enforceSetpointsZero:
+        if (rtDW.temporalCounter_i1 >= 100U) {
+          rtDW.is_AMK_startup = IN_commandOn;
+
+          // Outport: '<Root>/AMK1_bEnable'
+          rtY.AMK1_bEnable = 1U;
+
+          // Outport: '<Root>/AMK1_bInverterOn_tx'
+          rtY.AMK1_bInverterOn_tx = 1U;
+        } else if (rtU.AMK1_bError) {
+          rtDW.is_AMK_startup = IN_NO_ACTIVE_CHILD;
+          rtDW.is_c10_controller_autogen = IN_AMK_errorDetected;
+          rtDW.MI_motorStatus = MI_STATUSES::MI_STS_ERROR;
+        }
+        break;
+
+       case IN_toggleDCon:
+        // Outport: '<Root>/AMK1_bDcOn_tx'
+        rtY.AMK1_bDcOn_tx = 1U;
+        if (rtU.AMK1_bDcOn && rtU.AMK1_bQuitDcOn) {
+          rtDW.is_AMK_startup = IN_enforceSetpointsZero;
+          rtDW.temporalCounter_i1 = 0U;
+
+          // Outport: '<Root>/AMK1_TargetVelocity'
+          rtY.AMK1_TargetVelocity = 0.0F;
+
+          // Outport: '<Root>/AMK1_TorqueLimitPositiv'
+          rtY.AMK1_TorqueLimitPositiv = 0.0F;
+
+          // Outport: '<Root>/AMK1_TorqueLimitNegativ'
+          rtY.AMK1_TorqueLimitNegativ = 0.0F;
+        } else if (rtU.AMK1_bError) {
+          rtDW.is_AMK_startup = IN_NO_ACTIVE_CHILD;
+          rtDW.is_c10_controller_autogen = IN_AMK_errorDetected;
+          rtDW.MI_motorStatus = MI_STATUSES::MI_STS_ERROR;
+        }
+        break;
+
+       default:
+        // case IN_waiting_sysReady:
+        if (rtU.AMK1_bWarn) {
+          rtDW.is_AMK_startup = IN_toggleDCon;
+
+          // Outport: '<Root>/AMK1_bDcOn_tx'
+          rtY.AMK1_bDcOn_tx = 1U;
+        } else if (rtU.AMK1_bError) {
+          rtDW.is_AMK_startup = IN_NO_ACTIVE_CHILD;
+          rtDW.is_c10_controller_autogen = IN_AMK_errorDetected;
+          rtDW.MI_motorStatus = MI_STATUSES::MI_STS_ERROR;
+        }
+        break;
+      }
+      break;
+
+     default:
+      // Outport: '<Root>/AMK1_bInverterOn_tx'
+      // case IN_motorOff_waitingForGov:
+      rtY.AMK1_bInverterOn_tx = 0U;
+
+      // Outport: '<Root>/AMK1_bDcOn_tx'
+      rtY.AMK1_bDcOn_tx = 0U;
+
+      // Outport: '<Root>/AMK1_bEnable'
+      rtY.AMK1_bEnable = 0U;
+
+      // Outport: '<Root>/AMK1_bErrorReset'
+      rtY.AMK1_bErrorReset = 0U;
+      if (rtDW.GOV_e_miCmd == MI_CMD::CMD_STARTUP) {
+        rtDW.is_c10_controller_autogen = IN_AMK_startup;
+        rtDW.is_AMK_startup = IN_waiting_sysReady;
+        rtDW.MI_motorStatus = MI_STATUSES::STARTUP;
+      }
+      break;
+    }
+  }
+
+  // End of Chart: '<S4>/mi_right'
 
   // Chart: '<S4>/mi_left' incorporates:
-  //   DataTypeConversion: '<S4>/Cast To Single4'
   //   Inport: '<Root>/AMK0_bDcOn'
   //   Inport: '<Root>/AMK0_bError'
   //   Inport: '<Root>/AMK0_bInverterOn'
   //   Inport: '<Root>/AMK0_bQuitDcOn'
   //   Inport: '<Root>/AMK0_bQuitInverterOn'
   //   Inport: '<Root>/AMK0_bSystemReady'
-  //   Outport: '<Root>/AMK0_TargetVelocity'
-  //   Outport: '<Root>/AMK0_TorqueLimitNegativ'
-  //   Outport: '<Root>/AMK0_TorqueLimitPositiv'
-  //   Outport: '<Root>/AMK0_bDcOn_tx'
-  //   Outport: '<Root>/AMK0_bEnable'
-  //   Outport: '<Root>/AMK0_bErrorReset'
-  //   Outport: '<Root>/AMK0_bInverterOn_tx'
 
-  mi_left(rtDW.GOV_e_miCmd, rtU.AMK0_bDcOn, rtU.AMK0_bError,
-          rtU.AMK0_bInverterOn, rtU.AMK0_bQuitDcOn, rtU.AMK0_bQuitInverterOn,
-          rtU.AMK0_bSystemReady, rtConstB.CastToSingle3, static_cast<real32_T>
-          (rtb_Merge), rtConstB.CastToSingle5, &rtDW.MI_motorStatus_h,
-          &rtY.AMK0_bInverterOn_tx, &rtY.AMK0_bDcOn_tx, &rtY.AMK0_bEnable,
-          &rtY.AMK0_bErrorReset, &rtY.AMK0_TargetVelocity,
-          &rtY.AMK0_TorqueLimitPositiv, &rtY.AMK0_TorqueLimitNegativ,
-          &rtDW.MI_InverterEn_j, &rtDW.sf_mi_left);
+  if (rtDW.temporalCounter_i1_n < 511U) {
+    rtDW.temporalCounter_i1_n = static_cast<uint16_T>(rtDW.temporalCounter_i1_n
+      + 1U);
+  }
 
-  // Logic: '<S1>/NOT' incorporates:
-  //   Inport: '<Root>/BM_prechrgContactorSts'
+  if (rtDW.is_active_c9_controller_autogen == 0U) {
+    rtDW.is_active_c9_controller_autogen = 1U;
+    rtDW.is_c9_controller_autogen = IN_motorOff_waitingForGov;
+    rtDW.MI_motorStatus_o = MI_STATUSES::OFF;
 
-  rtb_NOT1 = !rtU.BM_prechrgContactorSts;
+    // Outport: '<Root>/AMK0_bInverterOn_tx'
+    rtY.AMK0_bInverterOn_tx = 0U;
 
-  // Logic: '<S1>/NOT1' incorporates:
-  //   Inport: '<Root>/BM_HVposContactorSts'
+    // Outport: '<Root>/AMK0_bDcOn_tx'
+    rtY.AMK0_bDcOn_tx = 0U;
 
-  rtb_NOT_ea = !rtU.BM_HVposContactorSts;
+    // Outport: '<Root>/AMK0_bEnable'
+    rtY.AMK0_bEnable = 0U;
 
-  // Logic: '<S1>/NOT2' incorporates:
-  //   Inport: '<Root>/BM_HVnegContactorSts'
+    // Outport: '<Root>/AMK0_bErrorReset'
+    rtY.AMK0_bErrorReset = 0U;
 
-  rtb_NOT_b = !rtU.BM_HVnegContactorSts;
+    // Outport: '<Root>/AMK0_TargetVelocity'
+    rtY.AMK0_TargetVelocity = 0.0F;
+
+    // Outport: '<Root>/AMK0_TorqueLimitPositiv'
+    rtY.AMK0_TorqueLimitPositiv = 0.0F;
+
+    // Outport: '<Root>/AMK0_TorqueLimitNegativ'
+    rtY.AMK0_TorqueLimitNegativ = 0.0F;
+    rtDW.MI_InverterEn_p = 0.0;
+  } else {
+    switch (rtDW.is_c9_controller_autogen) {
+     case IN_AMK_errorDetected:
+      if (rtDW.GOV_e_miCmd == MI_CMD::ERR_RESET) {
+        rtDW.is_c9_controller_autogen = IN_AMK_errorReset;
+        rtDW.is_AMK_errorReset_d = IN_enforceSetpointsZero_b;
+
+        // Outport: '<Root>/AMK0_TargetVelocity'
+        rtY.AMK0_TargetVelocity = 0.0F;
+
+        // Outport: '<Root>/AMK0_TorqueLimitPositiv'
+        rtY.AMK0_TorqueLimitPositiv = 0.0F;
+
+        // Outport: '<Root>/AMK0_TorqueLimitNegativ'
+        rtY.AMK0_TorqueLimitNegativ = 0.0F;
+
+        // Outport: '<Root>/AMK0_bInverterOn_tx'
+        rtY.AMK0_bInverterOn_tx = 0U;
+      }
+      break;
+
+     case IN_AMK_errorReset:
+      switch (rtDW.is_AMK_errorReset_d) {
+       case IN_enforceSetpointsZero_b:
+        // Outport: '<Root>/AMK0_bInverterOn_tx'
+        rtY.AMK0_bInverterOn_tx = 0U;
+        if (!rtU.AMK0_bInverterOn) {
+          rtDW.is_AMK_errorReset_d = IN_toggleEnable;
+          rtDW.temporalCounter_i1_n = 0U;
+
+          // Outport: '<Root>/AMK0_bEnable'
+          rtY.AMK0_bEnable = 0U;
+        }
+        break;
+
+       case IN_sendReset:
+        // Outport: '<Root>/AMK0_bErrorReset'
+        rtY.AMK0_bErrorReset = 1U;
+        if (rtDW.temporalCounter_i1_n >= 500U) {
+          rtDW.is_AMK_errorReset_d = IN_toggleReset;
+
+          // Outport: '<Root>/AMK0_bErrorReset'
+          rtY.AMK0_bErrorReset = 0U;
+        }
+        break;
+
+       case IN_toggleEnable:
+        // Outport: '<Root>/AMK0_bEnable'
+        rtY.AMK0_bEnable = 0U;
+        if (rtDW.temporalCounter_i1_n >= 500U) {
+          rtDW.is_AMK_errorReset_d = IN_sendReset;
+          rtDW.temporalCounter_i1_n = 0U;
+
+          // Outport: '<Root>/AMK0_bErrorReset'
+          rtY.AMK0_bErrorReset = 1U;
+        }
+        break;
+
+       default:
+        // Outport: '<Root>/AMK0_bErrorReset'
+        // case IN_toggleReset:
+        rtY.AMK0_bErrorReset = 0U;
+        if (rtU.AMK0_bSystemReady) {
+          rtDW.is_AMK_errorReset_d = IN_NO_ACTIVE_CHILD;
+          rtDW.is_c9_controller_autogen = IN_motorOff_waitingForGov;
+          rtDW.MI_motorStatus_o = MI_STATUSES::OFF;
+
+          // Outport: '<Root>/AMK0_bInverterOn_tx'
+          rtY.AMK0_bInverterOn_tx = 0U;
+
+          // Outport: '<Root>/AMK0_bDcOn_tx'
+          rtY.AMK0_bDcOn_tx = 0U;
+
+          // Outport: '<Root>/AMK0_bEnable'
+          rtY.AMK0_bEnable = 0U;
+
+          // Outport: '<Root>/AMK0_TargetVelocity'
+          rtY.AMK0_TargetVelocity = 0.0F;
+
+          // Outport: '<Root>/AMK0_TorqueLimitPositiv'
+          rtY.AMK0_TorqueLimitPositiv = 0.0F;
+
+          // Outport: '<Root>/AMK0_TorqueLimitNegativ'
+          rtY.AMK0_TorqueLimitNegativ = 0.0F;
+          rtDW.MI_InverterEn_p = 0.0;
+        }
+        break;
+      }
+      break;
+
+     case IN_AMK_ready:
+      if (rtU.AMK0_bError) {
+        rtDW.is_c9_controller_autogen = IN_AMK_errorDetected;
+        rtDW.MI_motorStatus_o = MI_STATUSES::MI_STS_ERROR;
+      } else if (rtU.AMK0_bQuitInverterOn && (!rtU.AMK0_bError)) {
+        rtDW.is_c9_controller_autogen = IN_AMK_running;
+      } else {
+        rtDW.MI_motorStatus_o = MI_STATUSES::READY;
+        rtDW.MI_InverterEn_p = 1.0;
+      }
+      break;
+
+     case IN_AMK_running:
+      if (rtU.AMK0_bError) {
+        rtDW.is_c9_controller_autogen = IN_AMK_errorDetected;
+        rtDW.MI_motorStatus_o = MI_STATUSES::MI_STS_ERROR;
+      } else if (rtDW.GOV_e_miCmd == MI_CMD::CMD_SHUTDOWN) {
+        rtDW.is_c9_controller_autogen = IN_AMK_shutdown;
+        rtDW.temporalCounter_i1_n = 0U;
+
+        // Outport: '<Root>/AMK0_TargetVelocity'
+        rtY.AMK0_TargetVelocity = 0.0F;
+
+        // Outport: '<Root>/AMK0_TorqueLimitPositiv'
+        rtY.AMK0_TorqueLimitPositiv = 0.0F;
+
+        // Outport: '<Root>/AMK0_TorqueLimitNegativ'
+        rtY.AMK0_TorqueLimitNegativ = 0.0F;
+        rtDW.MI_InverterEn_p = 0.0;
+      } else {
+        rtDW.MI_motorStatus_o = MI_STATUSES::RUNNING;
+
+        // Outport: '<Root>/AMK0_TargetVelocity'
+        rtY.AMK0_TargetVelocity = 10000.0F;
+
+        // Outport: '<Root>/AMK0_TorqueLimitPositiv' incorporates:
+        //   DataTypeConversion: '<S4>/Cast To Single4'
+
+        rtY.AMK0_TorqueLimitPositiv = static_cast<real32_T>(rtb_Merge);
+
+        // Outport: '<Root>/AMK0_TorqueLimitNegativ'
+        rtY.AMK0_TorqueLimitNegativ = 0.0F;
+      }
+      break;
+
+     case IN_AMK_shutdown:
+      if (rtDW.temporalCounter_i1_n >= 500U) {
+        rtDW.is_c9_controller_autogen = IN_motorOff_waitingForGov;
+        rtDW.MI_motorStatus_o = MI_STATUSES::OFF;
+
+        // Outport: '<Root>/AMK0_bInverterOn_tx'
+        rtY.AMK0_bInverterOn_tx = 0U;
+
+        // Outport: '<Root>/AMK0_bDcOn_tx'
+        rtY.AMK0_bDcOn_tx = 0U;
+
+        // Outport: '<Root>/AMK0_bEnable'
+        rtY.AMK0_bEnable = 0U;
+
+        // Outport: '<Root>/AMK0_bErrorReset'
+        rtY.AMK0_bErrorReset = 0U;
+
+        // Outport: '<Root>/AMK0_TargetVelocity'
+        rtY.AMK0_TargetVelocity = 0.0F;
+
+        // Outport: '<Root>/AMK0_TorqueLimitPositiv'
+        rtY.AMK0_TorqueLimitPositiv = 0.0F;
+
+        // Outport: '<Root>/AMK0_TorqueLimitNegativ'
+        rtY.AMK0_TorqueLimitNegativ = 0.0F;
+        rtDW.MI_InverterEn_p = 0.0;
+      }
+      break;
+
+     case IN_AMK_startup:
+      switch (rtDW.is_AMK_startup_e) {
+       case IN_commandOn:
+        // Outport: '<Root>/AMK0_bEnable'
+        rtY.AMK0_bEnable = 1U;
+
+        // Outport: '<Root>/AMK0_bInverterOn_tx'
+        rtY.AMK0_bInverterOn_tx = 1U;
+        if (rtU.AMK0_bInverterOn) {
+          rtDW.is_AMK_startup_e = IN_NO_ACTIVE_CHILD;
+          rtDW.is_c9_controller_autogen = IN_AMK_ready;
+          rtDW.MI_motorStatus_o = MI_STATUSES::READY;
+          rtDW.MI_InverterEn_p = 1.0;
+        } else if (rtU.AMK0_bError) {
+          rtDW.is_AMK_startup_e = IN_NO_ACTIVE_CHILD;
+          rtDW.is_c9_controller_autogen = IN_AMK_errorDetected;
+          rtDW.MI_motorStatus_o = MI_STATUSES::MI_STS_ERROR;
+        }
+        break;
+
+       case IN_enforceSetpointsZero:
+        if (rtDW.temporalCounter_i1_n >= 100U) {
+          rtDW.is_AMK_startup_e = IN_commandOn;
+
+          // Outport: '<Root>/AMK0_bEnable'
+          rtY.AMK0_bEnable = 1U;
+
+          // Outport: '<Root>/AMK0_bInverterOn_tx'
+          rtY.AMK0_bInverterOn_tx = 1U;
+        } else if (rtU.AMK0_bError) {
+          rtDW.is_AMK_startup_e = IN_NO_ACTIVE_CHILD;
+          rtDW.is_c9_controller_autogen = IN_AMK_errorDetected;
+          rtDW.MI_motorStatus_o = MI_STATUSES::MI_STS_ERROR;
+        }
+        break;
+
+       case IN_toggleDCon:
+        // Outport: '<Root>/AMK0_bDcOn_tx'
+        rtY.AMK0_bDcOn_tx = 1U;
+        if (rtU.AMK0_bDcOn && rtU.AMK0_bQuitDcOn) {
+          rtDW.is_AMK_startup_e = IN_enforceSetpointsZero;
+          rtDW.temporalCounter_i1_n = 0U;
+
+          // Outport: '<Root>/AMK0_TargetVelocity'
+          rtY.AMK0_TargetVelocity = 0.0F;
+
+          // Outport: '<Root>/AMK0_TorqueLimitPositiv'
+          rtY.AMK0_TorqueLimitPositiv = 0.0F;
+
+          // Outport: '<Root>/AMK0_TorqueLimitNegativ'
+          rtY.AMK0_TorqueLimitNegativ = 0.0F;
+        } else if (rtU.AMK0_bError) {
+          rtDW.is_AMK_startup_e = IN_NO_ACTIVE_CHILD;
+          rtDW.is_c9_controller_autogen = IN_AMK_errorDetected;
+          rtDW.MI_motorStatus_o = MI_STATUSES::MI_STS_ERROR;
+        }
+        break;
+
+       default:
+        // case IN_waiting_sysReady:
+        if (rtU.AMK0_bSystemReady) {
+          rtDW.is_AMK_startup_e = IN_toggleDCon;
+
+          // Outport: '<Root>/AMK0_bDcOn_tx'
+          rtY.AMK0_bDcOn_tx = 1U;
+        } else if (rtU.AMK0_bError) {
+          rtDW.is_AMK_startup_e = IN_NO_ACTIVE_CHILD;
+          rtDW.is_c9_controller_autogen = IN_AMK_errorDetected;
+          rtDW.MI_motorStatus_o = MI_STATUSES::MI_STS_ERROR;
+        }
+        break;
+      }
+      break;
+
+     default:
+      // Outport: '<Root>/AMK0_bInverterOn_tx'
+      // case IN_motorOff_waitingForGov:
+      rtY.AMK0_bInverterOn_tx = 0U;
+
+      // Outport: '<Root>/AMK0_bDcOn_tx'
+      rtY.AMK0_bDcOn_tx = 0U;
+
+      // Outport: '<Root>/AMK0_bEnable'
+      rtY.AMK0_bEnable = 0U;
+
+      // Outport: '<Root>/AMK0_bErrorReset'
+      rtY.AMK0_bErrorReset = 0U;
+      if (rtDW.GOV_e_miCmd == MI_CMD::CMD_STARTUP) {
+        rtDW.is_c9_controller_autogen = IN_AMK_startup;
+        rtDW.is_AMK_startup_e = IN_waiting_sysReady;
+        rtDW.MI_motorStatus_o = MI_STATUSES::STARTUP;
+      }
+      break;
+    }
+  }
+
+  // End of Chart: '<S4>/mi_left'
 
   // Chart: '<S1>/battery_monitor' incorporates:
+  //   Inport: '<Root>/BM_HVnegContactorSts'
+  //   Inport: '<Root>/BM_HVposContactorSts'
   //   Inport: '<Root>/BM_HvilFeedback'
-  //   Inport: '<Root>/BM_PackSOC'
+  //   Inport: '<Root>/BM_prechrgContactorSts'
 
   if (rtDW.temporalCounter_i1_e < 8191U) {
     rtDW.temporalCounter_i1_e = static_cast<uint16_T>(rtDW.temporalCounter_i1_e
@@ -1105,10 +1355,10 @@ void controller_autogen::step()
     switch (rtDW.is_c4_battery_monitor_lib) {
      case IN_InitialState:
       rtb_GOV_e_bmSts = BM_STATUSES::BM_INIT;
-      if ((!rtb_NOT1) && (!rtb_NOT_b) && (!rtb_NOT_ea) && (rtDW.GOV_e_bmCmd ==
-           BM_CMD::HV_STARTUP) && rtU.BM_HvilFeedback) {
+      if (rtU.BM_prechrgContactorSts && rtU.BM_HVnegContactorSts &&
+          rtU.BM_HVposContactorSts && (rtDW.GOV_e_bmCmd == BM_CMD::HV_STARTUP) &&
+          rtU.BM_HvilFeedback) {
         rtDW.is_c4_battery_monitor_lib = IN_StartupSuperstate;
-        rtDW.is_StartupSuperstate_a = IN_StartupState1;
         rtb_GOV_e_bmSts = BM_STATUSES::BM_IDLE;
       }
       break;
@@ -1128,57 +1378,12 @@ void controller_autogen::step()
      default:
       // case IN_StartupSuperstate:
       if (!rtU.BM_HvilFeedback) {
-        rtDW.is_StartupSuperstate_a = IN_NO_ACTIVE_CHILD_i;
         rtDW.is_c4_battery_monitor_lib = IN_InterruptState;
         rtDW.temporalCounter_i1_e = 0U;
         rtb_GOV_e_bmSts = BM_STATUSES::HVIL_INTERRUPT;
-      } else if (rtU.BM_PackSOC < 30.0) {
-        rtDW.is_StartupSuperstate_a = IN_NO_ACTIVE_CHILD_i;
+      } else {
         rtDW.is_c4_battery_monitor_lib = IN_LowSoC;
         rtb_GOV_e_bmSts = BM_STATUSES::BM_LOW_SOC;
-      } else {
-        switch (rtDW.is_StartupSuperstate_a) {
-         case IN_InitializePrechargeState:
-          rtb_GOV_e_bmSts = BM_STATUSES::INIT_PRECHARGE;
-          if (rtb_NOT1 && rtb_NOT_b && rtb_NOT_ea) {
-            rtDW.is_StartupSuperstate_a = IN_PrechargeState;
-            rtb_GOV_e_bmSts = BM_STATUSES::PRECHARGE;
-          }
-          break;
-
-         case IN_PrechargeState:
-          rtb_GOV_e_bmSts = BM_STATUSES::PRECHARGE;
-          if ((!rtb_NOT1) && rtb_NOT_b && rtb_NOT_ea) {
-            rtDW.is_StartupSuperstate_a = IN_RunningState;
-            rtb_GOV_e_bmSts = BM_STATUSES::BM_RUNNING;
-          }
-          break;
-
-         case IN_RunningState:
-          rtb_GOV_e_bmSts = BM_STATUSES::BM_RUNNING;
-          if ((!rtb_NOT1) && rtb_NOT_b && rtb_NOT_ea) {
-            rtDW.is_StartupSuperstate_a = IN_RunningState;
-            rtb_GOV_e_bmSts = BM_STATUSES::BM_RUNNING;
-          }
-          break;
-
-         case IN_StartupState:
-          rtb_GOV_e_bmSts = BM_STATUSES::BM_STARTUP;
-          if (rtb_NOT1 && rtb_NOT_b && (!rtb_NOT_ea)) {
-            rtDW.is_StartupSuperstate_a = IN_InitializePrechargeState;
-            rtb_GOV_e_bmSts = BM_STATUSES::INIT_PRECHARGE;
-          }
-          break;
-
-         default:
-          // case IN_StartupState1:
-          rtb_GOV_e_bmSts = BM_STATUSES::BM_IDLE;
-          if ((!rtb_NOT1) && rtb_NOT_b && (!rtb_NOT_ea)) {
-            rtDW.is_StartupSuperstate_a = IN_StartupState;
-            rtb_GOV_e_bmSts = BM_STATUSES::BM_STARTUP;
-          }
-          break;
-        }
       }
       break;
     }
@@ -1223,7 +1428,7 @@ void controller_autogen::step()
     // case IN_StartupSuperstate:
   } else if ((rtb_GOV_e_bmSts == BM_STATUSES::HVIL_INTERRUPT) ||
              (rtb_GOV_e_bmSts == BM_STATUSES::BM_LOW_SOC)) {
-    rtDW.is_StartupSuperstate = IN_NO_ACTIVE_CHILD_i;
+    rtDW.is_StartupSuperstate = IN_NO_ACTIVE_CHILD;
     rtDW.is_c5_battery_monitor_lib = IN_StartupCMD;
 
     // Outport: '<Root>/BM_PrechargeContactorCmd'
@@ -1325,115 +1530,63 @@ void controller_autogen::step()
 
   rtY.GOV_Status = static_cast<uint8_T>(rtDW.GOV_e_govSts);
 
-  // Outport: '<Root>/MI_InverterEn' incorporates:
-  //   Logic: '<S4>/AND'
-
-  rtY.MI_InverterEn = ((rtDW.MI_InverterEn_j != 0.0) && (rtDW.MI_InverterEn !=
-    0.0));
-
   // Switch: '<S4>/overallMotorState' incorporates:
   //   Delay: '<S4>/Delay'
   //   RelationalOperator: '<S4>/GreaterThan'
 
-  if (rtDW.MI_motorStatus_h == rtDW.MI_motorStatus) {
-    rtb_overallMotorState = rtDW.MI_motorStatus_h;
+  if (rtDW.MI_motorStatus_o == rtDW.MI_motorStatus) {
+    rtb_overallMotorState = rtDW.MI_motorStatus_o;
   } else {
     rtb_overallMotorState = rtDW.Delay_DSTATE_k;
   }
 
   // End of Switch: '<S4>/overallMotorState'
 
-  // MATLAB Function: '<S5>/avg' incorporates:
-  //   Inport: '<Root>/VD_LFWheelSpeed'
-  //   Inport: '<Root>/VD_RFWheelSpeed'
-
-  rtb_Switch = rtU.VD_LFWheelSpeed + rtU.VD_RFWheelSpeed;
-  if (rtb_Switch > 32767) {
-    rtb_Switch = 32767;
-  } else if (rtb_Switch < -32768) {
-    rtb_Switch = -32768;
-  }
-
-  // Sum: '<S26>/Subtract' incorporates:
-  //   Constant: '<Root>/Constant1'
-  //   Constant: '<S26>/Constant'
-  //   MATLAB Function: '<S5>/avg'
-  //   MATLAB Function: '<S5>/return greater'
-  //   Product: '<S26>/Divide'
-
-  rtb_Merge = 0.0 / std::round(static_cast<real_T>(rtb_Switch) / 2.0) - 1.0;
-
-  // Saturate: '<S26>/Set lower bound to 0'
-  if (rtb_Merge <= 0.0) {
-    rtb_Merge = 0.0;
-  }
-
-  // End of Saturate: '<S26>/Set lower bound to 0'
-
-  // Chart: '<S26>/vd_tc' incorporates:
-  //   Constant: '<S5>/Constant6'
-
-  if (rtDW.temporalCounter_i1_m < 63U) {
-    rtDW.temporalCounter_i1_m = static_cast<uint8_T>(rtDW.temporalCounter_i1_m +
-      1U);
-  }
-
-  if (rtDW.is_active_c1_simp_vd_lib == 0U) {
-    rtDW.is_active_c1_simp_vd_lib = 1U;
-    rtDW.is_c1_simp_vd_lib = IN_TC_off;
-    rtDW.temporalCounter_i1_m = 0U;
-  } else {
-    switch (rtDW.is_c1_simp_vd_lib) {
-     case IN_TC_off:
-      break;
-
-     case IN_TC_on:
-      if (rtDW.temporalCounter_i1_m >= 33U) {
-        rtDW.is_c1_simp_vd_lib = IN_TC_off;
-        rtDW.temporalCounter_i1_m = 0U;
-      }
-      break;
-
-     case IN_TC_on1:
-      if (rtDW.temporalCounter_i1_m >= 33U) {
-        rtDW.is_c1_simp_vd_lib = IN_TC_on;
-        rtDW.temporalCounter_i1_m = 0U;
-      }
-      break;
-
-     default:
-      // case IN_TC_on2:
-      if ((rtDW.temporalCounter_i1_m >= 33U) && (rtb_Merge <= 0.2)) {
-        rtDW.is_c1_simp_vd_lib = IN_TC_on1;
-        rtDW.temporalCounter_i1_m = 0U;
-      }
-      break;
-    }
-  }
-
-  // End of Chart: '<S26>/vd_tc'
-
-  // Update for Delay: '<S3>/Delay'
-  rtDW.Delay_DSTATE = rtb_GOV_e_bmSts;
-
   // Switch: '<S4>/Switch' incorporates:
   //   Constant: '<S4>/Constant'
+  //   Constant: '<S4>/Constant1'
   //   Logic: '<S4>/OR'
   //   RelationalOperator: '<S4>/motorErrorActive'
   //   RelationalOperator: '<S4>/motorErrorActive1'
 
   if ((rtDW.MI_motorStatus == MI_STATUSES::MI_STS_ERROR) ||
-      (rtDW.MI_motorStatus_h == MI_STATUSES::MI_STS_ERROR)) {
-    // Update for Delay: '<S3>/Delay1' incorporates:
-    //   Constant: '<S4>/Constant1'
-
-    rtDW.Delay1_DSTATE = MI_STATUSES::MI_STS_ERROR;
+      (rtDW.MI_motorStatus_o == MI_STATUSES::MI_STS_ERROR)) {
+    rtb_Switch_m = MI_STATUSES::MI_STS_ERROR;
   } else {
-    // Update for Delay: '<S3>/Delay1'
-    rtDW.Delay1_DSTATE = rtb_overallMotorState;
+    rtb_Switch_m = rtb_overallMotorState;
   }
 
   // End of Switch: '<S4>/Switch'
+
+  // Outport: '<Root>/MI_Status' incorporates:
+  //   DataTypeConversion: '<Root>/Cast To Single1'
+
+  rtY.MI_Status = static_cast<uint8_T>(rtb_Switch_m);
+
+  // Outport: '<Root>/Di_Status' incorporates:
+  //   DataTypeConversion: '<Root>/Cast To Single2'
+
+  rtY.Di_Status = static_cast<uint8_T>(rtb_GOV_e_diSts);
+
+  // Outport: '<Root>/BM_Status' incorporates:
+  //   DataTypeConversion: '<Root>/Cast To Single3'
+
+  rtY.BM_Status = static_cast<uint8_T>(rtb_GOV_e_bmSts);
+
+  // Outport: '<Root>/MI_InverterEn' incorporates:
+  //   Logic: '<S4>/AND'
+
+  rtY.MI_InverterEn = ((rtDW.MI_InverterEn_p != 0.0) && (rtDW.MI_InverterEn !=
+    0.0));
+
+  // Update for Delay: '<S3>/Delay'
+  rtDW.Delay_DSTATE = rtb_GOV_e_bmSts;
+
+  // Update for Delay: '<S3>/Delay1'
+  rtDW.Delay1_DSTATE = rtb_Switch_m;
+
+  // Update for Delay: '<S3>/Delay2'
+  rtDW.Delay2_DSTATE = rtb_GOV_e_diSts;
 
   // Update for S-Function (sfix_udelay): '<S25>/Tapped Delay'
   for (rtb_Switch = 0; rtb_Switch < 9; rtb_Switch++) {
@@ -1453,34 +1606,6 @@ void controller_autogen::initialize()
 {
   // InitializeConditions for Delay: '<S4>/Delay'
   rtDW.Delay_DSTATE_k = MI_STATUSES::OFF;
-
-  // SystemInitialize for Chart: '<S4>/mi_right' incorporates:
-  //   Outport: '<Root>/AMK1_TargetVelocity'
-  //   Outport: '<Root>/AMK1_TorqueLimitNegativ'
-  //   Outport: '<Root>/AMK1_TorqueLimitPositiv'
-  //   Outport: '<Root>/AMK1_bDcOn_tx'
-  //   Outport: '<Root>/AMK1_bEnable'
-  //   Outport: '<Root>/AMK1_bErrorReset'
-  //   Outport: '<Root>/AMK1_bInverterOn_tx'
-
-  mi_left_Init(&rtDW.MI_motorStatus, &rtY.AMK1_bInverterOn_tx,
-               &rtY.AMK1_bDcOn_tx, &rtY.AMK1_bEnable, &rtY.AMK1_bErrorReset,
-               &rtY.AMK1_TargetVelocity, &rtY.AMK1_TorqueLimitPositiv,
-               &rtY.AMK1_TorqueLimitNegativ, &rtDW.MI_InverterEn);
-
-  // SystemInitialize for Chart: '<S4>/mi_left' incorporates:
-  //   Outport: '<Root>/AMK0_TargetVelocity'
-  //   Outport: '<Root>/AMK0_TorqueLimitNegativ'
-  //   Outport: '<Root>/AMK0_TorqueLimitPositiv'
-  //   Outport: '<Root>/AMK0_bDcOn_tx'
-  //   Outport: '<Root>/AMK0_bEnable'
-  //   Outport: '<Root>/AMK0_bErrorReset'
-  //   Outport: '<Root>/AMK0_bInverterOn_tx'
-
-  mi_left_Init(&rtDW.MI_motorStatus_h, &rtY.AMK0_bInverterOn_tx,
-               &rtY.AMK0_bDcOn_tx, &rtY.AMK0_bEnable, &rtY.AMK0_bErrorReset,
-               &rtY.AMK0_TargetVelocity, &rtY.AMK0_TorqueLimitPositiv,
-               &rtY.AMK0_TorqueLimitNegativ, &rtDW.MI_InverterEn_j);
 }
 
 // Model terminate function

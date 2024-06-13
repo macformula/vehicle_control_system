@@ -7,9 +7,9 @@
 //
 // Code generated for Simulink model 'controller_autogen'.
 //
-// Model version                  : 1.86
+// Model version                  : 1.91
 // Simulink Coder version         : 9.8 (R2022b) 13-May-2022
-// C/C++ source code generated on : Mon Apr 29 17:06:21 2024
+// C/C++ source code generated on : Thu Jun 13 00:14:43 2024
 //
 // Target selection: ert.tlc
 // Embedded hardware selection: ARM Compatible->ARM Cortex-M
