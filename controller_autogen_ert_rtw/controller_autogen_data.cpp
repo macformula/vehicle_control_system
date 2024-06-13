@@ -7,19 +7,21 @@
 //
 // Code generated for Simulink model 'controller_autogen'.
 //
-// Model version                  : 1.91
+// Model version                  : 1.92
 // Simulink Coder version         : 9.8 (R2022b) 13-May-2022
-// C/C++ source code generated on : Thu Jun 13 16:00:17 2024
+// C/C++ source code generated on : Thu Jun 13 16:57:00 2024
 //
 // Target selection: ert.tlc
 // Embedded hardware selection: ARM Compatible->ARM Cortex-M
-// Code generation objectives: Unspecified
+// Code generation objectives:
+//    1. Execution efficiency
+//    2. RAM efficiency
 // Validation result: Not run
 //
 #include "controller_autogen.h"
 
 // Constant parameters (default storage)
-const controller_autogen::ConstP_controller_autogen_T controller_autogen_ConstP{
+const controller_autogen::ConstP rtConstP{
   // Pooled Parameter (Expression: [0 1])
   //  Referenced by: '<S2>/AccelPedalMap'
 

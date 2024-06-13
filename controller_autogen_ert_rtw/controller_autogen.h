@@ -7,19 +7,20 @@
 //
 // Code generated for Simulink model 'controller_autogen'.
 //
-// Model version                  : 1.91
+// Model version                  : 1.92
 // Simulink Coder version         : 9.8 (R2022b) 13-May-2022
-// C/C++ source code generated on : Thu Jun 13 16:00:17 2024
+// C/C++ source code generated on : Thu Jun 13 16:57:00 2024
 //
 // Target selection: ert.tlc
 // Embedded hardware selection: ARM Compatible->ARM Cortex-M
-// Code generation objectives: Unspecified
+// Code generation objectives:
+//    1. Execution efficiency
+//    2. RAM efficiency
 // Validation result: Not run
 //
 #ifndef RTW_HEADER_controller_autogen_h_
 #define RTW_HEADER_controller_autogen_h_
 #include "rtwtypes.h"
-#include "controller_autogen_types.h"
 
 // Macros for accessing real-time model data structure
 #ifndef rtmGetErrorStatus
@@ -30,39 +31,148 @@
 #define rtmSetErrorStatus(rtm, val)    ((rtm)->errorStatus = (val))
 #endif
 
+#define controller_autogen_M           (rtM)
+#ifndef DEFINED_TYPEDEF_FOR_BM_STATUSES_
+#define DEFINED_TYPEDEF_FOR_BM_STATUSES_
+
+enum class BM_STATUSES
+  : int32_T {
+  BM_UNKNOWN = 0,                      // Default value
+  BM_INIT,
+  BM_IDLE,
+  BM_STARTUP,
+  INIT_PRECHARGE,
+  PRECHARGE,
+  BM_RUNNING,
+  HVIL_INTERRUPT,
+  BM_LOW_SOC,
+  ERR_RUNNING
+};
+
+#endif
+
+#ifndef DEFINED_TYPEDEF_FOR_DI_CMD_
+#define DEFINED_TYPEDEF_FOR_DI_CMD_
+
+enum class DI_CMD
+  : int32_T {
+  DI_CMD_INIT = 0,                     // Default value
+  HV_ON,
+  READY_TO_DRIVE,
+  DI_SHUTDOWN,
+  RUN_ERROR,
+  DI_ERR_RESET
+};
+
+#endif
+
+#ifndef DEFINED_TYPEDEF_FOR_DI_STATUSES_
+#define DEFINED_TYPEDEF_FOR_DI_STATUSES_
+
+enum class DI_STATUSES
+  : int32_T {
+  DI_UNKNOWN = 0,                      // Default value
+  DI_STS_INIT,
+  DI_IDLE,
+  DI_STARTUP,
+  WAITING_FOR_DRVR,
+  READY_TO_DRIVE_REQ,
+  HV_START_REQ,
+  DI_RUNNING,
+  DI_ERROR
+};
+
+#endif
+
+#ifndef DEFINED_TYPEDEF_FOR_MI_STATUSES_
+#define DEFINED_TYPEDEF_FOR_MI_STATUSES_
+
+enum class MI_STATUSES
+  : int32_T {
+  UNKNOWN = 0,                         // Default value
+  STS_INIT,
+  STARTUP,
+  READY,
+  RUNNING,
+  SHUTDOWN,
+  MI_STS_ERROR,
+  OFF
+};
+
+#endif
+
+#ifndef DEFINED_TYPEDEF_FOR_MI_CMD_
+#define DEFINED_TYPEDEF_FOR_MI_CMD_
+
+enum class MI_CMD
+  : int32_T {
+  CMD_INIT = 0,                        // Default value
+  IDLE,
+  CMD_STARTUP,
+  CMD_SHUTDOWN,
+  ERR_RESET
+};
+
+#endif
+
+#ifndef DEFINED_TYPEDEF_FOR_GOV_STATUSES_
+#define DEFINED_TYPEDEF_FOR_GOV_STATUSES_
+
+enum class GOV_STATUSES
+  : int32_T {
+  GOV_INIT = 0,                        // Default value
+  GOV_STARTUP,
+  GOV_RUNNING,
+  GOV_SHUTDOWN,
+  HV_STARTUP_ERROR,
+  MOTOR_STARTUP_ERROR,
+  GOV_DI_ERROR,
+  HV_RUN_ERROR,
+  MOTOR_RUN_ERROR
+};
+
+#endif
+
+#ifndef DEFINED_TYPEDEF_FOR_BM_CMD_
+#define DEFINED_TYPEDEF_FOR_BM_CMD_
+
+enum class BM_CMD
+  : int32_T {
+  BM_CMD_INIT = 0,                     // Default value
+  HV_STARTUP,
+  HV_SHUTDOWN
+};
+
+#endif
+
 // Class declaration for model controller_autogen
 class controller_autogen final
 {
   // public data and function members
  public:
-  // Block signals (default storage)
-  struct B_controller_autogen_T {
+  // Block signals and states (default storage) for system '<Root>'
+  struct DW {
+    real_T TappedDelay_X[10];          // '<S25>/Tapped Delay'
     real_T pedaltotorque;              // '<S5>/%pedal to %torque'
     real_T MI_InverterEn;              // '<S4>/mi_right'
     real_T MI_InverterEn_p;            // '<S4>/mi_left'
+    BM_STATUSES Delay_DSTATE;          // '<S3>/Delay'
+    DI_CMD GOV_e_diCmd;                // '<S3>/governer_stateflow'
+    DI_STATUSES Delay2_DSTATE;         // '<S3>/Delay2'
     MI_STATUSES MI_motorStatus;        // '<S4>/mi_right'
     MI_STATUSES MI_motorStatus_o;      // '<S4>/mi_left'
-    MI_CMD GOV_e_miCmd;                // '<S3>/governer_stateflow'
-    GOV_STATUSES GOV_e_govSts;         // '<S3>/governer_stateflow'
-    DI_CMD GOV_e_diCmd;                // '<S3>/governer_stateflow'
-    BM_CMD GOV_e_bmCmd;                // '<S3>/governer_stateflow'
-    boolean_T b_ReadyToDrive;          // '<S2>/driver_interface'
-  };
-
-  // Block states (default storage) for system '<Root>'
-  struct DW_controller_autogen_T {
-    real_T TappedDelay_X[10];          // '<S25>/Tapped Delay'
-    BM_STATUSES Delay_DSTATE;          // '<S3>/Delay'
-    DI_STATUSES Delay2_DSTATE;         // '<S3>/Delay2'
     MI_STATUSES Delay1_DSTATE;         // '<S3>/Delay1'
     MI_STATUSES Delay_DSTATE_k;        // '<S4>/Delay'
+    MI_CMD GOV_e_miCmd;                // '<S3>/governer_stateflow'
+    GOV_STATUSES GOV_e_govSts;         // '<S3>/governer_stateflow'
+    BM_CMD GOV_e_bmCmd;                // '<S3>/governer_stateflow'
     uint16_T temporalCounter_i1;       // '<S4>/mi_right'
     uint16_T temporalCounter_i1_n;     // '<S4>/mi_left'
     uint16_T motorStartCount;          // '<S3>/governer_stateflow'
     uint16_T temporalCounter_i1_j;     // '<S3>/governer_stateflow'
     uint16_T temporalCounter_i1_h;     // '<S2>/driver_interface'
-    uint16_T temporalCounter_i1_o;     // '<S1>/bm_control'
-    uint16_T temporalCounter_i1_e;     // '<S1>/battery_monitor'
+    uint16_T temporalCounter_i1_b;     // '<S1>/bm_control'
+    uint16_T temporalCounter_i1_h0;    // '<S1>/battery_monitor'
     uint8_T is_c3_controller_autogen;  // '<S5>/vd_screenshot_check'
     uint8_T is_active_c3_controller_autogen;// '<S5>/vd_screenshot_check'
     uint8_T is_c10_controller_autogen; // '<S4>/mi_right'
@@ -82,15 +192,16 @@ class controller_autogen final
     uint8_T is_DI_running;             // '<S2>/driver_interface'
     uint8_T is_Ready_to_drive;         // '<S2>/driver_interface'
     uint8_T is_active_c2_driver_interface_l;// '<S2>/driver_interface'
-    uint8_T is_c5_battery_monitor_lib; // '<S1>/bm_control'
+    uint8_T is_c5_controller_autogen;  // '<S1>/bm_control'
     uint8_T is_StartupSuperstate;      // '<S1>/bm_control'
-    uint8_T is_active_c5_battery_monitor_li;// '<S1>/bm_control'
-    uint8_T is_c4_battery_monitor_lib; // '<S1>/battery_monitor'
-    uint8_T is_active_c4_battery_monitor_li;// '<S1>/battery_monitor'
+    uint8_T is_active_c5_controller_autogen;// '<S1>/bm_control'
+    uint8_T is_c4_controller_autogen;  // '<S1>/battery_monitor'
+    uint8_T is_active_c4_controller_autogen;// '<S1>/battery_monitor'
+    boolean_T b_ReadyToDrive;          // '<S2>/driver_interface'
   };
 
   // Constant parameters (default storage)
-  struct ConstP_controller_autogen_T {
+  struct ConstP {
     // Pooled Parameter (Expression: [0 1])
     //  Referenced by: '<S2>/AccelPedalMap'
 
@@ -113,7 +224,7 @@ class controller_autogen final
   };
 
   // External inputs (root inport signals with default storage)
-  struct ExtU_controller_autogen_T {
+  struct ExtU {
     boolean_T AMK1_bReserve;           // '<Root>/AMK1_bReserve'
     boolean_T AMK1_bSystemReady;       // '<Root>/AMK1_bSystemReady'
     boolean_T AMK1_bError;             // '<Root>/AMK1_bError'
@@ -158,7 +269,7 @@ class controller_autogen final
   };
 
   // External outputs (root outports fed by signals with default storage)
-  struct ExtY_controller_autogen_T {
+  struct ExtY {
     uint8_T AMK1_bInverterOn_tx;       // '<Root>/AMK1_bInverterOn_tx'
     uint8_T AMK1_bDcOn_tx;             // '<Root>/AMK1_bDcOn_tx'
     uint8_T AMK1_bEnable;              // '<Root>/AMK1_bEnable'
@@ -173,9 +284,9 @@ class controller_autogen final
     real32_T AMK0_TargetVelocity;      // '<Root>/AMK0_TargetVelocity'
     real32_T AMK0_TorqueLimitPositiv;  // '<Root>/AMK0_TorqueLimitPositiv'
     real32_T AMK0_TorqueLimitNegativ;  // '<Root>/AMK0_TorqueLimitNegativ'
-    real_T BM_PrechargeContactorCmd;   // '<Root>/BM_PrechargeContactorCmd'
-    real_T BM_HVposContactorCmd;       // '<Root>/BM_HVposContactorCmd'
-    real_T BM_HVnegContactorCmd;       // '<Root>/BM_HVnegContactorCmd'
+    boolean_T BM_PrechargeContactorCmd;// '<Root>/BM_PrechargeContactorCmd'
+    boolean_T BM_HVposContactorCmd;    // '<Root>/BM_HVposContactorCmd'
+    boolean_T BM_HVnegContactorCmd;    // '<Root>/BM_HVnegContactorCmd'
     boolean_T DI_DriverSpeaker;        // '<Root>/DI_DriverSpeaker'
     boolean_T DI_BrakeLightEn;         // '<Root>/DI_BrakeLightEn'
     uint8_T GOV_Status;                // '<Root>/GOV_Status'
@@ -186,7 +297,7 @@ class controller_autogen final
   };
 
   // Real-time Model Data Structure
-  struct RT_MODEL_controller_autogen_T {
+  struct RT_MODEL {
     const char_T * volatile errorStatus;
   };
 
@@ -203,19 +314,18 @@ class controller_autogen final
   controller_autogen& operator= (controller_autogen &&) = delete;
 
   // Real-Time Model get method
-  controller_autogen::RT_MODEL_controller_autogen_T * getRTM();
+  controller_autogen::RT_MODEL * getRTM();
 
   // Root inports set method
-  void setExternalInputs(const ExtU_controller_autogen_T
-    *pExtU_controller_autogen_T)
+  void setExternalInputs(const ExtU *pExtU)
   {
-    controller_autogen_U = *pExtU_controller_autogen_T;
+    rtU = *pExtU;
   }
 
   // Root outports get method
-  const ExtY_controller_autogen_T &getExternalOutputs() const
+  const ExtY &getExternalOutputs() const
   {
-    return controller_autogen_Y;
+    return rtY;
   }
 
   // model initialize function
@@ -236,24 +346,20 @@ class controller_autogen final
   // private data and function members
  private:
   // External inputs
-  ExtU_controller_autogen_T controller_autogen_U;
+  ExtU rtU;
 
   // External outputs
-  ExtY_controller_autogen_T controller_autogen_Y;
-
-  // Block signals
-  B_controller_autogen_T controller_autogen_B;
+  ExtY rtY;
 
   // Block states
-  DW_controller_autogen_T controller_autogen_DW;
+  DW rtDW;
 
   // Real-Time Model
-  RT_MODEL_controller_autogen_T controller_autogen_M;
+  RT_MODEL rtM;
 };
 
 // Constant parameters (default storage)
-extern const controller_autogen::ConstP_controller_autogen_T
-  controller_autogen_ConstP;
+extern const controller_autogen::ConstP rtConstP;
 
 //-
 //  These blocks were eliminated from the model due to optimizations:
