@@ -96,6 +96,21 @@ struct plant_cal_type {
   real_T CANRead_P1[13];               /* Expression: initValues
                                         * Referenced by: '<Root>/CAN Read '
                                         */
+  real_T APPS_Value;                   /* Expression: 1
+                                        * Referenced by: '<Root>/APPS'
+                                        */
+  real_T BPPS_Value;                   /* Expression: 1
+                                        * Referenced by: '<Root>/BPPS'
+                                        */
+  real_T HVILStatus_Value;             /* Expression: 1
+                                        * Referenced by: '<Root>/HVILStatus'
+                                        */
+  real_T StartButton_Value;            /* Expression: 1
+                                        * Referenced by: '<Root>/StartButton'
+                                        */
+  real_T SteeringAngle_Value;          /* Expression: 0.5219295562081905
+                                        * Referenced by: '<Root>/SteeringAngle'
+                                        */
   real32_T Constant3_Value;            /* Computed Parameter: Constant3_Value
                                         * Referenced by: '<S10>/Constant3'
                                         */

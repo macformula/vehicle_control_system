@@ -7,9 +7,9 @@
  *
  * Code generation for model "controls".
  *
- * Model version              : 1.9
+ * Model version              : 1.14
  * Simulink Coder version : 9.8 (R2022b) 13-May-2022
- * C++ source code generated on : Sun Sep  8 14:00:18 2024
+ * C++ source code generated on : Sun Sep  8 14:34:19 2024
  *
  * Target selection: slrealtime.tlc
  * Note: GRT includes extra infrastructure and instrumentation for prototyping

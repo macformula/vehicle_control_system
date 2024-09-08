@@ -7,9 +7,9 @@
  *
  * Code generation for model "controls".
  *
- * Model version              : 1.9
+ * Model version              : 1.14
  * Simulink Coder version : 9.8 (R2022b) 13-May-2022
- * C++ source code generated on : Sun Sep  8 14:00:18 2024
+ * C++ source code generated on : Sun Sep  8 14:34:19 2024
  *
  * Target selection: slrealtime.tlc
  * Note: GRT includes extra infrastructure and instrumentation for prototyping
@@ -158,16 +158,15 @@ struct DW_mi_left_controls_T {
 /* Block signals (default storage) */
 struct B_controls_T {
   CAN_DATATYPE CANRead1_o2;            /* '<Root>/CAN Read 1' */
+  CAN_DATATYPE CANPack2;               /* '<Root>/CAN Pack2' */
   CAN_DATATYPE CANPack;                /* '<Root>/CAN Pack' */
   CAN_DATATYPE CANRead_o2;             /* '<Root>/CAN Read ' */
   CAN_DATATYPE CANPack1;               /* '<Root>/CAN Pack1' */
-  CAN_DATATYPE TmpSignalConversionAtCANWriteIn[2];
+  CAN_DATATYPE TmpSignalConversionAtCANWriteIn[3];
   CAN_DATATYPE AMK0_SetPoints1;        /* '<S2>/CAN Pack' */
   CAN_DATATYPE AMK1_SetPoints1;        /* '<S2>/CAN Pack1' */
   CAN_DATATYPE TmpSignalConversionAtCANWrite1I[2];/* '<Root>/AMK_Output' */
   real_T Constant1;                    /* '<Root>/Constant1' */
-  real_T Constant13;                   /* '<Root>/Constant13' */
-  real_T Constant14;                   /* '<Root>/Constant14' */
   real_T CANUnpack2_o1;                /* '<Root>/CAN Unpack2' */
   real_T CANUnpack2_o2;                /* '<Root>/CAN Unpack2' */
   real_T AMK_TorqueCurrent_L;          /* '<Root>/CAN Unpack2' */
@@ -181,10 +180,12 @@ struct B_controls_T {
   real_T Abs;                          /* '<S11>/Abs' */
   real_T Switch;                       /* '<S11>/Switch' */
   real_T Max;                          /* '<S5>/Max' */
-  real_T AccelPedalMap;                /* '<S5>/AccelPedalMap' */
-  real_T Merge;                        /* '<S5>/Merge' */
   real_T Switch2;                      /* '<S5>/Switch2' */
   real_T BrakePedalMap;                /* '<S5>/BrakePedalMap' */
+  real_T Constant13;                   /* '<Root>/Constant13' */
+  real_T Constant14;                   /* '<Root>/Constant14' */
+  real_T AccelPedalMap;                /* '<S5>/AccelPedalMap' */
+  real_T Merge;                        /* '<S5>/Merge' */
   real_T Switch_n;                     /* '<S8>/Switch' */
   real_T Product;                      /* '<S8>/Product' */
   real_T pedaltotorque;                /* '<S8>/%pedal to %torque' */
@@ -259,12 +260,8 @@ struct B_controls_T {
   uint8_T CastToSingle_g;              /* '<Root>/Cast To Single' */
   uint8_T GOV_e_vdCmd;                 /* '<S6>/governer_stateflow' */
   boolean_T CANRead1_o1;               /* '<Root>/CAN Read 1' */
-  boolean_T NOT;                       /* '<S4>/NOT' */
-  boolean_T NOT1;                      /* '<S4>/NOT1' */
-  boolean_T NOT2;                      /* '<S4>/NOT2' */
-  boolean_T CANRead_o1;                /* '<Root>/CAN Read ' */
-  boolean_T NOT_h;                     /* '<Root>/NOT' */
-  boolean_T NOT1_e;                    /* '<S5>/NOT1' */
+  boolean_T NOT;                       /* '<Root>/NOT' */
+  boolean_T NOT1;                      /* '<S5>/NOT1' */
   boolean_T LowerTest;                 /* '<S20>/Lower Test' */
   boolean_T UpperTest;                 /* '<S20>/Upper Test' */
   boolean_T FixPtLogicalOperator;      /* '<S20>/FixPt Logical Operator' */
@@ -287,11 +284,15 @@ struct B_controls_T {
   boolean_T NOT_p;                     /* '<S19>/NOT' */
   boolean_T GreaterThan;               /* '<S11>/GreaterThan' */
   boolean_T b_DriverInterfaceError;    /* '<S5>/b_DriverInterfaceError' */
+  boolean_T OR;                        /* '<S5>/OR' */
+  boolean_T Switch_m;                  /* '<S5>/Switch' */
+  boolean_T NOT_dd;                    /* '<S4>/NOT' */
+  boolean_T NOT1_d;                    /* '<S4>/NOT1' */
+  boolean_T NOT2;                      /* '<S4>/NOT2' */
+  boolean_T CANRead_o1;                /* '<Root>/CAN Read ' */
   boolean_T NOT_fr;                    /* '<S5>/NOT' */
   boolean_T OR1;                       /* '<S5>/OR1' */
-  boolean_T OR;                        /* '<S5>/OR' */
   boolean_T AND;                       /* '<S7>/AND' */
-  boolean_T Switch_m;                  /* '<S5>/Switch' */
   boolean_T GreaterThan_j;             /* '<S7>/GreaterThan' */
   boolean_T motorErrorActive;          /* '<S7>/motorErrorActive' */
   boolean_T motorErrorActive1;         /* '<S7>/motorErrorActive1' */
@@ -307,7 +308,7 @@ struct DW_controls_T {
   real_T TappedDelay_X[10];            /* '<S28>/Tapped Delay' */
   void *CANRead1_PWORK;                /* '<Root>/CAN Read 1' */
   void *CANRead_PWORK;                 /* '<Root>/CAN Read ' */
-  void *CANWrite_PWORK[2];             /* '<Root>/CAN Write ' */
+  void *CANWrite_PWORK[3];             /* '<Root>/CAN Write ' */
   void *CANWrite1_PWORK[2];            /* '<Root>/CAN Write 1' */
   struct {
     void *AQHandles;
@@ -340,9 +341,10 @@ struct DW_controls_T {
   uint32_T is_StartupSuperstate;       /* '<S4>/bm_control' */
   uint32_T is_c4_battery_monitor_lib;  /* '<S4>/battery_monitor' */
   uint32_T is_StartupSuperstate_p;     /* '<S4>/battery_monitor' */
-  int_T CANPack_ModeSignalID;          /* '<Root>/CAN Pack' */
   int_T CANUnpack2_ModeSignalID;       /* '<Root>/CAN Unpack2' */
   int_T CANUnpack2_StatusPortID;       /* '<Root>/CAN Unpack2' */
+  int_T CANPack2_ModeSignalID;         /* '<Root>/CAN Pack2' */
+  int_T CANPack_ModeSignalID;          /* '<Root>/CAN Pack' */
   int_T CANPack1_ModeSignalID;         /* '<Root>/CAN Pack1' */
   int_T CANPack_ModeSignalID_n;        /* '<S2>/CAN Pack' */
   int_T CANPack1_ModeSignalID_d;       /* '<S2>/CAN Pack1' */

@@ -7,9 +7,9 @@
  *
  * Code generation for model "plant".
  *
- * Model version              : 1.5
+ * Model version              : 1.8
  * Simulink Coder version : 9.8 (R2022b) 13-May-2022
- * C++ source code generated on : Sun Sep  8 14:07:18 2024
+ * C++ source code generated on : Sun Sep  8 14:35:09 2024
  *
  * Target selection: slrealtime.tlc
  * Note: GRT includes extra infrastructure and instrumentation for prototyping
@@ -183,6 +183,7 @@ struct B_plant_T {
   CAN_DATATYPE TmpSignalConversionAtCANWriteIn[4];/* '<Root>/Subsystem' */
   CAN_DATATYPE CANPack;                /* '<S7>/CAN Pack' */
   CAN_DATATYPE CANRead_o2;             /* '<Root>/CAN Read ' */
+  CAN_DATATYPE AMK0_ActualValues2_c;   /* '<Root>/CAN Pack1' */
   real_T CANUnpack;                    /* '<Root>/CAN Unpack' */
   real_T Constant;                     /* '<Root>/Constant' */
   real_T spd_err;                      /* '<S10>/Subtract' */
@@ -199,6 +200,8 @@ struct B_plant_T {
   real_T percent_err_m;                /* '<S11>/Divide3' */
   real_T Switch_h;                     /* '<S13>/Switch' */
   real_T Switch2_d;                    /* '<S13>/Switch2' */
+  real_T CANUnpack1_o1;                /* '<Root>/CAN Unpack1' */
+  real_T CANUnpack1_o2;                /* '<Root>/CAN Unpack1' */
   real_T AMK0_TargetVelocity;          /* '<S4>/CAN Unpack' */
   real_T AMK0_TorqueLimitNegativ;      /* '<S4>/CAN Unpack' */
   real_T AMK0_TorqueLimitPositiv;      /* '<S4>/CAN Unpack' */
@@ -272,10 +275,13 @@ struct DW_plant_T {
   int_T CANPack2_ModeSignalID;         /* '<S6>/CAN Pack2' */
   int_T CANPack3_ModeSignalID;         /* '<S6>/CAN Pack3' */
   int_T CANPack_ModeSignalID_d;        /* '<S7>/CAN Pack' */
+  int_T CANUnpack1_ModeSignalID;       /* '<Root>/CAN Unpack1' */
+  int_T CANUnpack1_StatusPortID;       /* '<Root>/CAN Unpack1' */
+  int_T CANPack1_ModeSignalID_k;       /* '<Root>/CAN Pack1' */
   int_T CANUnpack_ModeSignalID_j;      /* '<S4>/CAN Unpack' */
   int_T CANUnpack_StatusPortID_o;      /* '<S4>/CAN Unpack' */
-  int_T CANUnpack1_ModeSignalID;       /* '<S4>/CAN Unpack1' */
-  int_T CANUnpack1_StatusPortID;       /* '<S4>/CAN Unpack1' */
+  int_T CANUnpack1_ModeSignalID_k;     /* '<S4>/CAN Unpack1' */
+  int_T CANUnpack1_StatusPortID_h;     /* '<S4>/CAN Unpack1' */
   int_T CANUnpack_ModeSignalID_b;      /* '<S5>/CAN Unpack' */
   int_T CANUnpack_StatusPortID_i;      /* '<S5>/CAN Unpack' */
   int8_T FunctionCallSubsystem_SubsysRan;/* '<Root>/Function-Call Subsystem' */

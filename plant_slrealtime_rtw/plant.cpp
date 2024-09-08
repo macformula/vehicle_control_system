@@ -7,9 +7,9 @@
  *
  * Code generation for model "plant".
  *
- * Model version              : 1.5
+ * Model version              : 1.8
  * Simulink Coder version : 9.8 (R2022b) 13-May-2022
- * C++ source code generated on : Sun Sep  8 14:07:18 2024
+ * C++ source code generated on : Sun Sep  8 14:35:09 2024
  *
  * Target selection: slrealtime.tlc
  * Note: GRT includes extra infrastructure and instrumentation for prototyping
@@ -2638,6 +2638,405 @@ void plant_step(void)
     sfcnOutputs(rts,0);
   }
 
+  /* S-Function (scanunpack): '<Root>/CAN Unpack1' */
+  {
+    /* S-Function (scanunpack): '<Root>/CAN Unpack1' */
+    if ((1 == plant_B.CANRead1_o2.Length) && (plant_B.CANRead1_o2.ID !=
+         INVALID_CAN_ID) ) {
+      if ((256 == plant_B.CANRead1_o2.ID) && (0U == plant_B.CANRead1_o2.Extended)
+          ) {
+        {
+          /* --------------- START Unpacking signal 0 ------------------
+           *  startBit                = 0
+           *  length                  = 1
+           *  desiredSignalByteLayout = LITTLEENDIAN
+           *  dataType                = UNSIGNED
+           *  factor                  = 1.0
+           *  offset                  = 0.0
+           * -----------------------------------------------------------------------*/
+          /*
+           * Signal is not connected or connected to terminator.
+           * No unpacking code generated.
+           */
+
+          /* --------------- START Unpacking signal 1 ------------------
+           *  startBit                = 1
+           *  length                  = 1
+           *  desiredSignalByteLayout = LITTLEENDIAN
+           *  dataType                = UNSIGNED
+           *  factor                  = 1.0
+           *  offset                  = 0.0
+           * -----------------------------------------------------------------------*/
+          /*
+           * Signal is not connected or connected to terminator.
+           * No unpacking code generated.
+           */
+        }
+      }
+    }
+  }
+
+  /* S-Function (scanpack): '<Root>/CAN Pack1' incorporates:
+   *  Constant: '<Root>/APPS'
+   *  Constant: '<Root>/BPPS'
+   *  Constant: '<Root>/HVILStatus'
+   *  Constant: '<Root>/StartButton'
+   *  Constant: '<Root>/SteeringAngle'
+   */
+  /* S-Function (scanpack): '<Root>/CAN Pack1' */
+  plant_B.AMK0_ActualValues2_c.ID = 256U;
+  plant_B.AMK0_ActualValues2_c.Length = 8U;
+  plant_B.AMK0_ActualValues2_c.Extended = 0U;
+  plant_B.AMK0_ActualValues2_c.Remote = 0;
+  plant_B.AMK0_ActualValues2_c.Data[0] = 0;
+  plant_B.AMK0_ActualValues2_c.Data[1] = 0;
+  plant_B.AMK0_ActualValues2_c.Data[2] = 0;
+  plant_B.AMK0_ActualValues2_c.Data[3] = 0;
+  plant_B.AMK0_ActualValues2_c.Data[4] = 0;
+  plant_B.AMK0_ActualValues2_c.Data[5] = 0;
+  plant_B.AMK0_ActualValues2_c.Data[6] = 0;
+  plant_B.AMK0_ActualValues2_c.Data[7] = 0;
+
+  {
+    /* --------------- START Packing signal 0 ------------------
+     *  startBit                = 0
+     *  length                  = 8
+     *  desiredSignalByteLayout = LITTLEENDIAN
+     *  dataType                = UNSIGNED
+     *  factor                  = 0.005
+     *  offset                  = 0.0
+     *  minimum                 = 0.0
+     *  maximum                 = 0.0
+     * -----------------------------------------------------------------------*/
+    {
+      real64_T outValue = 0;
+
+      {
+        real64_T result = plant_cal->APPS_Value;
+
+        /* no offset to apply */
+        result = result * (1 / 0.005);
+
+        /* round to closest integer value for integer CAN signal */
+        outValue = round(result);
+      }
+
+      {
+        uint8_T packedValue;
+        if (outValue > (real64_T)(255)) {
+          packedValue = (uint8_T) 255;
+        } else if (outValue < (real64_T)(0)) {
+          packedValue = (uint8_T) 0;
+        } else {
+          packedValue = (uint8_T) (outValue);
+        }
+
+        {
+          {
+            plant_B.AMK0_ActualValues2_c.Data[0] =
+              plant_B.AMK0_ActualValues2_c.Data[0] | (uint8_T)(packedValue);
+          }
+        }
+      }
+    }
+
+    /* --------------- START Packing signal 1 ------------------
+     *  startBit                = 8
+     *  length                  = 8
+     *  desiredSignalByteLayout = LITTLEENDIAN
+     *  dataType                = UNSIGNED
+     *  factor                  = 0.005
+     *  offset                  = 0.0
+     *  minimum                 = 0.0
+     *  maximum                 = 0.0
+     * -----------------------------------------------------------------------*/
+    {
+      real64_T outValue = 0;
+
+      {
+        real64_T result = plant_cal->APPS_Value;
+
+        /* no offset to apply */
+        result = result * (1 / 0.005);
+
+        /* round to closest integer value for integer CAN signal */
+        outValue = round(result);
+      }
+
+      {
+        uint8_T packedValue;
+        if (outValue > (real64_T)(255)) {
+          packedValue = (uint8_T) 255;
+        } else if (outValue < (real64_T)(0)) {
+          packedValue = (uint8_T) 0;
+        } else {
+          packedValue = (uint8_T) (outValue);
+        }
+
+        {
+          {
+            plant_B.AMK0_ActualValues2_c.Data[1] =
+              plant_B.AMK0_ActualValues2_c.Data[1] | (uint8_T)(packedValue);
+          }
+        }
+      }
+    }
+
+    /* --------------- START Packing signal 2 ------------------
+     *  startBit                = 16
+     *  length                  = 8
+     *  desiredSignalByteLayout = LITTLEENDIAN
+     *  dataType                = UNSIGNED
+     *  factor                  = 0.005
+     *  offset                  = 0.0
+     *  minimum                 = 0.0
+     *  maximum                 = 0.0
+     * -----------------------------------------------------------------------*/
+    {
+      real64_T outValue = 0;
+
+      {
+        real64_T result = plant_cal->BPPS_Value;
+
+        /* no offset to apply */
+        result = result * (1 / 0.005);
+
+        /* round to closest integer value for integer CAN signal */
+        outValue = round(result);
+      }
+
+      {
+        uint8_T packedValue;
+        if (outValue > (real64_T)(255)) {
+          packedValue = (uint8_T) 255;
+        } else if (outValue < (real64_T)(0)) {
+          packedValue = (uint8_T) 0;
+        } else {
+          packedValue = (uint8_T) (outValue);
+        }
+
+        {
+          {
+            plant_B.AMK0_ActualValues2_c.Data[2] =
+              plant_B.AMK0_ActualValues2_c.Data[2] | (uint8_T)(packedValue);
+          }
+        }
+      }
+    }
+
+    /* --------------- START Packing signal 3 ------------------
+     *  startBit                = 24
+     *  length                  = 8
+     *  desiredSignalByteLayout = LITTLEENDIAN
+     *  dataType                = UNSIGNED
+     *  factor                  = 0.005
+     *  offset                  = 0.0
+     *  minimum                 = 0.0
+     *  maximum                 = 0.0
+     * -----------------------------------------------------------------------*/
+    {
+      real64_T outValue = 0;
+
+      {
+        real64_T result = plant_cal->BPPS_Value;
+
+        /* no offset to apply */
+        result = result * (1 / 0.005);
+
+        /* round to closest integer value for integer CAN signal */
+        outValue = round(result);
+      }
+
+      {
+        uint8_T packedValue;
+        if (outValue > (real64_T)(255)) {
+          packedValue = (uint8_T) 255;
+        } else if (outValue < (real64_T)(0)) {
+          packedValue = (uint8_T) 0;
+        } else {
+          packedValue = (uint8_T) (outValue);
+        }
+
+        {
+          {
+            plant_B.AMK0_ActualValues2_c.Data[3] =
+              plant_B.AMK0_ActualValues2_c.Data[3] | (uint8_T)(packedValue);
+          }
+        }
+      }
+    }
+
+    /* --------------- START Packing signal 4 ------------------
+     *  startBit                = 41
+     *  length                  = 1
+     *  desiredSignalByteLayout = LITTLEENDIAN
+     *  dataType                = SIGNED
+     *  factor                  = 1.0
+     *  offset                  = 0.0
+     *  minimum                 = 0.0
+     *  maximum                 = 0.0
+     * -----------------------------------------------------------------------*/
+    {
+      real64_T outValue = 0;
+
+      {
+        real64_T result = plant_cal->HVILStatus_Value;
+
+        /* no scaling required */
+        /* round to closest integer value for integer CAN signal */
+        outValue = round(result);
+      }
+
+      {
+        int8_T packedValue;
+        int32_T scaledValue;
+        if (outValue > 2147483647.0) {
+          scaledValue = 2147483647;
+        } else if (outValue < -2147483648.0) {
+          scaledValue = -2147483647 - 1;
+        } else {
+          scaledValue = (int32_T) outValue;
+        }
+
+        if (scaledValue > (int32_T) (0)) {
+          packedValue = 0;
+        } else if (scaledValue < (int32_T)((-(0)-1))) {
+          packedValue = (-(0)-1);
+        } else {
+          packedValue = (int8_T) (scaledValue);
+        }
+
+        {
+          uint8_T* tempValuePtr = (uint8_T*)&packedValue;
+          uint8_T tempValue = *tempValuePtr;
+
+          {
+            plant_B.AMK0_ActualValues2_c.Data[5] =
+              plant_B.AMK0_ActualValues2_c.Data[5] | (uint8_T)((uint8_T)
+              ((uint8_T)(tempValue & (uint8_T)0x1U) << 1));
+          }
+        }
+      }
+    }
+
+    /* --------------- START Packing signal 5 ------------------
+     *  startBit                = 40
+     *  length                  = 1
+     *  desiredSignalByteLayout = LITTLEENDIAN
+     *  dataType                = SIGNED
+     *  factor                  = 1.0
+     *  offset                  = 0.0
+     *  minimum                 = 0.0
+     *  maximum                 = 0.0
+     * -----------------------------------------------------------------------*/
+    {
+      real64_T outValue = 0;
+
+      {
+        real64_T result = plant_cal->StartButton_Value;
+
+        /* no scaling required */
+        /* round to closest integer value for integer CAN signal */
+        outValue = round(result);
+      }
+
+      {
+        int8_T packedValue;
+        int32_T scaledValue;
+        if (outValue > 2147483647.0) {
+          scaledValue = 2147483647;
+        } else if (outValue < -2147483648.0) {
+          scaledValue = -2147483647 - 1;
+        } else {
+          scaledValue = (int32_T) outValue;
+        }
+
+        if (scaledValue > (int32_T) (0)) {
+          packedValue = 0;
+        } else if (scaledValue < (int32_T)((-(0)-1))) {
+          packedValue = (-(0)-1);
+        } else {
+          packedValue = (int8_T) (scaledValue);
+        }
+
+        {
+          uint8_T* tempValuePtr = (uint8_T*)&packedValue;
+          uint8_T tempValue = *tempValuePtr;
+
+          {
+            plant_B.AMK0_ActualValues2_c.Data[5] =
+              plant_B.AMK0_ActualValues2_c.Data[5] | (uint8_T)((uint8_T)
+              (tempValue & (uint8_T)0x1U));
+          }
+        }
+      }
+    }
+
+    /* --------------- START Packing signal 6 ------------------
+     *  startBit                = 32
+     *  length                  = 8
+     *  desiredSignalByteLayout = LITTLEENDIAN
+     *  dataType                = UNSIGNED
+     *  factor                  = 0.005
+     *  offset                  = 0.0
+     *  minimum                 = 0.0
+     *  maximum                 = 0.0
+     * -----------------------------------------------------------------------*/
+    {
+      real64_T outValue = 0;
+
+      {
+        real64_T result = plant_cal->SteeringAngle_Value;
+
+        /* no offset to apply */
+        result = result * (1 / 0.005);
+
+        /* round to closest integer value for integer CAN signal */
+        outValue = round(result);
+      }
+
+      {
+        uint8_T packedValue;
+        if (outValue > (real64_T)(255)) {
+          packedValue = (uint8_T) 255;
+        } else if (outValue < (real64_T)(0)) {
+          packedValue = (uint8_T) 0;
+        } else {
+          packedValue = (uint8_T) (outValue);
+        }
+
+        {
+          {
+            plant_B.AMK0_ActualValues2_c.Data[4] =
+              plant_B.AMK0_ActualValues2_c.Data[4] | (uint8_T)(packedValue);
+          }
+        }
+      }
+    }
+
+    /* --------------- START Packing signal 7 ------------------
+     *  startBit                = 48
+     *  length                  = 12
+     *  desiredSignalByteLayout = LITTLEENDIAN
+     *  dataType                = SIGNED
+     *  factor                  = 1.0
+     *  offset                  = 0.0
+     *  minimum                 = 0.0
+     *  maximum                 = 0.0
+     * -----------------------------------------------------------------------*/
+
+    /* --------------- START Packing signal 8 ------------------
+     *  startBit                = 60
+     *  length                  = 12
+     *  desiredSignalByteLayout = LITTLEENDIAN
+     *  dataType                = SIGNED
+     *  factor                  = 1.0
+     *  offset                  = 0.0
+     *  minimum                 = 0.0
+     *  maximum                 = 0.0
+     * -----------------------------------------------------------------------*/
+  }
+
   /* Update absolute time for base rate */
   /* The "clockTick0" counts the number of times the code of this task has
    * been executed. The absolute time is the multiplication of "clockTick0"
@@ -2714,6 +3113,7 @@ void plant_initialize(void)
     plant_B.TmpSignalConversionAtCANWriteIn[3] = CAN_DATATYPE_GROUND;
     plant_B.CANPack = CAN_DATATYPE_GROUND;
     plant_B.CANRead_o2 = CAN_DATATYPE_GROUND;
+    plant_B.AMK0_ActualValues2_c = CAN_DATATYPE_GROUND;
   }
 
   /* states (dwork) */
@@ -3425,6 +3825,10 @@ void plant_initialize(void)
     if (ssGetErrorStatus(rts) != (NULL))
       return;
   }
+
+  /* Start for S-Function (scanunpack): '<Root>/CAN Unpack1' */
+
+  /*-----------S-Function Block: <Root>/CAN Unpack1 -----------------*/
 
   /* SystemInitialize for Chart: '<S1>/Chart' */
   plant_Chart_Init(&plant_B.sf_Chart, &plant_DW.sf_Chart);

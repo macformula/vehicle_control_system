@@ -54,21 +54,6 @@ struct controls_cal_type {
   real_T CANRead1_P1[13];              /* Expression: initValues
                                         * Referenced by: '<Root>/CAN Read 1'
                                         */
-  real_T Constant13_Value;             /* Expression: 1
-                                        * Referenced by: '<Root>/Constant13'
-                                        */
-  real_T Constant14_Value;             /* Expression: 100
-                                        * Referenced by: '<Root>/Constant14'
-                                        */
-  real_T CANRead_P1_Size[2];           /* Computed Parameter: CANRead_P1_Size
-                                        * Referenced by: '<Root>/CAN Read '
-                                        */
-  real_T CANRead_P1[13];               /* Expression: initValues
-                                        * Referenced by: '<Root>/CAN Read '
-                                        */
-  real_T Constant_Value_f;             /* Expression: 5000
-                                        * Referenced by: '<S8>/Constant'
-                                        */
   real_T LowerPotentiometerLimit1_Value;/* Expression: 0
                                          * Referenced by: '<S15>/LowerPotentiometerLimit1'
                                          */
@@ -102,15 +87,6 @@ struct controls_cal_type {
   real_T Constant_Value_i;             /* Expression: 0.1
                                         * Referenced by: '<S11>/Constant'
                                         */
-  real_T AccelPedalMap_tableData[2];   /* Expression: [0 1]
-                                        * Referenced by: '<S5>/AccelPedalMap'
-                                        */
-  real_T AccelPedalMap_bp01Data[2];    /* Expression: [0 1]
-                                        * Referenced by: '<S5>/AccelPedalMap'
-                                        */
-  real_T Constant_Value_g;             /* Expression: 0
-                                        * Referenced by: '<S5>/Constant'
-                                        */
   real_T BrakePedalMap_tableData[21];
   /* Expression: [0 5 10 15 20 25 30 35 40 45 50 55 60 65 70 75 80 85 90 95 100]
    * Referenced by: '<S5>/BrakePedalMap'
@@ -120,6 +96,33 @@ struct controls_cal_type {
    * Referenced by: '<S5>/BrakePedalMap'
    */
   real_T Switch_Threshold;             /* Expression: 0.1
+                                        * Referenced by: '<S5>/Switch'
+                                        */
+  real_T Constant13_Value;             /* Expression: 1
+                                        * Referenced by: '<Root>/Constant13'
+                                        */
+  real_T Constant14_Value;             /* Expression: 100
+                                        * Referenced by: '<Root>/Constant14'
+                                        */
+  real_T CANRead_P1_Size[2];           /* Computed Parameter: CANRead_P1_Size
+                                        * Referenced by: '<Root>/CAN Read '
+                                        */
+  real_T CANRead_P1[13];               /* Expression: initValues
+                                        * Referenced by: '<Root>/CAN Read '
+                                        */
+  real_T Constant_Value_f;             /* Expression: 5000
+                                        * Referenced by: '<S8>/Constant'
+                                        */
+  real_T AccelPedalMap_tableData[2];   /* Expression: [0 1]
+                                        * Referenced by: '<S5>/AccelPedalMap'
+                                        */
+  real_T AccelPedalMap_bp01Data[2];    /* Expression: [0 1]
+                                        * Referenced by: '<S5>/AccelPedalMap'
+                                        */
+  real_T Constant_Value_g;             /* Expression: 0
+                                        * Referenced by: '<S5>/Constant'
+                                        */
+  real_T Switch_Threshold_h;           /* Expression: 0.1
                                         * Referenced by: '<S8>/Switch'
                                         */
   real_T Constant7_Value;              /* Expression: 1
@@ -151,9 +154,6 @@ struct controls_cal_type {
                                         */
   real_T CANWrite1_P1[10];             /* Expression: initValues
                                         * Referenced by: '<Root>/CAN Write 1'
-                                        */
-  real_T Switch_Threshold_f;           /* Expression: 0.1
-                                        * Referenced by: '<S5>/Switch'
                                         */
   real_T Constant2_Value_m;            /* Expression: 0
                                         * Referenced by: '<Root>/Constant2'

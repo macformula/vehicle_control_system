@@ -180,6 +180,31 @@ plant_cal_type plant_cal_impl = {
    */
   { 614.0, 1.0, -1.0, 0.0, 1.0, 1.0, 0.0, 0.0, 0.0, 1.0, 2.0, 1.0, 2.0 },
 
+  /* Expression: 1
+   * Referenced by: '<Root>/APPS'
+   */
+  1.0,
+
+  /* Expression: 1
+   * Referenced by: '<Root>/BPPS'
+   */
+  1.0,
+
+  /* Expression: 1
+   * Referenced by: '<Root>/HVILStatus'
+   */
+  1.0,
+
+  /* Expression: 1
+   * Referenced by: '<Root>/StartButton'
+   */
+  1.0,
+
+  /* Expression: 0.5219295562081905
+   * Referenced by: '<Root>/SteeringAngle'
+   */
+  0.52192955620819048,
+
   /* Computed Parameter: Constant3_Value
    * Referenced by: '<S10>/Constant3'
    */

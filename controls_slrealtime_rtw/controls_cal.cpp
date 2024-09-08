@@ -86,31 +86,6 @@ controls_cal_type controls_cal_impl = {
    */
   { 614.0, 1.0, -1.0, 1.0, 1.0, 1.0, 0.0, 0.0, 0.0, 1.0, 2.0, 1.0, 2.0 },
 
-  /* Expression: 1
-   * Referenced by: '<Root>/Constant13'
-   */
-  1.0,
-
-  /* Expression: 100
-   * Referenced by: '<Root>/Constant14'
-   */
-  100.0,
-
-  /* Computed Parameter: CANRead_P1_Size
-   * Referenced by: '<Root>/CAN Read '
-   */
-  { 1.0, 13.0 },
-
-  /* Expression: initValues
-   * Referenced by: '<Root>/CAN Read '
-   */
-  { 614.0, 1.0, -1.0, 0.0, 1.0, 1.0, 0.0, 0.0, 0.0, 1.0, 2.0, 1.0, 2.0 },
-
-  /* Expression: 5000
-   * Referenced by: '<S8>/Constant'
-   */
-  5000.0,
-
   /* Expression: 0
    * Referenced by: '<S15>/LowerPotentiometerLimit1'
    */
@@ -166,6 +141,48 @@ controls_cal_type controls_cal_impl = {
    */
   0.1,
 
+  /* Expression: [0 5 10 15 20 25 30 35 40 45 50 55 60 65 70 75 80 85 90 95 100]
+   * Referenced by: '<S5>/BrakePedalMap'
+   */
+  { 0.0, 5.0, 10.0, 15.0, 20.0, 25.0, 30.0, 35.0, 40.0, 45.0, 50.0, 55.0, 60.0,
+    65.0, 70.0, 75.0, 80.0, 85.0, 90.0, 95.0, 100.0 },
+
+  /* Expression: [0 5 10 15 20 25 30 35 40 45 50 55 60 65 70 75 80 85 90 95 100]
+   * Referenced by: '<S5>/BrakePedalMap'
+   */
+  { 0.0, 5.0, 10.0, 15.0, 20.0, 25.0, 30.0, 35.0, 40.0, 45.0, 50.0, 55.0, 60.0,
+    65.0, 70.0, 75.0, 80.0, 85.0, 90.0, 95.0, 100.0 },
+
+  /* Expression: 0.1
+   * Referenced by: '<S5>/Switch'
+   */
+  0.1,
+
+  /* Expression: 1
+   * Referenced by: '<Root>/Constant13'
+   */
+  1.0,
+
+  /* Expression: 100
+   * Referenced by: '<Root>/Constant14'
+   */
+  100.0,
+
+  /* Computed Parameter: CANRead_P1_Size
+   * Referenced by: '<Root>/CAN Read '
+   */
+  { 1.0, 13.0 },
+
+  /* Expression: initValues
+   * Referenced by: '<Root>/CAN Read '
+   */
+  { 614.0, 1.0, -1.0, 0.0, 1.0, 1.0, 0.0, 0.0, 0.0, 1.0, 2.0, 1.0, 2.0 },
+
+  /* Expression: 5000
+   * Referenced by: '<S8>/Constant'
+   */
+  5000.0,
+
   /* Expression: [0 1]
    * Referenced by: '<S5>/AccelPedalMap'
    */
@@ -180,18 +197,6 @@ controls_cal_type controls_cal_impl = {
    * Referenced by: '<S5>/Constant'
    */
   0.0,
-
-  /* Expression: [0 5 10 15 20 25 30 35 40 45 50 55 60 65 70 75 80 85 90 95 100]
-   * Referenced by: '<S5>/BrakePedalMap'
-   */
-  { 0.0, 5.0, 10.0, 15.0, 20.0, 25.0, 30.0, 35.0, 40.0, 45.0, 50.0, 55.0, 60.0,
-    65.0, 70.0, 75.0, 80.0, 85.0, 90.0, 95.0, 100.0 },
-
-  /* Expression: [0 5 10 15 20 25 30 35 40 45 50 55 60 65 70 75 80 85 90 95 100]
-   * Referenced by: '<S5>/BrakePedalMap'
-   */
-  { 0.0, 5.0, 10.0, 15.0, 20.0, 25.0, 30.0, 35.0, 40.0, 45.0, 50.0, 55.0, 60.0,
-    65.0, 70.0, 75.0, 80.0, 85.0, 90.0, 95.0, 100.0 },
 
   /* Expression: 0.1
    * Referenced by: '<S8>/Switch'
@@ -252,7 +257,7 @@ controls_cal_type controls_cal_impl = {
   /* Expression: initValues
    * Referenced by: '<Root>/CAN Write '
    */
-  { 614.0, 1.0, -1.0, 1.0, 1.0, 1.0, 0.0, 2.0, 0.0, 0.0 },
+  { 614.0, 1.0, -1.0, 1.0, 1.0, 1.0, 0.0, 3.0, 0.0, 0.0 },
 
   /* Computed Parameter: CANWrite1_P1_Size
    * Referenced by: '<Root>/CAN Write 1'
@@ -263,11 +268,6 @@ controls_cal_type controls_cal_impl = {
    * Referenced by: '<Root>/CAN Write 1'
    */
   { 614.0, 1.0, -1.0, 0.0, 1.0, 1.0, 0.0, 2.0, 0.0, 0.0 },
-
-  /* Expression: 0.1
-   * Referenced by: '<S5>/Switch'
-   */
-  0.1,
 
   /* Expression: 0
    * Referenced by: '<Root>/Constant2'

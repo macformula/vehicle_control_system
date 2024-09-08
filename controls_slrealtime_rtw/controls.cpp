@@ -7,9 +7,9 @@
  *
  * Code generation for model "controls".
  *
- * Model version              : 1.9
+ * Model version              : 1.14
  * Simulink Coder version : 9.8 (R2022b) 13-May-2022
- * C++ source code generated on : Sun Sep  8 14:00:18 2024
+ * C++ source code generated on : Sun Sep  8 14:34:19 2024
  *
  * Target selection: slrealtime.tlc
  * Note: GRT includes extra infrastructure and instrumentation for prototyping
@@ -757,6 +757,601 @@ void controls_step(void)
     sfcnOutputs(rts,0);
   }
 
+  /* S-Function (scanunpack): '<Root>/CAN Unpack2' */
+  {
+    /* S-Function (scanunpack): '<Root>/CAN Unpack2' */
+    if ((8 == controls_B.CANRead1_o2.Length) && (controls_B.CANRead1_o2.ID !=
+         INVALID_CAN_ID) ) {
+      if ((256 == controls_B.CANRead1_o2.ID) && (0U ==
+           controls_B.CANRead1_o2.Extended) ) {
+        {
+          /* --------------- START Unpacking signal 0 ------------------
+           *  startBit                = 0
+           *  length                  = 8
+           *  desiredSignalByteLayout = LITTLEENDIAN
+           *  dataType                = UNSIGNED
+           *  factor                  = 0.005
+           *  offset                  = 0.0
+           * -----------------------------------------------------------------------*/
+          {
+            real64_T outValue = 0;
+
+            {
+              uint8_T unpackedValue = 0;
+
+              {
+                uint8_T tempValue = (uint8_T) (0);
+
+                {
+                  tempValue = tempValue | (uint8_T)(controls_B.CANRead1_o2.Data
+                    [0]);
+                }
+
+                unpackedValue = tempValue;
+              }
+
+              outValue = (real64_T) (unpackedValue);
+            }
+
+            {
+              real64_T result = (real64_T) outValue;
+              result = result * 0.005;
+              controls_B.CANUnpack2_o1 = result;
+            }
+          }
+
+          /* --------------- START Unpacking signal 1 ------------------
+           *  startBit                = 8
+           *  length                  = 8
+           *  desiredSignalByteLayout = LITTLEENDIAN
+           *  dataType                = UNSIGNED
+           *  factor                  = 0.005
+           *  offset                  = 0.0
+           * -----------------------------------------------------------------------*/
+          {
+            real64_T outValue = 0;
+
+            {
+              uint8_T unpackedValue = 0;
+
+              {
+                uint8_T tempValue = (uint8_T) (0);
+
+                {
+                  tempValue = tempValue | (uint8_T)(controls_B.CANRead1_o2.Data
+                    [1]);
+                }
+
+                unpackedValue = tempValue;
+              }
+
+              outValue = (real64_T) (unpackedValue);
+            }
+
+            {
+              real64_T result = (real64_T) outValue;
+              result = result * 0.005;
+              controls_B.CANUnpack2_o2 = result;
+            }
+          }
+
+          /* --------------- START Unpacking signal 2 ------------------
+           *  startBit                = 16
+           *  length                  = 8
+           *  desiredSignalByteLayout = LITTLEENDIAN
+           *  dataType                = UNSIGNED
+           *  factor                  = 0.005
+           *  offset                  = 0.0
+           * -----------------------------------------------------------------------*/
+          /*
+           * Signal is not connected or connected to terminator.
+           * No unpacking code generated.
+           */
+
+          /* --------------- START Unpacking signal 3 ------------------
+           *  startBit                = 24
+           *  length                  = 8
+           *  desiredSignalByteLayout = LITTLEENDIAN
+           *  dataType                = UNSIGNED
+           *  factor                  = 0.005
+           *  offset                  = 0.0
+           * -----------------------------------------------------------------------*/
+          /*
+           * Signal is not connected or connected to terminator.
+           * No unpacking code generated.
+           */
+
+          /* --------------- START Unpacking signal 4 ------------------
+           *  startBit                = 41
+           *  length                  = 1
+           *  desiredSignalByteLayout = LITTLEENDIAN
+           *  dataType                = SIGNED
+           *  factor                  = 1.0
+           *  offset                  = 0.0
+           * -----------------------------------------------------------------------*/
+          /*
+           * Signal is not connected or connected to terminator.
+           * No unpacking code generated.
+           */
+
+          /* --------------- START Unpacking signal 5 ------------------
+           *  startBit                = 40
+           *  length                  = 1
+           *  desiredSignalByteLayout = LITTLEENDIAN
+           *  dataType                = SIGNED
+           *  factor                  = 1.0
+           *  offset                  = 0.0
+           * -----------------------------------------------------------------------*/
+          {
+            real64_T outValue = 0;
+
+            {
+              int8_T unpackedValue = 0;
+
+              {
+                uint8_T tempValue = (uint8_T) (0);
+                int8_T* tempValuePtr = (int8_T*)&tempValue;
+
+                {
+                  tempValue = tempValue | (uint8_T)((uint8_T)
+                    (controls_B.CANRead1_o2.Data[5]) & (uint8_T)(0x1U));
+                }
+
+                unpackedValue = *tempValuePtr;
+              }
+
+              {
+                uint8_T* tempRawValuePtr = (uint8_T*)&unpackedValue;
+                uint8_T tempValue = *tempRawValuePtr;
+                int8_T* tempValuePtr = (int8_T*)&tempValue;
+                uint8_T bitValue = tempValue & (uint8_T)0x1U;
+                if (bitValue != 0U) {
+                  /* Extend sign bits */
+                  tempValue = tempValue | (uint8_T)0xFEU;
+                  unpackedValue = *tempValuePtr;
+                }
+              }
+
+              outValue = (real64_T) (unpackedValue);
+            }
+
+            {
+              real64_T result = (real64_T) outValue;
+              controls_B.CANUnpack2_o6 = result;
+            }
+          }
+
+          /* --------------- START Unpacking signal 6 ------------------
+           *  startBit                = 32
+           *  length                  = 8
+           *  desiredSignalByteLayout = LITTLEENDIAN
+           *  dataType                = UNSIGNED
+           *  factor                  = 0.005
+           *  offset                  = 0.0
+           * -----------------------------------------------------------------------*/
+          {
+            real64_T outValue = 0;
+
+            {
+              uint8_T unpackedValue = 0;
+
+              {
+                uint8_T tempValue = (uint8_T) (0);
+
+                {
+                  tempValue = tempValue | (uint8_T)(controls_B.CANRead1_o2.Data
+                    [4]);
+                }
+
+                unpackedValue = tempValue;
+              }
+
+              outValue = (real64_T) (unpackedValue);
+            }
+
+            {
+              real64_T result = (real64_T) outValue;
+              result = result * 0.005;
+              controls_B.CANUnpack2_o7 = result;
+            }
+          }
+
+          /* --------------- START Unpacking signal 7 ------------------
+           *  startBit                = 48
+           *  length                  = 12
+           *  desiredSignalByteLayout = LITTLEENDIAN
+           *  dataType                = SIGNED
+           *  factor                  = 1.0
+           *  offset                  = 0.0
+           * -----------------------------------------------------------------------*/
+          /*
+           * Signal is not connected or connected to terminator.
+           * No unpacking code generated.
+           */
+
+          /* --------------- START Unpacking signal 8 ------------------
+           *  startBit                = 60
+           *  length                  = 12
+           *  desiredSignalByteLayout = LITTLEENDIAN
+           *  dataType                = SIGNED
+           *  factor                  = 1.0
+           *  offset                  = 0.0
+           * -----------------------------------------------------------------------*/
+          /*
+           * Signal is not connected or connected to terminator.
+           * No unpacking code generated.
+           */
+        }
+      }
+    }
+  }
+
+  /* Logic: '<Root>/NOT' */
+  controls_B.NOT = !(controls_B.CANUnpack2_o6 != 0.0);
+
+  /* Logic: '<S5>/NOT1' */
+  controls_B.NOT1 = !controls_B.NOT;
+
+  /* RelationalOperator: '<S20>/Lower Test' incorporates:
+   *  Constant: '<S15>/LowerPotentiometerLimit1'
+   */
+  controls_B.LowerTest = (controls_cal->LowerPotentiometerLimit1_Value <=
+    controls_B.CANUnpack2_o1);
+
+  /* RelationalOperator: '<S20>/Upper Test' incorporates:
+   *  Constant: '<S15>/UpperPotentiometerLimit1'
+   */
+  controls_B.UpperTest = (controls_B.CANUnpack2_o1 <=
+    controls_cal->UpperPotentiometerLimit1_Value);
+
+  /* Logic: '<S20>/FixPt Logical Operator' */
+  controls_B.FixPtLogicalOperator = (controls_B.LowerTest &&
+    controls_B.UpperTest);
+
+  /* Logic: '<S15>/NOT' */
+  controls_B.NOT_d = !controls_B.FixPtLogicalOperator;
+
+  /* RelationalOperator: '<S21>/Lower Test' incorporates:
+   *  Constant: '<S16>/LowerPotentiometerLimit1'
+   */
+  controls_B.LowerTest_a = (controls_cal->LowerPotentiometerLimit1_Valu_p <=
+    controls_B.CANUnpack2_o2);
+
+  /* RelationalOperator: '<S21>/Upper Test' incorporates:
+   *  Constant: '<S16>/UpperPotentiometerLimit1'
+   */
+  controls_B.UpperTest_l = (controls_B.CANUnpack2_o2 <=
+    controls_cal->UpperPotentiometerLimit1_Valu_j);
+
+  /* Logic: '<S21>/FixPt Logical Operator' */
+  controls_B.FixPtLogicalOperator_e = (controls_B.LowerTest_a &&
+    controls_B.UpperTest_l);
+
+  /* Logic: '<S16>/NOT' */
+  controls_B.NOT_g = !controls_B.FixPtLogicalOperator_e;
+
+  /* RelationalOperator: '<S22>/Lower Test' incorporates:
+   *  Constant: '<S17>/LowerPotentiometerLimit1'
+   */
+  controls_B.LowerTest_g = (controls_cal->LowerPotentiometerLimit1_Valu_f <= 0.0);
+
+  /* RelationalOperator: '<S22>/Upper Test' incorporates:
+   *  Constant: '<S17>/UpperPotentiometerLimit1'
+   */
+  controls_B.UpperTest_i = (controls_cal->UpperPotentiometerLimit1_Valu_a >= 0.0);
+
+  /* Logic: '<S22>/FixPt Logical Operator' */
+  controls_B.FixPtLogicalOperator_l = (controls_B.LowerTest_g &&
+    controls_B.UpperTest_i);
+
+  /* Logic: '<S17>/NOT' */
+  controls_B.NOT_i = !controls_B.FixPtLogicalOperator_l;
+
+  /* RelationalOperator: '<S23>/Lower Test' incorporates:
+   *  Constant: '<S18>/LowerPotentiometerLimit1'
+   */
+  controls_B.LowerTest_m = (controls_cal->LowerPotentiometerLimit1_Valu_i <= 0.0);
+
+  /* RelationalOperator: '<S23>/Upper Test' incorporates:
+   *  Constant: '<S18>/UpperPotentiometerLimit1'
+   */
+  controls_B.UpperTest_e = (controls_cal->UpperPotentiometerLimit1_Valu_g >= 0.0);
+
+  /* Logic: '<S23>/FixPt Logical Operator' */
+  controls_B.FixPtLogicalOperator_k = (controls_B.LowerTest_m &&
+    controls_B.UpperTest_e);
+
+  /* Logic: '<S18>/NOT' */
+  controls_B.NOT_f = !controls_B.FixPtLogicalOperator_k;
+
+  /* RelationalOperator: '<S24>/Lower Test' incorporates:
+   *  Constant: '<S19>/LowerPotentiometerLimit1'
+   */
+  controls_B.LowerTest_k = (controls_cal->LowerPotentiometerLimit1_Val_fz <=
+    controls_B.CANUnpack2_o7);
+
+  /* RelationalOperator: '<S24>/Upper Test' incorporates:
+   *  Constant: '<S19>/UpperPotentiometerLimit1'
+   */
+  controls_B.UpperTest_g = (controls_B.CANUnpack2_o7 <=
+    controls_cal->UpperPotentiometerLimit1_Valu_k);
+
+  /* Logic: '<S24>/FixPt Logical Operator' */
+  controls_B.FixPtLogicalOperator_i = (controls_B.LowerTest_k &&
+    controls_B.UpperTest_g);
+
+  /* Logic: '<S19>/NOT' */
+  controls_B.NOT_p = !controls_B.FixPtLogicalOperator_i;
+
+  /* Sum: '<S11>/Subtract' */
+  controls_B.Subtract = controls_B.CANUnpack2_o1 - controls_B.CANUnpack2_o2;
+
+  /* Abs: '<S11>/Abs' */
+  controls_B.Abs = std::abs(controls_B.Subtract);
+
+  /* RelationalOperator: '<S11>/GreaterThan' incorporates:
+   *  Constant: '<S11>/Constant'
+   */
+  controls_B.GreaterThan = (controls_B.Abs > controls_cal->Constant_Value_i);
+
+  /* Switch: '<S11>/Switch' */
+  if (controls_B.GreaterThan) {
+    /* Switch: '<S11>/Switch' incorporates:
+     *  Constant: '<S11>/Constant1'
+     */
+    controls_B.Switch = controls_cal->Constant1_Value_j;
+  } else {
+    /* Switch: '<S11>/Switch' incorporates:
+     *  Constant: '<S11>/Constant2'
+     */
+    controls_B.Switch = controls_cal->Constant2_Value;
+  }
+
+  /* End of Switch: '<S11>/Switch' */
+
+  /* Logic: '<S5>/b_DriverInterfaceError' */
+  controls_B.b_DriverInterfaceError = (controls_B.NOT_d || controls_B.NOT_g ||
+    controls_B.NOT_i || controls_B.NOT_f || controls_B.NOT_p ||
+    (controls_B.Switch != 0.0));
+
+  /* MinMax: '<S5>/Max' */
+  controls_B.Max = 0.0;
+
+  /* Chart: '<S5>/driver_interface' */
+  if (controls_DW.temporalCounter_i1_m < 2047U) {
+    controls_DW.temporalCounter_i1_m = static_cast<uint16_T>
+      (controls_DW.temporalCounter_i1_m + 1U);
+  }
+
+  controls_DW.sfEvent_dr = controls_CALL_EVENT_i;
+  if (controls_DW.is_active_c2_driver_interface_l == 0U) {
+    controls_DW.is_active_c2_driver_interface_l = 1U;
+    controls_DW.is_c2_driver_interface_lib = controls_IN_INIT;
+    controls_B.GOV_e_diSts = DI_STS_INIT;
+    controls_B.b_ReadyToDrive = false;
+    controls_B.DI_b_driverSpeaker = false;
+  } else {
+    switch (controls_DW.is_c2_driver_interface_lib) {
+     case controls_IN_DI_error:
+      controls_B.GOV_e_diSts = DI_ERROR;
+      break;
+
+     case controls_IN_DI_running:
+      if (controls_B.b_DriverInterfaceError) {
+        controls_DW.is_Ready_to_drive = controls_IN_NO_ACTIVE_CHILD_o;
+        controls_DW.is_DI_running = controls_IN_NO_ACTIVE_CHILD_o;
+        controls_DW.is_c2_driver_interface_lib = controls_IN_DI_error;
+        controls_B.GOV_e_diSts = DI_ERROR;
+      } else if (controls_B.GOV_e_diCmd == DI_SHUTDOWN) {
+        controls_DW.is_Ready_to_drive = controls_IN_NO_ACTIVE_CHILD_o;
+        controls_DW.is_DI_running = controls_IN_NO_ACTIVE_CHILD_o;
+        controls_DW.is_c2_driver_interface_lib = controls_IN_INIT;
+        controls_B.GOV_e_diSts = DI_STS_INIT;
+        controls_B.b_ReadyToDrive = false;
+        controls_B.DI_b_driverSpeaker = false;
+      } else {
+        switch (controls_DW.is_DI_running) {
+         case contr_IN_Driver_requested_start:
+          controls_B.GOV_e_diSts = HV_START_REQ;
+          out = ((controls_B.GOV_e_diCmd == HV_ON) && controls_B.NOT1);
+          if (out) {
+            controls_DW.is_DI_running = controls_IN_Motor_start_request;
+            controls_B.GOV_e_diSts = READY_TO_DRIVE_REQ;
+          }
+          break;
+
+         case controls_IN_Motor_start_request:
+          controls_B.GOV_e_diSts = READY_TO_DRIVE_REQ;
+          break;
+
+         case controls_IN_Ready_to_drive:
+          controls_B.b_ReadyToDrive = true;
+          controls_B.GOV_e_diSts = DI_RUNNING;
+          if (controls_B.GOV_e_diCmd == RUN_ERROR) {
+            controls_DW.is_Ready_to_drive = controls_IN_NO_ACTIVE_CHILD_o;
+            controls_DW.is_DI_running = controls_IN_NO_ACTIVE_CHILD_o;
+            controls_DW.is_c2_driver_interface_lib =
+              controls_IN_Vehicle_coasting;
+            controls_B.b_ReadyToDrive = false;
+            controls_B.GOV_e_diSts = DI_IDLE;
+          } else if (controls_DW.is_Ready_to_drive == controls_IN_SpeakerOff) {
+            controls_B.DI_b_driverSpeaker = false;
+          } else {
+            /* case IN_SpeakerOn_: */
+            controls_B.DI_b_driverSpeaker = true;
+            if (controls_DW.temporalCounter_i1_m >= 2000U) {
+              controls_DW.is_Ready_to_drive = controls_IN_SpeakerOff;
+              controls_B.DI_b_driverSpeaker = false;
+            }
+          }
+          break;
+
+         default:
+          /* case IN_Waiting_for_driver: */
+          controls_B.GOV_e_diSts = WAITING_FOR_DRVR;
+          if (controls_B.NOT1) {
+            controls_DW.is_DI_running = contr_IN_Driver_requested_start;
+            controls_B.GOV_e_diSts = HV_START_REQ;
+          }
+          break;
+        }
+      }
+      break;
+
+     case controls_IN_INIT:
+      controls_B.GOV_e_diSts = DI_STS_INIT;
+      controls_B.b_ReadyToDrive = false;
+      controls_B.DI_b_driverSpeaker = false;
+      if (controls_B.GOV_e_diCmd == DI_CMD_INIT) {
+        controls_DW.is_c2_driver_interface_lib = controls_IN_DI_running;
+        controls_DW.is_DI_running = controls_IN_Waiting_for_driver;
+        controls_B.GOV_e_diSts = WAITING_FOR_DRVR;
+      }
+      break;
+
+     default:
+      /* case IN_Vehicle_coasting: */
+      controls_B.b_ReadyToDrive = false;
+      controls_B.GOV_e_diSts = DI_IDLE;
+      break;
+    }
+  }
+
+  /* End of Chart: '<S5>/driver_interface' */
+
+  /* Logic: '<S5>/OR' */
+  controls_B.OR = (controls_B.NOT_f || controls_B.NOT_i);
+
+  /* Switch: '<S5>/Switch2' */
+  if (controls_B.OR) {
+    /* Switch: '<S5>/Switch2' incorporates:
+     *  Constant: '<S5>/Constant1'
+     */
+    controls_B.Switch2 = controls_cal->Constant1_Value_k;
+  } else {
+    /* Switch: '<S5>/Switch2' */
+    controls_B.Switch2 = 0.0;
+  }
+
+  /* End of Switch: '<S5>/Switch2' */
+
+  /* Lookup_n-D: '<S5>/BrakePedalMap' incorporates:
+   *  Switch: '<S5>/Switch2'
+   */
+  controls_B.BrakePedalMap = look1_binlcpw(controls_B.Switch2,
+    controls_cal->BrakePedalMap_bp01Data, controls_cal->BrakePedalMap_tableData,
+    20U);
+
+  /* Switch: '<S5>/Switch' */
+  if (controls_B.BrakePedalMap > controls_cal->Switch_Threshold) {
+    /* Switch: '<S5>/Switch' incorporates:
+     *  Constant: '<S5>/Constant4'
+     */
+    controls_B.Switch_m = controls_cal->Constant4_Value_i;
+  } else {
+    /* Switch: '<S5>/Switch' incorporates:
+     *  Constant: '<S5>/Constant3'
+     */
+    controls_B.Switch_m = controls_cal->Constant3_Value_m;
+  }
+
+  /* End of Switch: '<S5>/Switch' */
+
+  /* S-Function (scanpack): '<Root>/CAN Pack2' */
+  /* S-Function (scanpack): '<Root>/CAN Pack2' */
+  controls_B.CANPack2.ID = 256U;
+  controls_B.CANPack2.Length = 1U;
+  controls_B.CANPack2.Extended = 0U;
+  controls_B.CANPack2.Remote = 0;
+  controls_B.CANPack2.Data[0] = 0;
+  controls_B.CANPack2.Data[1] = 0;
+  controls_B.CANPack2.Data[2] = 0;
+  controls_B.CANPack2.Data[3] = 0;
+  controls_B.CANPack2.Data[4] = 0;
+  controls_B.CANPack2.Data[5] = 0;
+  controls_B.CANPack2.Data[6] = 0;
+  controls_B.CANPack2.Data[7] = 0;
+
+  {
+    /* --------------- START Packing signal 0 ------------------
+     *  startBit                = 0
+     *  length                  = 1
+     *  desiredSignalByteLayout = LITTLEENDIAN
+     *  dataType                = UNSIGNED
+     *  factor                  = 1.0
+     *  offset                  = 0.0
+     *  minimum                 = 0.0
+     *  maximum                 = 0.0
+     * -----------------------------------------------------------------------*/
+    {
+      uint32_T packingValue = 0;
+
+      {
+        uint32_T result = (uint32_T) (controls_B.DI_b_driverSpeaker);
+
+        /* no scaling required */
+        packingValue = result;
+      }
+
+      {
+        uint8_T packedValue;
+        if (packingValue > (boolean_T)(1)) {
+          packedValue = (uint8_T) 1;
+        } else if (packingValue < (boolean_T)(0)) {
+          packedValue = (uint8_T) 0;
+        } else {
+          packedValue = (uint8_T) (packingValue);
+        }
+
+        {
+          {
+            controls_B.CANPack2.Data[0] = controls_B.CANPack2.Data[0] | (uint8_T)
+              ((uint8_T)(packedValue & (uint8_T)0x1U));
+          }
+        }
+      }
+    }
+
+    /* --------------- START Packing signal 1 ------------------
+     *  startBit                = 1
+     *  length                  = 1
+     *  desiredSignalByteLayout = LITTLEENDIAN
+     *  dataType                = UNSIGNED
+     *  factor                  = 1.0
+     *  offset                  = 0.0
+     *  minimum                 = 0.0
+     *  maximum                 = 0.0
+     * -----------------------------------------------------------------------*/
+    {
+      uint32_T packingValue = 0;
+
+      {
+        uint32_T result = (uint32_T) (controls_B.Switch_m);
+
+        /* no scaling required */
+        packingValue = result;
+      }
+
+      {
+        uint8_T packedValue;
+        if (packingValue > (boolean_T)(1)) {
+          packedValue = (uint8_T) 1;
+        } else if (packingValue < (boolean_T)(0)) {
+          packedValue = (uint8_T) 0;
+        } else {
+          packedValue = (uint8_T) (packingValue);
+        }
+
+        {
+          {
+            controls_B.CANPack2.Data[0] = controls_B.CANPack2.Data[0] | (uint8_T)
+              ((uint8_T)((uint8_T)(packedValue & (uint8_T)0x1U) << 1));
+          }
+        }
+      }
+    }
+  }
+
   /* Outputs for Atomic SubSystem: '<Root>/Function-Call Subsystem2' */
   /* S-Function (scanunpack): '<S3>/CAN Unpack' */
   {
@@ -875,10 +1470,10 @@ void controls_step(void)
   /* End of Outputs for SubSystem: '<Root>/Function-Call Subsystem2' */
 
   /* Logic: '<S4>/NOT' */
-  controls_B.NOT = !(controls_B.CANUnpack_o3 != 0.0);
+  controls_B.NOT_dd = !(controls_B.CANUnpack_o3 != 0.0);
 
   /* Logic: '<S4>/NOT1' */
-  controls_B.NOT1 = !(controls_B.CANUnpack_o2 != 0.0);
+  controls_B.NOT1_d = !(controls_B.CANUnpack_o2 != 0.0);
 
   /* Logic: '<S4>/NOT2' */
   controls_B.NOT2 = !(controls_B.CANUnpack_o1 != 0.0);
@@ -904,7 +1499,7 @@ void controls_step(void)
     switch (controls_DW.is_c4_battery_monitor_lib) {
      case controls_IN_InitialState:
       controls_B.GOV_e_bmSts = BM_INIT;
-      out = ((!controls_B.NOT) && (!controls_B.NOT2) && (!controls_B.NOT1) &&
+      out = ((!controls_B.NOT_dd) && (!controls_B.NOT2) && (!controls_B.NOT1_d) &&
              (controls_B.GOV_e_bmCmd == HV_STARTUP) && (controls_B.Constant13 ==
               1.0));
       if (out) {
@@ -943,7 +1538,7 @@ void controls_step(void)
         switch (controls_DW.is_StartupSuperstate_p) {
          case con_IN_InitializePrechargeState:
           controls_B.GOV_e_bmSts = INIT_PRECHARGE;
-          out = (controls_B.NOT && controls_B.NOT2 && controls_B.NOT1);
+          out = (controls_B.NOT_dd && controls_B.NOT2 && controls_B.NOT1_d);
           if (out) {
             controls_DW.is_StartupSuperstate_p = controls_IN_PrechargeState;
             controls_B.GOV_e_bmSts = PRECHARGE;
@@ -952,7 +1547,7 @@ void controls_step(void)
 
          case controls_IN_PrechargeState:
           controls_B.GOV_e_bmSts = PRECHARGE;
-          out = ((!controls_B.NOT) && controls_B.NOT2 && controls_B.NOT1);
+          out = ((!controls_B.NOT_dd) && controls_B.NOT2 && controls_B.NOT1_d);
           if (out) {
             controls_DW.is_StartupSuperstate_p = controls_IN_RunningState;
             controls_B.GOV_e_bmSts = BM_RUNNING;
@@ -961,7 +1556,7 @@ void controls_step(void)
 
          case controls_IN_RunningState:
           controls_B.GOV_e_bmSts = BM_RUNNING;
-          out = ((!controls_B.NOT) && controls_B.NOT2 && controls_B.NOT1);
+          out = ((!controls_B.NOT_dd) && controls_B.NOT2 && controls_B.NOT1_d);
           if (out) {
             controls_DW.is_StartupSuperstate_p = controls_IN_RunningState;
             controls_B.GOV_e_bmSts = BM_RUNNING;
@@ -970,7 +1565,7 @@ void controls_step(void)
 
          case controls_IN_StartupState:
           controls_B.GOV_e_bmSts = BM_STARTUP;
-          out = (controls_B.NOT && controls_B.NOT2 && (!controls_B.NOT1));
+          out = (controls_B.NOT_dd && controls_B.NOT2 && (!controls_B.NOT1_d));
           if (out) {
             controls_DW.is_StartupSuperstate_p = con_IN_InitializePrechargeState;
             controls_B.GOV_e_bmSts = INIT_PRECHARGE;
@@ -980,7 +1575,7 @@ void controls_step(void)
          default:
           /* case IN_StartupState1: */
           controls_B.GOV_e_bmSts = BM_IDLE;
-          out = ((!controls_B.NOT) && controls_B.NOT2 && (!controls_B.NOT1));
+          out = ((!controls_B.NOT_dd) && controls_B.NOT2 && (!controls_B.NOT1_d));
           if (out) {
             controls_DW.is_StartupSuperstate_p = controls_IN_StartupState;
             controls_B.GOV_e_bmSts = BM_STARTUP;
@@ -2356,468 +2951,6 @@ void controls_step(void)
   controls_B.CastToSingle3 = static_cast<real32_T>
     (controls_cal->Constant_Value_f);
 
-  /* S-Function (scanunpack): '<Root>/CAN Unpack2' */
-  {
-    /* S-Function (scanunpack): '<Root>/CAN Unpack2' */
-    if ((8 == controls_B.CANRead1_o2.Length) && (controls_B.CANRead1_o2.ID !=
-         INVALID_CAN_ID) ) {
-      if ((256 == controls_B.CANRead1_o2.ID) && (0U ==
-           controls_B.CANRead1_o2.Extended) ) {
-        {
-          /* --------------- START Unpacking signal 0 ------------------
-           *  startBit                = 0
-           *  length                  = 8
-           *  desiredSignalByteLayout = LITTLEENDIAN
-           *  dataType                = UNSIGNED
-           *  factor                  = 0.005
-           *  offset                  = 0.0
-           * -----------------------------------------------------------------------*/
-          {
-            real64_T outValue = 0;
-
-            {
-              uint8_T unpackedValue = 0;
-
-              {
-                uint8_T tempValue = (uint8_T) (0);
-
-                {
-                  tempValue = tempValue | (uint8_T)(controls_B.CANRead1_o2.Data
-                    [0]);
-                }
-
-                unpackedValue = tempValue;
-              }
-
-              outValue = (real64_T) (unpackedValue);
-            }
-
-            {
-              real64_T result = (real64_T) outValue;
-              result = result * 0.005;
-              controls_B.CANUnpack2_o1 = result;
-            }
-          }
-
-          /* --------------- START Unpacking signal 1 ------------------
-           *  startBit                = 8
-           *  length                  = 8
-           *  desiredSignalByteLayout = LITTLEENDIAN
-           *  dataType                = UNSIGNED
-           *  factor                  = 0.005
-           *  offset                  = 0.0
-           * -----------------------------------------------------------------------*/
-          {
-            real64_T outValue = 0;
-
-            {
-              uint8_T unpackedValue = 0;
-
-              {
-                uint8_T tempValue = (uint8_T) (0);
-
-                {
-                  tempValue = tempValue | (uint8_T)(controls_B.CANRead1_o2.Data
-                    [1]);
-                }
-
-                unpackedValue = tempValue;
-              }
-
-              outValue = (real64_T) (unpackedValue);
-            }
-
-            {
-              real64_T result = (real64_T) outValue;
-              result = result * 0.005;
-              controls_B.CANUnpack2_o2 = result;
-            }
-          }
-
-          /* --------------- START Unpacking signal 2 ------------------
-           *  startBit                = 16
-           *  length                  = 8
-           *  desiredSignalByteLayout = LITTLEENDIAN
-           *  dataType                = UNSIGNED
-           *  factor                  = 0.005
-           *  offset                  = 0.0
-           * -----------------------------------------------------------------------*/
-          /*
-           * Signal is not connected or connected to terminator.
-           * No unpacking code generated.
-           */
-
-          /* --------------- START Unpacking signal 3 ------------------
-           *  startBit                = 24
-           *  length                  = 8
-           *  desiredSignalByteLayout = LITTLEENDIAN
-           *  dataType                = UNSIGNED
-           *  factor                  = 0.005
-           *  offset                  = 0.0
-           * -----------------------------------------------------------------------*/
-          /*
-           * Signal is not connected or connected to terminator.
-           * No unpacking code generated.
-           */
-
-          /* --------------- START Unpacking signal 4 ------------------
-           *  startBit                = 41
-           *  length                  = 1
-           *  desiredSignalByteLayout = LITTLEENDIAN
-           *  dataType                = SIGNED
-           *  factor                  = 1.0
-           *  offset                  = 0.0
-           * -----------------------------------------------------------------------*/
-          /*
-           * Signal is not connected or connected to terminator.
-           * No unpacking code generated.
-           */
-
-          /* --------------- START Unpacking signal 5 ------------------
-           *  startBit                = 40
-           *  length                  = 1
-           *  desiredSignalByteLayout = LITTLEENDIAN
-           *  dataType                = SIGNED
-           *  factor                  = 1.0
-           *  offset                  = 0.0
-           * -----------------------------------------------------------------------*/
-          {
-            real64_T outValue = 0;
-
-            {
-              int8_T unpackedValue = 0;
-
-              {
-                uint8_T tempValue = (uint8_T) (0);
-                int8_T* tempValuePtr = (int8_T*)&tempValue;
-
-                {
-                  tempValue = tempValue | (uint8_T)((uint8_T)
-                    (controls_B.CANRead1_o2.Data[5]) & (uint8_T)(0x1U));
-                }
-
-                unpackedValue = *tempValuePtr;
-              }
-
-              {
-                uint8_T* tempRawValuePtr = (uint8_T*)&unpackedValue;
-                uint8_T tempValue = *tempRawValuePtr;
-                int8_T* tempValuePtr = (int8_T*)&tempValue;
-                uint8_T bitValue = tempValue & (uint8_T)0x1U;
-                if (bitValue != 0U) {
-                  /* Extend sign bits */
-                  tempValue = tempValue | (uint8_T)0xFEU;
-                  unpackedValue = *tempValuePtr;
-                }
-              }
-
-              outValue = (real64_T) (unpackedValue);
-            }
-
-            {
-              real64_T result = (real64_T) outValue;
-              controls_B.CANUnpack2_o6 = result;
-            }
-          }
-
-          /* --------------- START Unpacking signal 6 ------------------
-           *  startBit                = 32
-           *  length                  = 8
-           *  desiredSignalByteLayout = LITTLEENDIAN
-           *  dataType                = UNSIGNED
-           *  factor                  = 0.005
-           *  offset                  = 0.0
-           * -----------------------------------------------------------------------*/
-          {
-            real64_T outValue = 0;
-
-            {
-              uint8_T unpackedValue = 0;
-
-              {
-                uint8_T tempValue = (uint8_T) (0);
-
-                {
-                  tempValue = tempValue | (uint8_T)(controls_B.CANRead1_o2.Data
-                    [4]);
-                }
-
-                unpackedValue = tempValue;
-              }
-
-              outValue = (real64_T) (unpackedValue);
-            }
-
-            {
-              real64_T result = (real64_T) outValue;
-              result = result * 0.005;
-              controls_B.CANUnpack2_o7 = result;
-            }
-          }
-
-          /* --------------- START Unpacking signal 7 ------------------
-           *  startBit                = 48
-           *  length                  = 12
-           *  desiredSignalByteLayout = LITTLEENDIAN
-           *  dataType                = SIGNED
-           *  factor                  = 1.0
-           *  offset                  = 0.0
-           * -----------------------------------------------------------------------*/
-          /*
-           * Signal is not connected or connected to terminator.
-           * No unpacking code generated.
-           */
-
-          /* --------------- START Unpacking signal 8 ------------------
-           *  startBit                = 60
-           *  length                  = 12
-           *  desiredSignalByteLayout = LITTLEENDIAN
-           *  dataType                = SIGNED
-           *  factor                  = 1.0
-           *  offset                  = 0.0
-           * -----------------------------------------------------------------------*/
-          /*
-           * Signal is not connected or connected to terminator.
-           * No unpacking code generated.
-           */
-        }
-      }
-    }
-  }
-
-  /* Logic: '<Root>/NOT' */
-  controls_B.NOT_h = !(controls_B.CANUnpack2_o6 != 0.0);
-
-  /* Logic: '<S5>/NOT1' */
-  controls_B.NOT1_e = !controls_B.NOT_h;
-
-  /* RelationalOperator: '<S20>/Lower Test' incorporates:
-   *  Constant: '<S15>/LowerPotentiometerLimit1'
-   */
-  controls_B.LowerTest = (controls_cal->LowerPotentiometerLimit1_Value <=
-    controls_B.CANUnpack2_o1);
-
-  /* RelationalOperator: '<S20>/Upper Test' incorporates:
-   *  Constant: '<S15>/UpperPotentiometerLimit1'
-   */
-  controls_B.UpperTest = (controls_B.CANUnpack2_o1 <=
-    controls_cal->UpperPotentiometerLimit1_Value);
-
-  /* Logic: '<S20>/FixPt Logical Operator' */
-  controls_B.FixPtLogicalOperator = (controls_B.LowerTest &&
-    controls_B.UpperTest);
-
-  /* Logic: '<S15>/NOT' */
-  controls_B.NOT_d = !controls_B.FixPtLogicalOperator;
-
-  /* RelationalOperator: '<S21>/Lower Test' incorporates:
-   *  Constant: '<S16>/LowerPotentiometerLimit1'
-   */
-  controls_B.LowerTest_a = (controls_cal->LowerPotentiometerLimit1_Valu_p <=
-    controls_B.CANUnpack2_o2);
-
-  /* RelationalOperator: '<S21>/Upper Test' incorporates:
-   *  Constant: '<S16>/UpperPotentiometerLimit1'
-   */
-  controls_B.UpperTest_l = (controls_B.CANUnpack2_o2 <=
-    controls_cal->UpperPotentiometerLimit1_Valu_j);
-
-  /* Logic: '<S21>/FixPt Logical Operator' */
-  controls_B.FixPtLogicalOperator_e = (controls_B.LowerTest_a &&
-    controls_B.UpperTest_l);
-
-  /* Logic: '<S16>/NOT' */
-  controls_B.NOT_g = !controls_B.FixPtLogicalOperator_e;
-
-  /* RelationalOperator: '<S22>/Lower Test' incorporates:
-   *  Constant: '<S17>/LowerPotentiometerLimit1'
-   */
-  controls_B.LowerTest_g = (controls_cal->LowerPotentiometerLimit1_Valu_f <= 0.0);
-
-  /* RelationalOperator: '<S22>/Upper Test' incorporates:
-   *  Constant: '<S17>/UpperPotentiometerLimit1'
-   */
-  controls_B.UpperTest_i = (controls_cal->UpperPotentiometerLimit1_Valu_a >= 0.0);
-
-  /* Logic: '<S22>/FixPt Logical Operator' */
-  controls_B.FixPtLogicalOperator_l = (controls_B.LowerTest_g &&
-    controls_B.UpperTest_i);
-
-  /* Logic: '<S17>/NOT' */
-  controls_B.NOT_i = !controls_B.FixPtLogicalOperator_l;
-
-  /* RelationalOperator: '<S23>/Lower Test' incorporates:
-   *  Constant: '<S18>/LowerPotentiometerLimit1'
-   */
-  controls_B.LowerTest_m = (controls_cal->LowerPotentiometerLimit1_Valu_i <= 0.0);
-
-  /* RelationalOperator: '<S23>/Upper Test' incorporates:
-   *  Constant: '<S18>/UpperPotentiometerLimit1'
-   */
-  controls_B.UpperTest_e = (controls_cal->UpperPotentiometerLimit1_Valu_g >= 0.0);
-
-  /* Logic: '<S23>/FixPt Logical Operator' */
-  controls_B.FixPtLogicalOperator_k = (controls_B.LowerTest_m &&
-    controls_B.UpperTest_e);
-
-  /* Logic: '<S18>/NOT' */
-  controls_B.NOT_f = !controls_B.FixPtLogicalOperator_k;
-
-  /* RelationalOperator: '<S24>/Lower Test' incorporates:
-   *  Constant: '<S19>/LowerPotentiometerLimit1'
-   */
-  controls_B.LowerTest_k = (controls_cal->LowerPotentiometerLimit1_Val_fz <=
-    controls_B.CANUnpack2_o7);
-
-  /* RelationalOperator: '<S24>/Upper Test' incorporates:
-   *  Constant: '<S19>/UpperPotentiometerLimit1'
-   */
-  controls_B.UpperTest_g = (controls_B.CANUnpack2_o7 <=
-    controls_cal->UpperPotentiometerLimit1_Valu_k);
-
-  /* Logic: '<S24>/FixPt Logical Operator' */
-  controls_B.FixPtLogicalOperator_i = (controls_B.LowerTest_k &&
-    controls_B.UpperTest_g);
-
-  /* Logic: '<S19>/NOT' */
-  controls_B.NOT_p = !controls_B.FixPtLogicalOperator_i;
-
-  /* Sum: '<S11>/Subtract' */
-  controls_B.Subtract = controls_B.CANUnpack2_o1 - controls_B.CANUnpack2_o2;
-
-  /* Abs: '<S11>/Abs' */
-  controls_B.Abs = std::abs(controls_B.Subtract);
-
-  /* RelationalOperator: '<S11>/GreaterThan' incorporates:
-   *  Constant: '<S11>/Constant'
-   */
-  controls_B.GreaterThan = (controls_B.Abs > controls_cal->Constant_Value_i);
-
-  /* Switch: '<S11>/Switch' */
-  if (controls_B.GreaterThan) {
-    /* Switch: '<S11>/Switch' incorporates:
-     *  Constant: '<S11>/Constant1'
-     */
-    controls_B.Switch = controls_cal->Constant1_Value_j;
-  } else {
-    /* Switch: '<S11>/Switch' incorporates:
-     *  Constant: '<S11>/Constant2'
-     */
-    controls_B.Switch = controls_cal->Constant2_Value;
-  }
-
-  /* End of Switch: '<S11>/Switch' */
-
-  /* Logic: '<S5>/b_DriverInterfaceError' */
-  controls_B.b_DriverInterfaceError = (controls_B.NOT_d || controls_B.NOT_g ||
-    controls_B.NOT_i || controls_B.NOT_f || controls_B.NOT_p ||
-    (controls_B.Switch != 0.0));
-
-  /* MinMax: '<S5>/Max' */
-  controls_B.Max = 0.0;
-
-  /* Chart: '<S5>/driver_interface' */
-  if (controls_DW.temporalCounter_i1_m < 2047U) {
-    controls_DW.temporalCounter_i1_m = static_cast<uint16_T>
-      (controls_DW.temporalCounter_i1_m + 1U);
-  }
-
-  controls_DW.sfEvent_dr = controls_CALL_EVENT_i;
-  if (controls_DW.is_active_c2_driver_interface_l == 0U) {
-    controls_DW.is_active_c2_driver_interface_l = 1U;
-    controls_DW.is_c2_driver_interface_lib = controls_IN_INIT;
-    controls_B.GOV_e_diSts = DI_STS_INIT;
-    controls_B.b_ReadyToDrive = false;
-    controls_B.DI_b_driverSpeaker = false;
-  } else {
-    switch (controls_DW.is_c2_driver_interface_lib) {
-     case controls_IN_DI_error:
-      controls_B.GOV_e_diSts = DI_ERROR;
-      break;
-
-     case controls_IN_DI_running:
-      if (controls_B.b_DriverInterfaceError) {
-        controls_DW.is_Ready_to_drive = controls_IN_NO_ACTIVE_CHILD_o;
-        controls_DW.is_DI_running = controls_IN_NO_ACTIVE_CHILD_o;
-        controls_DW.is_c2_driver_interface_lib = controls_IN_DI_error;
-        controls_B.GOV_e_diSts = DI_ERROR;
-      } else if (controls_B.GOV_e_diCmd == DI_SHUTDOWN) {
-        controls_DW.is_Ready_to_drive = controls_IN_NO_ACTIVE_CHILD_o;
-        controls_DW.is_DI_running = controls_IN_NO_ACTIVE_CHILD_o;
-        controls_DW.is_c2_driver_interface_lib = controls_IN_INIT;
-        controls_B.GOV_e_diSts = DI_STS_INIT;
-        controls_B.b_ReadyToDrive = false;
-        controls_B.DI_b_driverSpeaker = false;
-      } else {
-        switch (controls_DW.is_DI_running) {
-         case contr_IN_Driver_requested_start:
-          controls_B.GOV_e_diSts = HV_START_REQ;
-          out = ((controls_B.GOV_e_diCmd == HV_ON) && controls_B.NOT1_e);
-          if (out) {
-            controls_DW.is_DI_running = controls_IN_Motor_start_request;
-            controls_B.GOV_e_diSts = READY_TO_DRIVE_REQ;
-          }
-          break;
-
-         case controls_IN_Motor_start_request:
-          controls_B.GOV_e_diSts = READY_TO_DRIVE_REQ;
-          break;
-
-         case controls_IN_Ready_to_drive:
-          controls_B.b_ReadyToDrive = true;
-          controls_B.GOV_e_diSts = DI_RUNNING;
-          if (controls_B.GOV_e_diCmd == RUN_ERROR) {
-            controls_DW.is_Ready_to_drive = controls_IN_NO_ACTIVE_CHILD_o;
-            controls_DW.is_DI_running = controls_IN_NO_ACTIVE_CHILD_o;
-            controls_DW.is_c2_driver_interface_lib =
-              controls_IN_Vehicle_coasting;
-            controls_B.b_ReadyToDrive = false;
-            controls_B.GOV_e_diSts = DI_IDLE;
-          } else if (controls_DW.is_Ready_to_drive == controls_IN_SpeakerOff) {
-            controls_B.DI_b_driverSpeaker = false;
-          } else {
-            /* case IN_SpeakerOn_: */
-            controls_B.DI_b_driverSpeaker = true;
-            if (controls_DW.temporalCounter_i1_m >= 2000U) {
-              controls_DW.is_Ready_to_drive = controls_IN_SpeakerOff;
-              controls_B.DI_b_driverSpeaker = false;
-            }
-          }
-          break;
-
-         default:
-          /* case IN_Waiting_for_driver: */
-          controls_B.GOV_e_diSts = WAITING_FOR_DRVR;
-          if (controls_B.NOT1_e) {
-            controls_DW.is_DI_running = contr_IN_Driver_requested_start;
-            controls_B.GOV_e_diSts = HV_START_REQ;
-          }
-          break;
-        }
-      }
-      break;
-
-     case controls_IN_INIT:
-      controls_B.GOV_e_diSts = DI_STS_INIT;
-      controls_B.b_ReadyToDrive = false;
-      controls_B.DI_b_driverSpeaker = false;
-      if (controls_B.GOV_e_diCmd == DI_CMD_INIT) {
-        controls_DW.is_c2_driver_interface_lib = controls_IN_DI_running;
-        controls_DW.is_DI_running = controls_IN_Waiting_for_driver;
-        controls_B.GOV_e_diSts = WAITING_FOR_DRVR;
-      }
-      break;
-
-     default:
-      /* case IN_Vehicle_coasting: */
-      controls_B.b_ReadyToDrive = false;
-      controls_B.GOV_e_diSts = DI_IDLE;
-      break;
-    }
-  }
-
-  /* End of Chart: '<S5>/driver_interface' */
-
   /* Logic: '<S5>/NOT' */
   controls_B.NOT_fr = !controls_B.b_ReadyToDrive;
 
@@ -2852,31 +2985,8 @@ void controls_step(void)
 
   /* End of If: '<S5>/If' */
 
-  /* Logic: '<S5>/OR' */
-  controls_B.OR = (controls_B.NOT_f || controls_B.NOT_i);
-
-  /* Switch: '<S5>/Switch2' */
-  if (controls_B.OR) {
-    /* Switch: '<S5>/Switch2' incorporates:
-     *  Constant: '<S5>/Constant1'
-     */
-    controls_B.Switch2 = controls_cal->Constant1_Value_k;
-  } else {
-    /* Switch: '<S5>/Switch2' */
-    controls_B.Switch2 = 0.0;
-  }
-
-  /* End of Switch: '<S5>/Switch2' */
-
-  /* Lookup_n-D: '<S5>/BrakePedalMap' incorporates:
-   *  Switch: '<S5>/Switch2'
-   */
-  controls_B.BrakePedalMap = look1_binlcpw(controls_B.Switch2,
-    controls_cal->BrakePedalMap_bp01Data, controls_cal->BrakePedalMap_tableData,
-    20U);
-
   /* Switch: '<S8>/Switch' */
-  if (controls_B.BrakePedalMap > controls_cal->Switch_Threshold) {
+  if (controls_B.BrakePedalMap > controls_cal->Switch_Threshold_h) {
     /* Switch: '<S8>/Switch' incorporates:
      *  Constant: '<S8>/Constant5'
      */
@@ -3054,8 +3164,9 @@ void controls_step(void)
   }
 
   /* SignalConversion generated from: '<Root>/CAN Write ' */
-  controls_B.TmpSignalConversionAtCANWriteIn[0] = controls_B.CANPack;
-  controls_B.TmpSignalConversionAtCANWriteIn[1] = controls_B.CANPack1;
+  controls_B.TmpSignalConversionAtCANWriteIn[0] = controls_B.CANPack2;
+  controls_B.TmpSignalConversionAtCANWriteIn[1] = controls_B.CANPack;
+  controls_B.TmpSignalConversionAtCANWriteIn[2] = controls_B.CANPack1;
 
   /* S-Function (sg_CAN_OfA2_write_s): '<Root>/CAN Write ' */
 
@@ -3751,21 +3862,6 @@ void controls_step(void)
     sfcnOutputs(rts,0);
   }
 
-  /* Switch: '<S5>/Switch' */
-  if (controls_B.BrakePedalMap > controls_cal->Switch_Threshold_f) {
-    /* Switch: '<S5>/Switch' incorporates:
-     *  Constant: '<S5>/Constant4'
-     */
-    controls_B.Switch_m = controls_cal->Constant4_Value_i;
-  } else {
-    /* Switch: '<S5>/Switch' incorporates:
-     *  Constant: '<S5>/Constant3'
-     */
-    controls_B.Switch_m = controls_cal->Constant3_Value_m;
-  }
-
-  /* End of Switch: '<S5>/Switch' */
-
   /* DataTypeConversion: '<Root>/Cast To Single' */
   controls_B.CastToSingle_g = static_cast<uint8_T>(controls_B.GOV_e_govSts);
 
@@ -4032,11 +4128,13 @@ void controls_initialize(void)
 
   {
     controls_B.CANRead1_o2 = CAN_DATATYPE_GROUND;
+    controls_B.CANPack2 = CAN_DATATYPE_GROUND;
     controls_B.CANPack = CAN_DATATYPE_GROUND;
     controls_B.CANRead_o2 = CAN_DATATYPE_GROUND;
     controls_B.CANPack1 = CAN_DATATYPE_GROUND;
     controls_B.TmpSignalConversionAtCANWriteIn[0] = CAN_DATATYPE_GROUND;
     controls_B.TmpSignalConversionAtCANWriteIn[1] = CAN_DATATYPE_GROUND;
+    controls_B.TmpSignalConversionAtCANWriteIn[2] = CAN_DATATYPE_GROUND;
     controls_B.AMK0_SetPoints1 = CAN_DATATYPE_GROUND;
     controls_B.AMK1_SetPoints1 = CAN_DATATYPE_GROUND;
     controls_B.TmpSignalConversionAtCANWrite1I[0] = CAN_DATATYPE_GROUND;
@@ -4533,7 +4631,7 @@ void controls_initialize(void)
           ssSetInputPortSignal(rts, 0,
                                controls_B.TmpSignalConversionAtCANWriteIn);
           _ssSetInputPortNumDimensions(rts, 0, 1);
-          ssSetInputPortWidthAsInt(rts, 0, 2);
+          ssSetInputPortWidthAsInt(rts, 0, 3);
         }
       }
 
@@ -4567,7 +4665,7 @@ void controls_initialize(void)
         ssSetNumDWorkAsInt(rts, 1);
 
         /* PWORK */
-        ssSetDWorkWidthAsInt(rts, 0, 2);
+        ssSetDWorkWidthAsInt(rts, 0, 3);
         ssSetDWorkDataType(rts, 0,SS_POINTER);
         ssSetDWorkComplexSignal(rts, 0, 0);
         ssSetDWork(rts, 0, &controls_DW.CANWrite_PWORK[0]);
@@ -4743,6 +4841,10 @@ void controls_initialize(void)
       return;
   }
 
+  /* Start for S-Function (scanunpack): '<Root>/CAN Unpack2' */
+
+  /*-----------S-Function Block: <Root>/CAN Unpack2 -----------------*/
+
   /* Start for Constant: '<Root>/Constant13' */
   controls_B.Constant13 = controls_cal->Constant13_Value;
 
@@ -4757,10 +4859,6 @@ void controls_initialize(void)
     if (ssGetErrorStatus(rts) != (NULL))
       return;
   }
-
-  /* Start for S-Function (scanunpack): '<Root>/CAN Unpack2' */
-
-  /*-----------S-Function Block: <Root>/CAN Unpack2 -----------------*/
 
   /* Start for S-Function (sg_CAN_OfA2_write_s): '<Root>/CAN Write ' */
   /* Level2 S-Function Block: '<Root>/CAN Write ' (sg_CAN_OfA2_write_s) */
@@ -4817,6 +4915,17 @@ void controls_initialize(void)
   controls_B.GOV_e_diCmd = DI_CMD_INIT;
   controls_B.GOV_e_govSts = GOV_INIT;
 
+  /* SystemInitialize for Chart: '<S5>/driver_interface' */
+  controls_DW.sfEvent_dr = controls_CALL_EVENT_i;
+  controls_DW.is_DI_running = controls_IN_NO_ACTIVE_CHILD_o;
+  controls_DW.is_Ready_to_drive = controls_IN_NO_ACTIVE_CHILD_o;
+  controls_DW.temporalCounter_i1_m = 0U;
+  controls_DW.is_active_c2_driver_interface_l = 0U;
+  controls_DW.is_c2_driver_interface_lib = controls_IN_NO_ACTIVE_CHILD_o;
+  controls_B.GOV_e_diSts = DI_UNKNOWN;
+  controls_B.DI_b_driverSpeaker = false;
+  controls_B.b_ReadyToDrive = false;
+
   /* SystemInitialize for Atomic SubSystem: '<Root>/Function-Call Subsystem2' */
   /* Start for S-Function (scanunpack): '<S3>/CAN Unpack' */
 
@@ -4860,17 +4969,6 @@ void controls_initialize(void)
   /*-----------S-Function Block: <S1>/CAN Unpack3 -----------------*/
 
   /* End of SystemInitialize for SubSystem: '<Root>/AMK_Input' */
-
-  /* SystemInitialize for Chart: '<S5>/driver_interface' */
-  controls_DW.sfEvent_dr = controls_CALL_EVENT_i;
-  controls_DW.is_DI_running = controls_IN_NO_ACTIVE_CHILD_o;
-  controls_DW.is_Ready_to_drive = controls_IN_NO_ACTIVE_CHILD_o;
-  controls_DW.temporalCounter_i1_m = 0U;
-  controls_DW.is_active_c2_driver_interface_l = 0U;
-  controls_DW.is_c2_driver_interface_lib = controls_IN_NO_ACTIVE_CHILD_o;
-  controls_B.GOV_e_diSts = DI_UNKNOWN;
-  controls_B.DI_b_driverSpeaker = false;
-  controls_B.b_ReadyToDrive = false;
 
   /* SystemInitialize for Chart: '<S8>/vd_screenshot_check' */
   controls_DW.sfEvent = controls_CALL_EVENT_i;
