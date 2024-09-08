@@ -9,7 +9,7 @@
  *
  * Model version              : 1.8
  * Simulink Coder version : 9.8 (R2022b) 13-May-2022
- * C++ source code generated on : Sun Sep  8 14:35:09 2024
+ * C++ source code generated on : Sun Sep  8 14:37:22 2024
  *
  * Target selection: slrealtime.tlc
  * Note: GRT includes extra infrastructure and instrumentation for prototyping
@@ -2303,379 +2303,6 @@ void plant_step(void)
     sfcnOutputs(rts,0);
   }
 
-  /* Delay: '<S14>/Delay' */
-  plant_B.Delay = plant_DW.Delay_DSTATE;
-
-  /* Delay: '<S14>/Delay1' */
-  plant_B.Delay1 = plant_DW.Delay1_DSTATE;
-
-  /* Delay: '<S14>/Delay2' */
-  plant_B.Delay2 = plant_DW.Delay2_DSTATE;
-
-  /* Update for Delay: '<S14>/Delay' */
-  plant_DW.Delay_DSTATE = plant_B.AIR_pos;
-
-  /* Update for Delay: '<S14>/Delay1' */
-  plant_DW.Delay1_DSTATE = plant_B.precharge;
-
-  /* Update for Delay: '<S14>/Delay2' */
-  plant_DW.Delay2_DSTATE = plant_B.AIR_neg;
-
-  /* End of Outputs for SubSystem: '<S2>/Triggered Subsystem1' */
-
-  /* Logic: '<S2>/NOT2' */
-  plant_B.NOT2 = !(plant_B.Delay2 != 0.0);
-
-  /* Logic: '<S2>/NOT' */
-  plant_B.NOT = !(plant_B.Delay != 0.0);
-
-  /* Logic: '<S2>/NOT1' */
-  plant_B.NOT1 = !(plant_B.Delay1 != 0.0);
-
-  /* S-Function (scanpack): '<S7>/CAN Pack' */
-  /* S-Function (scanpack): '<S7>/CAN Pack' */
-  plant_B.CANPack.ID = 1574U;
-  plant_B.CANPack.Length = 3U;
-  plant_B.CANPack.Extended = 0U;
-  plant_B.CANPack.Remote = 0;
-  plant_B.CANPack.Data[0] = 0;
-  plant_B.CANPack.Data[1] = 0;
-  plant_B.CANPack.Data[2] = 0;
-  plant_B.CANPack.Data[3] = 0;
-  plant_B.CANPack.Data[4] = 0;
-  plant_B.CANPack.Data[5] = 0;
-  plant_B.CANPack.Data[6] = 0;
-  plant_B.CANPack.Data[7] = 0;
-
-  {
-    /* --------------- START Packing signal 0 ------------------
-     *  startBit                = 8
-     *  length                  = 1
-     *  desiredSignalByteLayout = LITTLEENDIAN
-     *  dataType                = UNSIGNED
-     *  factor                  = 1.0
-     *  offset                  = 0.0
-     *  minimum                 = 0.0
-     *  maximum                 = 0.0
-     * -----------------------------------------------------------------------*/
-    {
-      uint32_T packingValue = 0;
-
-      {
-        uint32_T result = (uint32_T) (plant_B.NOT2);
-
-        /* no scaling required */
-        packingValue = result;
-      }
-
-      {
-        uint8_T packedValue;
-        if (packingValue > (boolean_T)(1)) {
-          packedValue = (uint8_T) 1;
-        } else if (packingValue < (boolean_T)(0)) {
-          packedValue = (uint8_T) 0;
-        } else {
-          packedValue = (uint8_T) (packingValue);
-        }
-
-        {
-          {
-            plant_B.CANPack.Data[1] = plant_B.CANPack.Data[1] | (uint8_T)
-              ((uint8_T)(packedValue & (uint8_T)0x1U));
-          }
-        }
-      }
-    }
-
-    /* --------------- START Packing signal 1 ------------------
-     *  startBit                = 0
-     *  length                  = 1
-     *  desiredSignalByteLayout = LITTLEENDIAN
-     *  dataType                = UNSIGNED
-     *  factor                  = 1.0
-     *  offset                  = 0.0
-     *  minimum                 = 0.0
-     *  maximum                 = 0.0
-     * -----------------------------------------------------------------------*/
-    {
-      uint32_T packingValue = 0;
-
-      {
-        uint32_T result = (uint32_T) (plant_B.NOT);
-
-        /* no scaling required */
-        packingValue = result;
-      }
-
-      {
-        uint8_T packedValue;
-        if (packingValue > (boolean_T)(1)) {
-          packedValue = (uint8_T) 1;
-        } else if (packingValue < (boolean_T)(0)) {
-          packedValue = (uint8_T) 0;
-        } else {
-          packedValue = (uint8_T) (packingValue);
-        }
-
-        {
-          {
-            plant_B.CANPack.Data[0] = plant_B.CANPack.Data[0] | (uint8_T)
-              ((uint8_T)(packedValue & (uint8_T)0x1U));
-          }
-        }
-      }
-    }
-
-    /* --------------- START Packing signal 2 ------------------
-     *  startBit                = 16
-     *  length                  = 1
-     *  desiredSignalByteLayout = LITTLEENDIAN
-     *  dataType                = UNSIGNED
-     *  factor                  = 1.0
-     *  offset                  = 0.0
-     *  minimum                 = 0.0
-     *  maximum                 = 0.0
-     * -----------------------------------------------------------------------*/
-    {
-      uint32_T packingValue = 0;
-
-      {
-        uint32_T result = (uint32_T) (plant_B.NOT1);
-
-        /* no scaling required */
-        packingValue = result;
-      }
-
-      {
-        uint8_T packedValue;
-        if (packingValue > (boolean_T)(1)) {
-          packedValue = (uint8_T) 1;
-        } else if (packingValue < (boolean_T)(0)) {
-          packedValue = (uint8_T) 0;
-        } else {
-          packedValue = (uint8_T) (packingValue);
-        }
-
-        {
-          {
-            plant_B.CANPack.Data[2] = plant_B.CANPack.Data[2] | (uint8_T)
-              ((uint8_T)(packedValue & (uint8_T)0x1U));
-          }
-        }
-      }
-    }
-  }
-
-  /* S-Function (sg_CAN_OfA2_write_s): '<Root>/CAN Write 1' */
-
-  /* Level2 S-Function Block: '<Root>/CAN Write 1' (sg_CAN_OfA2_write_s) */
-  {
-    SimStruct *rts = plant_M->childSfunctions[3];
-    sfcnOutputs(rts,0);
-  }
-
-  /* Sum: '<S10>/Subtract' */
-  plant_B.spd_err = plant_B.AMK0_TargetVelocity -
-    plant_B.MovingAverage.Mot_spd_actual;
-
-  /* MinMax: '<S10>/Max' incorporates:
-   *  Constant: '<S10>/Constant'
-   */
-  u0 = plant_B.AMK0_TargetVelocity;
-  u1 = plant_cal->Constant_Value_c;
-  if ((u0 >= u1) || rtIsNaN(u1)) {
-    u1 = u0;
-  }
-
-  /* MinMax: '<S10>/Max' */
-  plant_B.Max = u1;
-
-  /* Product: '<S10>/Divide1' */
-  plant_B.percent_err = plant_B.spd_err / plant_B.Max;
-
-  /* Switch: '<S10>/Switch2' */
-  if (plant_B.percent_err >= plant_cal->Switch2_Threshold) {
-    /* Switch: '<S10>/Switch2' */
-    plant_B.Switch2 = plant_B.AMK0_TorqueLimitPositiv;
-  } else {
-    /* Switch: '<S10>/Switch2' */
-    plant_B.Switch2 = plant_B.AMK0_TorqueLimitNegativ;
-  }
-
-  /* End of Switch: '<S10>/Switch2' */
-
-  /* Product: '<S10>/Divide3' */
-  plant_B.percent_err_e = plant_B.percent_err * plant_B.Switch2;
-  plant_MovingAverage1(plant_B.percent_err_e, &plant_B.MovingAverage1,
-                       &plant_DW.MovingAverage1);
-
-  /* RelationalOperator: '<S12>/LowerRelop1' */
-  plant_B.LowerRelop1 = (plant_B.MovingAverage1.MovingAverage1 >
-    plant_B.AMK0_TorqueLimitPositiv);
-
-  /* RelationalOperator: '<S12>/UpperRelop' */
-  plant_B.UpperRelop = (plant_B.MovingAverage1.MovingAverage1 <
-                        plant_B.AMK0_TorqueLimitNegativ);
-
-  /* Switch: '<S12>/Switch' */
-  if (plant_B.UpperRelop) {
-    /* Switch: '<S12>/Switch' */
-    plant_B.Switch = plant_B.AMK0_TorqueLimitNegativ;
-  } else {
-    /* Switch: '<S12>/Switch' */
-    plant_B.Switch = plant_B.MovingAverage1.MovingAverage1;
-  }
-
-  /* End of Switch: '<S12>/Switch' */
-
-  /* Switch: '<S12>/Switch2' */
-  if (plant_B.LowerRelop1) {
-    /* Switch: '<S12>/Switch2' */
-    plant_B.Switch2_m = plant_B.AMK0_TorqueLimitPositiv;
-  } else {
-    /* Switch: '<S12>/Switch2' */
-    plant_B.Switch2_m = plant_B.Switch;
-  }
-
-  /* End of Switch: '<S12>/Switch2' */
-
-  /* Switch: '<S10>/Switch1' */
-  if (plant_B.sf_Chart.Motor_running) {
-    /* Switch: '<S10>/Switch1' */
-    plant_B.mot_torq = static_cast<real32_T>(plant_B.Switch2_m);
-  } else {
-    /* Switch: '<S10>/Switch1' incorporates:
-     *  Constant: '<S10>/Constant2'
-     */
-    plant_B.mot_torq = static_cast<real32_T>(plant_cal->Constant2_Value);
-  }
-
-  /* End of Switch: '<S10>/Switch1' */
-
-  /* Sum: '<S11>/Subtract' */
-  plant_B.spd_err_l = plant_B.AMK1_TargetVelocity -
-    plant_B.MovingAverage_b.Mot_spd_actual;
-
-  /* MinMax: '<S11>/Max' incorporates:
-   *  Constant: '<S11>/Constant'
-   */
-  u0 = plant_B.AMK1_TargetVelocity;
-  u1 = plant_cal->Constant_Value_a;
-  if ((u0 >= u1) || rtIsNaN(u1)) {
-    u1 = u0;
-  }
-
-  /* MinMax: '<S11>/Max' */
-  plant_B.Max_g = u1;
-
-  /* Product: '<S11>/Divide1' */
-  plant_B.percent_err_g = plant_B.spd_err_l / plant_B.Max_g;
-
-  /* Switch: '<S11>/Switch2' */
-  if (plant_B.percent_err_g >= plant_cal->Switch2_Threshold_k) {
-    /* Switch: '<S11>/Switch2' */
-    plant_B.Switch2_i = plant_B.AMK1_TorqueLimitPositiv;
-  } else {
-    /* Switch: '<S11>/Switch2' */
-    plant_B.Switch2_i = plant_B.AMK1_TorqueLimitNegativ;
-  }
-
-  /* End of Switch: '<S11>/Switch2' */
-
-  /* Product: '<S11>/Divide3' */
-  plant_B.percent_err_m = plant_B.percent_err_g * plant_B.Switch2_i;
-  plant_MovingAverage1(plant_B.percent_err_m, &plant_B.MovingAverage1_b,
-                       &plant_DW.MovingAverage1_b);
-
-  /* RelationalOperator: '<S13>/LowerRelop1' */
-  plant_B.LowerRelop1_k = (plant_B.MovingAverage1_b.MovingAverage1 >
-    plant_B.AMK1_TorqueLimitPositiv);
-
-  /* RelationalOperator: '<S13>/UpperRelop' */
-  plant_B.UpperRelop_b = (plant_B.MovingAverage1_b.MovingAverage1 <
-    plant_B.AMK1_TorqueLimitNegativ);
-
-  /* Switch: '<S13>/Switch' */
-  if (plant_B.UpperRelop_b) {
-    /* Switch: '<S13>/Switch' */
-    plant_B.Switch_h = plant_B.AMK1_TorqueLimitNegativ;
-  } else {
-    /* Switch: '<S13>/Switch' */
-    plant_B.Switch_h = plant_B.MovingAverage1_b.MovingAverage1;
-  }
-
-  /* End of Switch: '<S13>/Switch' */
-
-  /* Switch: '<S13>/Switch2' */
-  if (plant_B.LowerRelop1_k) {
-    /* Switch: '<S13>/Switch2' */
-    plant_B.Switch2_d = plant_B.AMK1_TorqueLimitPositiv;
-  } else {
-    /* Switch: '<S13>/Switch2' */
-    plant_B.Switch2_d = plant_B.Switch_h;
-  }
-
-  /* End of Switch: '<S13>/Switch2' */
-
-  /* Switch: '<S11>/Switch1' */
-  if (plant_B.sf_Chart1.Motor_running) {
-    /* Switch: '<S11>/Switch1' */
-    plant_B.mot_torq_l = static_cast<real32_T>(plant_B.Switch2_d);
-  } else {
-    /* Switch: '<S11>/Switch1' incorporates:
-     *  Constant: '<S11>/Constant2'
-     */
-    plant_B.mot_torq_l = static_cast<real32_T>(plant_cal->Constant2_Value_k);
-  }
-
-  /* End of Switch: '<S11>/Switch1' */
-
-  /* S-Function (sg_CAN_OfA2_read_s): '<Root>/CAN Read ' */
-
-  /* Level2 S-Function Block: '<Root>/CAN Read ' (sg_CAN_OfA2_read_s) */
-  {
-    SimStruct *rts = plant_M->childSfunctions[4];
-    sfcnOutputs(rts,0);
-  }
-
-  /* S-Function (scanunpack): '<Root>/CAN Unpack1' */
-  {
-    /* S-Function (scanunpack): '<Root>/CAN Unpack1' */
-    if ((1 == plant_B.CANRead1_o2.Length) && (plant_B.CANRead1_o2.ID !=
-         INVALID_CAN_ID) ) {
-      if ((256 == plant_B.CANRead1_o2.ID) && (0U == plant_B.CANRead1_o2.Extended)
-          ) {
-        {
-          /* --------------- START Unpacking signal 0 ------------------
-           *  startBit                = 0
-           *  length                  = 1
-           *  desiredSignalByteLayout = LITTLEENDIAN
-           *  dataType                = UNSIGNED
-           *  factor                  = 1.0
-           *  offset                  = 0.0
-           * -----------------------------------------------------------------------*/
-          /*
-           * Signal is not connected or connected to terminator.
-           * No unpacking code generated.
-           */
-
-          /* --------------- START Unpacking signal 1 ------------------
-           *  startBit                = 1
-           *  length                  = 1
-           *  desiredSignalByteLayout = LITTLEENDIAN
-           *  dataType                = UNSIGNED
-           *  factor                  = 1.0
-           *  offset                  = 0.0
-           * -----------------------------------------------------------------------*/
-          /*
-           * Signal is not connected or connected to terminator.
-           * No unpacking code generated.
-           */
-        }
-      }
-    }
-  }
-
   /* S-Function (scanpack): '<Root>/CAN Pack1' incorporates:
    *  Constant: '<Root>/APPS'
    *  Constant: '<Root>/BPPS'
@@ -3037,6 +2664,383 @@ void plant_step(void)
      * -----------------------------------------------------------------------*/
   }
 
+  /* Delay: '<S14>/Delay' */
+  plant_B.Delay = plant_DW.Delay_DSTATE;
+
+  /* Delay: '<S14>/Delay1' */
+  plant_B.Delay1 = plant_DW.Delay1_DSTATE;
+
+  /* Delay: '<S14>/Delay2' */
+  plant_B.Delay2 = plant_DW.Delay2_DSTATE;
+
+  /* Update for Delay: '<S14>/Delay' */
+  plant_DW.Delay_DSTATE = plant_B.AIR_pos;
+
+  /* Update for Delay: '<S14>/Delay1' */
+  plant_DW.Delay1_DSTATE = plant_B.precharge;
+
+  /* Update for Delay: '<S14>/Delay2' */
+  plant_DW.Delay2_DSTATE = plant_B.AIR_neg;
+
+  /* End of Outputs for SubSystem: '<S2>/Triggered Subsystem1' */
+
+  /* Logic: '<S2>/NOT2' */
+  plant_B.NOT2 = !(plant_B.Delay2 != 0.0);
+
+  /* Logic: '<S2>/NOT' */
+  plant_B.NOT = !(plant_B.Delay != 0.0);
+
+  /* Logic: '<S2>/NOT1' */
+  plant_B.NOT1 = !(plant_B.Delay1 != 0.0);
+
+  /* S-Function (scanpack): '<S7>/CAN Pack' */
+  /* S-Function (scanpack): '<S7>/CAN Pack' */
+  plant_B.CANPack.ID = 1574U;
+  plant_B.CANPack.Length = 3U;
+  plant_B.CANPack.Extended = 0U;
+  plant_B.CANPack.Remote = 0;
+  plant_B.CANPack.Data[0] = 0;
+  plant_B.CANPack.Data[1] = 0;
+  plant_B.CANPack.Data[2] = 0;
+  plant_B.CANPack.Data[3] = 0;
+  plant_B.CANPack.Data[4] = 0;
+  plant_B.CANPack.Data[5] = 0;
+  plant_B.CANPack.Data[6] = 0;
+  plant_B.CANPack.Data[7] = 0;
+
+  {
+    /* --------------- START Packing signal 0 ------------------
+     *  startBit                = 8
+     *  length                  = 1
+     *  desiredSignalByteLayout = LITTLEENDIAN
+     *  dataType                = UNSIGNED
+     *  factor                  = 1.0
+     *  offset                  = 0.0
+     *  minimum                 = 0.0
+     *  maximum                 = 0.0
+     * -----------------------------------------------------------------------*/
+    {
+      uint32_T packingValue = 0;
+
+      {
+        uint32_T result = (uint32_T) (plant_B.NOT2);
+
+        /* no scaling required */
+        packingValue = result;
+      }
+
+      {
+        uint8_T packedValue;
+        if (packingValue > (boolean_T)(1)) {
+          packedValue = (uint8_T) 1;
+        } else if (packingValue < (boolean_T)(0)) {
+          packedValue = (uint8_T) 0;
+        } else {
+          packedValue = (uint8_T) (packingValue);
+        }
+
+        {
+          {
+            plant_B.CANPack.Data[1] = plant_B.CANPack.Data[1] | (uint8_T)
+              ((uint8_T)(packedValue & (uint8_T)0x1U));
+          }
+        }
+      }
+    }
+
+    /* --------------- START Packing signal 1 ------------------
+     *  startBit                = 0
+     *  length                  = 1
+     *  desiredSignalByteLayout = LITTLEENDIAN
+     *  dataType                = UNSIGNED
+     *  factor                  = 1.0
+     *  offset                  = 0.0
+     *  minimum                 = 0.0
+     *  maximum                 = 0.0
+     * -----------------------------------------------------------------------*/
+    {
+      uint32_T packingValue = 0;
+
+      {
+        uint32_T result = (uint32_T) (plant_B.NOT);
+
+        /* no scaling required */
+        packingValue = result;
+      }
+
+      {
+        uint8_T packedValue;
+        if (packingValue > (boolean_T)(1)) {
+          packedValue = (uint8_T) 1;
+        } else if (packingValue < (boolean_T)(0)) {
+          packedValue = (uint8_T) 0;
+        } else {
+          packedValue = (uint8_T) (packingValue);
+        }
+
+        {
+          {
+            plant_B.CANPack.Data[0] = plant_B.CANPack.Data[0] | (uint8_T)
+              ((uint8_T)(packedValue & (uint8_T)0x1U));
+          }
+        }
+      }
+    }
+
+    /* --------------- START Packing signal 2 ------------------
+     *  startBit                = 16
+     *  length                  = 1
+     *  desiredSignalByteLayout = LITTLEENDIAN
+     *  dataType                = UNSIGNED
+     *  factor                  = 1.0
+     *  offset                  = 0.0
+     *  minimum                 = 0.0
+     *  maximum                 = 0.0
+     * -----------------------------------------------------------------------*/
+    {
+      uint32_T packingValue = 0;
+
+      {
+        uint32_T result = (uint32_T) (plant_B.NOT1);
+
+        /* no scaling required */
+        packingValue = result;
+      }
+
+      {
+        uint8_T packedValue;
+        if (packingValue > (boolean_T)(1)) {
+          packedValue = (uint8_T) 1;
+        } else if (packingValue < (boolean_T)(0)) {
+          packedValue = (uint8_T) 0;
+        } else {
+          packedValue = (uint8_T) (packingValue);
+        }
+
+        {
+          {
+            plant_B.CANPack.Data[2] = plant_B.CANPack.Data[2] | (uint8_T)
+              ((uint8_T)(packedValue & (uint8_T)0x1U));
+          }
+        }
+      }
+    }
+  }
+
+  /* SignalConversion generated from: '<Root>/CAN Write 1' */
+  plant_B.TmpSignalConversionAtCANWrite1I[0] = plant_B.AMK0_ActualValues2_c;
+  plant_B.TmpSignalConversionAtCANWrite1I[1] = plant_B.CANPack;
+
+  /* S-Function (sg_CAN_OfA2_write_s): '<Root>/CAN Write 1' */
+
+  /* Level2 S-Function Block: '<Root>/CAN Write 1' (sg_CAN_OfA2_write_s) */
+  {
+    SimStruct *rts = plant_M->childSfunctions[3];
+    sfcnOutputs(rts,0);
+  }
+
+  /* Sum: '<S10>/Subtract' */
+  plant_B.spd_err = plant_B.AMK0_TargetVelocity -
+    plant_B.MovingAverage.Mot_spd_actual;
+
+  /* MinMax: '<S10>/Max' incorporates:
+   *  Constant: '<S10>/Constant'
+   */
+  u0 = plant_B.AMK0_TargetVelocity;
+  u1 = plant_cal->Constant_Value_c;
+  if ((u0 >= u1) || rtIsNaN(u1)) {
+    u1 = u0;
+  }
+
+  /* MinMax: '<S10>/Max' */
+  plant_B.Max = u1;
+
+  /* Product: '<S10>/Divide1' */
+  plant_B.percent_err = plant_B.spd_err / plant_B.Max;
+
+  /* Switch: '<S10>/Switch2' */
+  if (plant_B.percent_err >= plant_cal->Switch2_Threshold) {
+    /* Switch: '<S10>/Switch2' */
+    plant_B.Switch2 = plant_B.AMK0_TorqueLimitPositiv;
+  } else {
+    /* Switch: '<S10>/Switch2' */
+    plant_B.Switch2 = plant_B.AMK0_TorqueLimitNegativ;
+  }
+
+  /* End of Switch: '<S10>/Switch2' */
+
+  /* Product: '<S10>/Divide3' */
+  plant_B.percent_err_e = plant_B.percent_err * plant_B.Switch2;
+  plant_MovingAverage1(plant_B.percent_err_e, &plant_B.MovingAverage1,
+                       &plant_DW.MovingAverage1);
+
+  /* RelationalOperator: '<S12>/LowerRelop1' */
+  plant_B.LowerRelop1 = (plant_B.MovingAverage1.MovingAverage1 >
+    plant_B.AMK0_TorqueLimitPositiv);
+
+  /* RelationalOperator: '<S12>/UpperRelop' */
+  plant_B.UpperRelop = (plant_B.MovingAverage1.MovingAverage1 <
+                        plant_B.AMK0_TorqueLimitNegativ);
+
+  /* Switch: '<S12>/Switch' */
+  if (plant_B.UpperRelop) {
+    /* Switch: '<S12>/Switch' */
+    plant_B.Switch = plant_B.AMK0_TorqueLimitNegativ;
+  } else {
+    /* Switch: '<S12>/Switch' */
+    plant_B.Switch = plant_B.MovingAverage1.MovingAverage1;
+  }
+
+  /* End of Switch: '<S12>/Switch' */
+
+  /* Switch: '<S12>/Switch2' */
+  if (plant_B.LowerRelop1) {
+    /* Switch: '<S12>/Switch2' */
+    plant_B.Switch2_m = plant_B.AMK0_TorqueLimitPositiv;
+  } else {
+    /* Switch: '<S12>/Switch2' */
+    plant_B.Switch2_m = plant_B.Switch;
+  }
+
+  /* End of Switch: '<S12>/Switch2' */
+
+  /* Switch: '<S10>/Switch1' */
+  if (plant_B.sf_Chart.Motor_running) {
+    /* Switch: '<S10>/Switch1' */
+    plant_B.mot_torq = static_cast<real32_T>(plant_B.Switch2_m);
+  } else {
+    /* Switch: '<S10>/Switch1' incorporates:
+     *  Constant: '<S10>/Constant2'
+     */
+    plant_B.mot_torq = static_cast<real32_T>(plant_cal->Constant2_Value);
+  }
+
+  /* End of Switch: '<S10>/Switch1' */
+
+  /* Sum: '<S11>/Subtract' */
+  plant_B.spd_err_l = plant_B.AMK1_TargetVelocity -
+    plant_B.MovingAverage_b.Mot_spd_actual;
+
+  /* MinMax: '<S11>/Max' incorporates:
+   *  Constant: '<S11>/Constant'
+   */
+  u0 = plant_B.AMK1_TargetVelocity;
+  u1 = plant_cal->Constant_Value_a;
+  if ((u0 >= u1) || rtIsNaN(u1)) {
+    u1 = u0;
+  }
+
+  /* MinMax: '<S11>/Max' */
+  plant_B.Max_g = u1;
+
+  /* Product: '<S11>/Divide1' */
+  plant_B.percent_err_g = plant_B.spd_err_l / plant_B.Max_g;
+
+  /* Switch: '<S11>/Switch2' */
+  if (plant_B.percent_err_g >= plant_cal->Switch2_Threshold_k) {
+    /* Switch: '<S11>/Switch2' */
+    plant_B.Switch2_i = plant_B.AMK1_TorqueLimitPositiv;
+  } else {
+    /* Switch: '<S11>/Switch2' */
+    plant_B.Switch2_i = plant_B.AMK1_TorqueLimitNegativ;
+  }
+
+  /* End of Switch: '<S11>/Switch2' */
+
+  /* Product: '<S11>/Divide3' */
+  plant_B.percent_err_m = plant_B.percent_err_g * plant_B.Switch2_i;
+  plant_MovingAverage1(plant_B.percent_err_m, &plant_B.MovingAverage1_b,
+                       &plant_DW.MovingAverage1_b);
+
+  /* RelationalOperator: '<S13>/LowerRelop1' */
+  plant_B.LowerRelop1_k = (plant_B.MovingAverage1_b.MovingAverage1 >
+    plant_B.AMK1_TorqueLimitPositiv);
+
+  /* RelationalOperator: '<S13>/UpperRelop' */
+  plant_B.UpperRelop_b = (plant_B.MovingAverage1_b.MovingAverage1 <
+    plant_B.AMK1_TorqueLimitNegativ);
+
+  /* Switch: '<S13>/Switch' */
+  if (plant_B.UpperRelop_b) {
+    /* Switch: '<S13>/Switch' */
+    plant_B.Switch_h = plant_B.AMK1_TorqueLimitNegativ;
+  } else {
+    /* Switch: '<S13>/Switch' */
+    plant_B.Switch_h = plant_B.MovingAverage1_b.MovingAverage1;
+  }
+
+  /* End of Switch: '<S13>/Switch' */
+
+  /* Switch: '<S13>/Switch2' */
+  if (plant_B.LowerRelop1_k) {
+    /* Switch: '<S13>/Switch2' */
+    plant_B.Switch2_d = plant_B.AMK1_TorqueLimitPositiv;
+  } else {
+    /* Switch: '<S13>/Switch2' */
+    plant_B.Switch2_d = plant_B.Switch_h;
+  }
+
+  /* End of Switch: '<S13>/Switch2' */
+
+  /* Switch: '<S11>/Switch1' */
+  if (plant_B.sf_Chart1.Motor_running) {
+    /* Switch: '<S11>/Switch1' */
+    plant_B.mot_torq_l = static_cast<real32_T>(plant_B.Switch2_d);
+  } else {
+    /* Switch: '<S11>/Switch1' incorporates:
+     *  Constant: '<S11>/Constant2'
+     */
+    plant_B.mot_torq_l = static_cast<real32_T>(plant_cal->Constant2_Value_k);
+  }
+
+  /* End of Switch: '<S11>/Switch1' */
+
+  /* S-Function (sg_CAN_OfA2_read_s): '<Root>/CAN Read ' */
+
+  /* Level2 S-Function Block: '<Root>/CAN Read ' (sg_CAN_OfA2_read_s) */
+  {
+    SimStruct *rts = plant_M->childSfunctions[4];
+    sfcnOutputs(rts,0);
+  }
+
+  /* S-Function (scanunpack): '<Root>/CAN Unpack1' */
+  {
+    /* S-Function (scanunpack): '<Root>/CAN Unpack1' */
+    if ((1 == plant_B.CANRead1_o2.Length) && (plant_B.CANRead1_o2.ID !=
+         INVALID_CAN_ID) ) {
+      if ((256 == plant_B.CANRead1_o2.ID) && (0U == plant_B.CANRead1_o2.Extended)
+          ) {
+        {
+          /* --------------- START Unpacking signal 0 ------------------
+           *  startBit                = 0
+           *  length                  = 1
+           *  desiredSignalByteLayout = LITTLEENDIAN
+           *  dataType                = UNSIGNED
+           *  factor                  = 1.0
+           *  offset                  = 0.0
+           * -----------------------------------------------------------------------*/
+          /*
+           * Signal is not connected or connected to terminator.
+           * No unpacking code generated.
+           */
+
+          /* --------------- START Unpacking signal 1 ------------------
+           *  startBit                = 1
+           *  length                  = 1
+           *  desiredSignalByteLayout = LITTLEENDIAN
+           *  dataType                = UNSIGNED
+           *  factor                  = 1.0
+           *  offset                  = 0.0
+           * -----------------------------------------------------------------------*/
+          /*
+           * Signal is not connected or connected to terminator.
+           * No unpacking code generated.
+           */
+        }
+      }
+    }
+  }
+
   /* Update absolute time for base rate */
   /* The "clockTick0" counts the number of times the code of this task has
    * been executed. The absolute time is the multiplication of "clockTick0"
@@ -3111,9 +3115,11 @@ void plant_initialize(void)
     plant_B.TmpSignalConversionAtCANWriteIn[1] = CAN_DATATYPE_GROUND;
     plant_B.TmpSignalConversionAtCANWriteIn[2] = CAN_DATATYPE_GROUND;
     plant_B.TmpSignalConversionAtCANWriteIn[3] = CAN_DATATYPE_GROUND;
-    plant_B.CANPack = CAN_DATATYPE_GROUND;
-    plant_B.CANRead_o2 = CAN_DATATYPE_GROUND;
     plant_B.AMK0_ActualValues2_c = CAN_DATATYPE_GROUND;
+    plant_B.CANPack = CAN_DATATYPE_GROUND;
+    plant_B.TmpSignalConversionAtCANWrite1I[0] = CAN_DATATYPE_GROUND;
+    plant_B.TmpSignalConversionAtCANWrite1I[1] = CAN_DATATYPE_GROUND;
+    plant_B.CANRead_o2 = CAN_DATATYPE_GROUND;
   }
 
   /* states (dwork) */
@@ -3574,9 +3580,9 @@ void plant_initialize(void)
         /* port 0 */
         {
           ssSetInputPortRequiredContiguous(rts, 0, 1);
-          ssSetInputPortSignal(rts, 0, &plant_B.CANPack);
+          ssSetInputPortSignal(rts, 0, plant_B.TmpSignalConversionAtCANWrite1I);
           _ssSetInputPortNumDimensions(rts, 0, 1);
-          ssSetInputPortWidthAsInt(rts, 0, 1);
+          ssSetInputPortWidthAsInt(rts, 0, 2);
         }
       }
 
@@ -3598,7 +3604,7 @@ void plant_initialize(void)
       }
 
       /* work vectors */
-      ssSetPWork(rts, (void **) &plant_DW.CANWrite1_PWORK);
+      ssSetPWork(rts, (void **) &plant_DW.CANWrite1_PWORK[0]);
 
       {
         struct _ssDWorkRecord *dWorkRecord = (struct _ssDWorkRecord *)
@@ -3610,10 +3616,10 @@ void plant_initialize(void)
         ssSetNumDWorkAsInt(rts, 1);
 
         /* PWORK */
-        ssSetDWorkWidthAsInt(rts, 0, 1);
+        ssSetDWorkWidthAsInt(rts, 0, 2);
         ssSetDWorkDataType(rts, 0,SS_POINTER);
         ssSetDWorkComplexSignal(rts, 0, 0);
-        ssSetDWork(rts, 0, &plant_DW.CANWrite1_PWORK);
+        ssSetDWork(rts, 0, &plant_DW.CANWrite1_PWORK[0]);
       }
 
       /* registration */

@@ -9,7 +9,7 @@
  *
  * Model version              : 1.8
  * Simulink Coder version : 9.8 (R2022b) 13-May-2022
- * C++ source code generated on : Sun Sep  8 14:35:09 2024
+ * C++ source code generated on : Sun Sep  8 14:37:22 2024
  *
  * Target selection: slrealtime.tlc
  * Note: GRT includes extra infrastructure and instrumentation for prototyping
@@ -181,9 +181,10 @@ struct B_plant_T {
   CAN_DATATYPE AMK1_ActualValues1;     /* '<S6>/CAN Pack2' */
   CAN_DATATYPE AMK1_ActualValues2;     /* '<S6>/CAN Pack3' */
   CAN_DATATYPE TmpSignalConversionAtCANWriteIn[4];/* '<Root>/Subsystem' */
-  CAN_DATATYPE CANPack;                /* '<S7>/CAN Pack' */
-  CAN_DATATYPE CANRead_o2;             /* '<Root>/CAN Read ' */
   CAN_DATATYPE AMK0_ActualValues2_c;   /* '<Root>/CAN Pack1' */
+  CAN_DATATYPE CANPack;                /* '<S7>/CAN Pack' */
+  CAN_DATATYPE TmpSignalConversionAtCANWrite1I[2];
+  CAN_DATATYPE CANRead_o2;             /* '<Root>/CAN Read ' */
   real_T CANUnpack;                    /* '<Root>/CAN Unpack' */
   real_T Constant;                     /* '<Root>/Constant' */
   real_T spd_err;                      /* '<S10>/Subtract' */
@@ -250,7 +251,7 @@ struct DW_plant_T {
   real_T Delay2_DSTATE;                /* '<S14>/Delay2' */
   void *CANRead1_PWORK;                /* '<Root>/CAN Read 1' */
   void *CANWrite_PWORK[4];             /* '<Root>/CAN Write ' */
-  void *CANWrite1_PWORK;               /* '<Root>/CAN Write 1' */
+  void *CANWrite1_PWORK[2];            /* '<Root>/CAN Write 1' */
   struct {
     void *AQHandles;
   } TAQSigLogging_InsertedFor_Subsy;   /* synthesized block */
@@ -274,10 +275,10 @@ struct DW_plant_T {
   int_T CANPack1_ModeSignalID;         /* '<S6>/CAN Pack1' */
   int_T CANPack2_ModeSignalID;         /* '<S6>/CAN Pack2' */
   int_T CANPack3_ModeSignalID;         /* '<S6>/CAN Pack3' */
+  int_T CANPack1_ModeSignalID_k;       /* '<Root>/CAN Pack1' */
   int_T CANPack_ModeSignalID_d;        /* '<S7>/CAN Pack' */
   int_T CANUnpack1_ModeSignalID;       /* '<Root>/CAN Unpack1' */
   int_T CANUnpack1_StatusPortID;       /* '<Root>/CAN Unpack1' */
-  int_T CANPack1_ModeSignalID_k;       /* '<Root>/CAN Pack1' */
   int_T CANUnpack_ModeSignalID_j;      /* '<S4>/CAN Unpack' */
   int_T CANUnpack_StatusPortID_o;      /* '<S4>/CAN Unpack' */
   int_T CANUnpack1_ModeSignalID_k;     /* '<S4>/CAN Unpack1' */
